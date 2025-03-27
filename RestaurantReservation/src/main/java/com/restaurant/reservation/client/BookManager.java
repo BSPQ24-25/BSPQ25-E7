@@ -1,4 +1,4 @@
-package com.example.restapi.client;
+package com.restaurant.reservation.client;
 
 import java.util.List;
 
@@ -6,7 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import com.example.restapi.model.Book;
+import com.restaurant.reservation.model.Book;
+
 
 public class BookManager {
 
