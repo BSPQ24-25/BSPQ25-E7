@@ -2,6 +2,9 @@ package com.restaurant.reservation.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
 
 @Entity
 @Table(name = "users")
