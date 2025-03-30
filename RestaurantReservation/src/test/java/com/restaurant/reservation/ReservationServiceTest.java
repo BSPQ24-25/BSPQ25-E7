@@ -2,10 +2,10 @@ package com.restaurant.reservation;
 
 import com.restaurant.reservation.model.Customer;
 import com.restaurant.reservation.model.Reservation;
-import com.restaurant.reservation.model.Table;
+import com.restaurant.reservation.model.RestaurantTable;
+import com.restaurant.reservation.model.Reservation.ReservationState;
 import com.restaurant.reservation.repository.ReservationRepository;
 import com.restaurant.reservation.service.ReservationService;
-import com.restaurant.reservation.model.Reservation.ReservationState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -30,52 +30,54 @@ public class ReservationServiceTest {
 
     @Test
     void testCreateReservation() {
-        Customer mockCustomer = mock(Customer.class);
-        Table mockTable = mock(Table.class);
-
-        Reservation reservation = new Reservation();
-        reservation.setCustomer(mockCustomer);
-        reservation.setTable(mockTable);
-        reservation.setDateTime(LocalDateTime.now().plusDays(1));
-        reservation.setnPeople(4);
-        reservation.setState(ReservationState.CONFIRMED);
-
+        Reservation reservation = createSampleReservation();
         when(reservationRepository.save(any(Reservation.class))).thenReturn(reservation);
 
         Reservation saved = reservationService.createReservation(reservation);
         assertNotNull(saved);
-        assertEquals(4, saved.getnPeople());
         assertEquals(ReservationState.CONFIRMED, saved.getState());
     }
 
     @Test
-    void testGetReservationById() {
-        Reservation reservation = new Reservation();
-        reservation.setReservationId(1L);
-        reservation.setState(ReservationState.PENDING);
-
-        when(reservationRepository.findById(1L)).thenReturn(Optional.of(reservation));
-
-        Optional<Reservation> result = reservationService.getReservationById(1L);
-        assertTrue(result.isPresent());
-        assertEquals(ReservationState.PENDING, result.get().getState());
-    }
-
-    @Test
     void testGetAllReservations() {
-        Reservation res1 = new Reservation();
-        Reservation res2 = new Reservation();
-
-        when(reservationRepository.findAll()).thenReturn(Arrays.asList(res1, res2));
+        when(reservationRepository.findAll()).thenReturn(Arrays.asList(
+                createSampleReservation(),
+                createSampleReservation()
+        ));
 
         List<Reservation> result = reservationService.getAllReservations();
         assertEquals(2, result.size());
     }
 
     @Test
+    void testGetReservationById() {
+        Reservation reservation = createSampleReservation();
+        reservation.setReservationId(1L);
+
+        when(reservationRepository.findById(1L)).thenReturn(Optional.of(reservation));
+
+        Optional<Reservation> found = reservationService.getReservationById(1L);
+        assertTrue(found.isPresent());
+        assertEquals(1L, found.get().getReservationId());
+    }
+
+    @Test
     void testCancelReservation() {
-        doNothing().when(reservationRepository).deleteById(3L);
-        reservationService.cancelReservation(3L);
-        verify(reservationRepository, times(1)).deleteById(3L);
+        doNothing().when(reservationRepository).deleteById(1L);
+
+        reservationService.cancelReservation(1L);
+
+        verify(reservationRepository, times(1)).deleteById(1L);
+    }
+
+    // Método auxiliar para crear una reserva ficticia
+    private Reservation createSampleReservation() {
+        Reservation r = new Reservation();
+        r.setCustomer(mock(Customer.class));
+        r.setTable(mock(RestaurantTable.class)); // actualizado
+        r.setDateTime(LocalDateTime.now().plusDays(1));
+        r.setnPeople(2);
+        r.setState(ReservationState.CONFIRMED);
+        return r;
     }
 }

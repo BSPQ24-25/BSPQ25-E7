@@ -4,11 +4,12 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
 @Entity
-@jakarta.persistence.Table(name = "reservations")
+@Table(name = "reservations")
 public class Reservation {
 
     @Id
@@ -21,7 +22,7 @@ public class Reservation {
 
     @ManyToOne
     @JoinColumn(name = "table_id", nullable = false)
-    private Table table;
+    private RestaurantTable table;
 
     @NotNull
     @Future(message = "La fecha debe ser en el futuro")
@@ -56,11 +57,11 @@ public class Reservation {
         this.customer = customer;
     }
 
-    public Table getTable() {
+    public RestaurantTable getTable() {
         return table;
     }
 
-    public void setTable(Table table) {
+    public void setTable(RestaurantTable table) {
         this.table = table;
     }
 
@@ -87,5 +88,10 @@ public class Reservation {
     public void setState(ReservationState state) {
         this.state = state;
     }
+
  
+
+
+
+    
 }
