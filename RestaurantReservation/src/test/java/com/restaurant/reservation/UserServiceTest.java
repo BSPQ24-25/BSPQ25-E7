@@ -21,4 +21,15 @@ public class UserServiceTest {
         assertTrue(foundUser.isPresent());
         assertEquals("testuser", foundUser.get().getUsername());
     }
+
+    @Test
+    void testRegisterUser() {
+        User User = new User(1L, "testuser", "password", "USER");
+        when(userRepository.save(User)).thenReturn(User);
+
+        User savedUser = userService.saveUser(User);
+        assertNotNull(savedUser);
+        assertEquals("testuser", savedUser.getUsername());
+    }
+
 }

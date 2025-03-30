@@ -14,6 +14,11 @@ public class ReservationService {
     @Autowired
     private ReservationRepository reservationRepository;
 
+    @Autowired
+    public ReservationService(ReservationRepository reservationRepository) {
+        this.reservationRepository = reservationRepository;
+    }
+
     public Reservation createReservation(Reservation reservation) {
         return reservationRepository.save(reservation);
     }
