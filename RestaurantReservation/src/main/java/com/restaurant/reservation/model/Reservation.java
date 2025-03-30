@@ -88,10 +88,5 @@ public class Reservation {
     public void setState(ReservationState state) {
         this.state = state;
     }
-
  
-
-
-
-    
 }
