@@ -22,7 +22,7 @@ public class Reservation {
 
     @ManyToOne
     @JoinColumn(name = "table_id", nullable = false)
-    private Table table;
+    private RestaurantTable table;
 
     @NotNull
     @Future(message = "La fecha debe ser en el futuro")
@@ -57,11 +57,11 @@ public class Reservation {
         this.customer = customer;
     }
 
-    public Table getTable() {
+    public RestaurantTable getTable() {
         return table;
     }
 
-    public void setTable(Table table) {
+    public void setTable(RestaurantTable table) {
         this.table = table;
     }
 
@@ -88,5 +88,10 @@ public class Reservation {
     public void setState(ReservationState state) {
         this.state = state;
     }
+
  
+
+
+
+    
 }
