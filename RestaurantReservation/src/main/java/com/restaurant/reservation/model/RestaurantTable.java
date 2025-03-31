@@ -1,63 +1,52 @@
 package com.restaurant.reservation.model;
 
 import jakarta.persistence.*;
-import jakarta.persistence.Entity;
-import java.util.List;
 
 @Entity
 public class RestaurantTable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    private Integer capacity;
-    private String state; 
-    
+    private Long tableId;
+
+    private int capacity;
+
+    private String state;
+
     @ManyToOne
-    @JoinColumn(name = "restaurant_id")
-    private Restaurant restaurant;
-    
-    @OneToMany(mappedBy = "table")
-    private List<Reservation> reservations;
-    
-    // Getters y Setters
-    public Long getId() {
-        return id;
+    @JoinColumn(name = "restaurantId")
+    private Restaurant restaurant;  // Relación con Restaurant
+
+    // Getters y setters
+    public Long getTableId() {
+        return tableId;
     }
-    
-    public void setId(Long id) {
-        this.id = id;
+
+    public void setTableId(Long tableId) {
+        this.tableId = tableId;
     }
-    
-    public Integer getCapacity() {
+
+    public int getCapacity() {
         return capacity;
     }
-    
-    public void setCapacity(Integer capacity) {
+
+    public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
-    
+
     public String getState() {
         return state;
     }
-    
+
     public void setState(String state) {
         this.state = state;
     }
-    
+
     public Restaurant getRestaurant() {
         return restaurant;
     }
-    
+
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
-    }
-    
-    public List<Reservation> getReservations() {
-        return reservations;
-    }
-    
-    public void setReservations(List<Reservation> reservations) {
-        this.reservations = reservations;
     }
 }
