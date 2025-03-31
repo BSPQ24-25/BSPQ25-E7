@@ -1,6 +1,19 @@
-CREATE DATABASE IF NOT EXISTS cosanostradb;
+-- Eliminar usuario si existe
+DROP USER IF EXISTS 'spq'@'%';
+
+-- Crear usuario con acceso
+CREATE USER IF NOT EXISTS 'spq'@'%' IDENTIFIED BY 'spq';
+
+-- Eliminar base de datos si existe y crear una nueva
+DROP DATABASE IF EXISTS cosanostradb;
+CREATE DATABASE cosanostradb;
 USE cosanostradb;
 
+-- Dar permisos al usuario
+GRANT ALL ON cosanostradb.* TO 'spq'@'%';
+FLUSH PRIVILEGES;
+
+-- Crear tabla Customer
 CREATE TABLE IF NOT EXISTS Customer (
     customerId INT AUTO_INCREMENT PRIMARY KEY,
     mail VARCHAR(100) NOT NULL UNIQUE,
@@ -9,12 +22,14 @@ CREATE TABLE IF NOT EXISTS Customer (
     tif VARCHAR(20)
 );
 
+-- Crear tabla Admin
 CREATE TABLE IF NOT EXISTS Admin (
     adminId INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(100) NOT NULL
 );
 
+-- Crear tabla Restaurant
 CREATE TABLE IF NOT EXISTS Restaurant (
     restaurantId INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -22,14 +37,16 @@ CREATE TABLE IF NOT EXISTS Restaurant (
     capacity INT
 );
 
+-- Crear tabla Table (asegurarse de que restaurantId sea una clave foránea válida)
 CREATE TABLE IF NOT EXISTS `Table` (
     tableId INT AUTO_INCREMENT PRIMARY KEY,
     restaurantId INT,
     capacity INT NOT NULL,
     state VARCHAR(50) DEFAULT 'available',
-    FOREIGN KEY (restaurantId) REFERENCES Restaurant(restaurantId)
+    FOREIGN KEY (restaurantId) REFERENCES Restaurant(restaurantId) ON DELETE CASCADE
 );
 
+-- Crear tabla Reservation
 CREATE TABLE IF NOT EXISTS Reservation (
     reservationId INT AUTO_INCREMENT PRIMARY KEY,
     customerId INT,
@@ -38,21 +55,6 @@ CREATE TABLE IF NOT EXISTS Reservation (
     hour TIME NOT NULL,
     nPeople INT NOT NULL,
     state VARCHAR(50) DEFAULT 'confirmed',
-    FOREIGN KEY (customerId) REFERENCES Customer(customerId),
-    FOREIGN KEY (tableId) REFERENCES `Table`(tableId)
+    FOREIGN KEY (customerId) REFERENCES Customer(customerId) ON DELETE CASCADE,
+    FOREIGN KEY (tableId) REFERENCES `Table`(tableId) ON DELETE CASCADE
 );
-
-INSERT IGNORE INTO Customer (mail, name, type, tif) VALUES 
-('cliente1@email.com', 'Ana García', 'regular', '12345678A');
-
-INSERT IGNORE INTO Admin (username, password) VALUES 
-('admin1', 'admin123');
-
-INSERT IGNORE INTO Restaurant (name, availabilityHours, capacity) VALUES 
-('Cosa Nostra', '12:00-16:00, 20:00-00:00', 50);
-
-INSERT IGNORE INTO `Table` (restaurantId, capacity, state) VALUES 
-(1, 4, 'available');
-
-INSERT IGNORE INTO Reservation (customerId, tableId, date, hour, nPeople, state) VALUES 
-(1, 1, '2023-12-15', '20:30:00', 4, 'confirmed');
