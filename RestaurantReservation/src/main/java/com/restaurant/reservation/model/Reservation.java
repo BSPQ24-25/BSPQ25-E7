@@ -1,15 +1,10 @@
 package com.restaurant.reservation.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
-@Table(name = "reservations")
 public class Reservation {
 
     @Id
@@ -17,30 +12,24 @@ public class Reservation {
     private Long reservationId;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
+    @JoinColumn(name = "customerId", referencedColumnName = "id")
     private Customer customer;
 
     @ManyToOne
-    @JoinColumn(name = "table_id", nullable = false)
+    @JoinColumn(name = "tableId", referencedColumnName = "tableId")
     private RestaurantTable table;
 
-    @NotNull
-    @Future(message = "La fecha debe ser en el futuro")
-    private LocalDateTime dateTime;
+    @ManyToOne
+    @JoinColumn(name = "restaurantId")  // Esta es la clave foránea que hace referencia a la tabla Restaurant
+    private Restaurant restaurant;
 
-    @Min(value = 1, message = "Debe haber al menos 1 persona")
+
+    private LocalDate date;
+    private LocalTime hour;
     private int nPeople;
-
-    @Enumerated(EnumType.STRING)
-    private ReservationState state;
-
-    public enum ReservationState {
-        PENDING, CONFIRMED, CANCELLED
-    }
-
-
-       // Getters y setters...
-
+    private String state;
+  
+    // Getters y setters
     public Long getReservationId() {
         return reservationId;
     }
@@ -65,12 +54,28 @@ public class Reservation {
         this.table = table;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public Restaurant getRestaurant() {
+        return restaurant;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public LocalTime getHour() {
+        return hour;
+    }
+
+    public void setHour(LocalTime hour) {
+        this.hour = hour;
     }
 
     public int getnPeople() {
@@ -81,17 +86,11 @@ public class Reservation {
         this.nPeople = nPeople;
     }
 
-    public ReservationState getState() {
+    public String getState() {
         return state;
     }
 
-    public void setState(ReservationState state) {
+    public void setState(String state) {
         this.state = state;
     }
-
- 
-
-
-
-    
 }
