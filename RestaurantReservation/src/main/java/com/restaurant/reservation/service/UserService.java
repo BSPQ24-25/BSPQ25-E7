@@ -5,6 +5,7 @@ import com.restaurant.reservation.model.Customer;
 import com.restaurant.reservation.model.User;
 import com.restaurant.reservation.model.Admin;
 import com.restaurant.reservation.repository.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
