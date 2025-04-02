@@ -1,13 +1,13 @@
 package com.restaurant.reservation.model;
 
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 public class Restaurant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-  
     @Column(name = "id")
     private Long id;
 
@@ -35,25 +35,15 @@ public class Restaurant {
 
     public void setId(Long id) {
         this.id = id;
-        
-    private Long restaurantId;
-
-    private String name;
-
-    private String availabilityHours;
-
-    private int capacity;
-
-    @OneToMany(mappedBy = "restaurant")
-    private List<RestaurantTable> tables;
-
-    // Getters y setters
-    public Long getRestaurantId() {
-        return restaurantId;
     }
 
-    public void setRestaurantId(Long restaurantId) {
-        this.restaurantId = restaurantId;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public List<String> getAvailabilityHours() {
         return availabilityHours;
@@ -68,20 +58,14 @@ public class Restaurant {
     }
 
     public void setCapacity(Integer capacity) {
-
-    public String getAvailabilityHours() {
-        return availabilityHours;
+        this.capacity = capacity;
     }
 
-    public void setAvailabilityHours(String availabilityHours) {
-        this.availabilityHours = availabilityHours;
+    public List<RestaurantTable> getTables() {
+        return tables;
     }
 
-    public int getCapacity() {
-        return capacity;
+    public void setTables(List<RestaurantTable> tables) {
+        this.tables = tables;
     }
-
-    public void setCapacity(int capacity) {
-    
-
 }
