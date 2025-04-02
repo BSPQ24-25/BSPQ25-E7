@@ -4,7 +4,6 @@ import com.restaurant.reservation.model.Customer;
 import com.restaurant.reservation.model.User;
 import com.restaurant.reservation.dto.UserRegistrationDTO;
 import com.restaurant.reservation.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -40,7 +39,6 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    @Autowired
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }

@@ -1,63 +1,56 @@
 package com.restaurant.reservation.model;
 
 import jakarta.persistence.*;
-import jakarta.persistence.Entity;
-import java.util.List;
 
 @Entity
+@Table(name = "restaurant_table")
 public class RestaurantTable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id") // este es el PK autoincremental
     private Long id;
-    
+
+    @Column(nullable = false)
     private Integer capacity;
-    private String state; 
-    
-    @ManyToOne
-    @JoinColumn(name = "restaurant_id")
+
+    @Column(nullable = false)
+    private String state;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
-    
-    @OneToMany(mappedBy = "table")
-    private List<Reservation> reservations;
-    
+
     // Getters y Setters
     public Long getId() {
         return id;
     }
-    
+
     public void setId(Long id) {
         this.id = id;
     }
-    
+
     public Integer getCapacity() {
         return capacity;
     }
-    
+
     public void setCapacity(Integer capacity) {
         this.capacity = capacity;
     }
-    
+
     public String getState() {
         return state;
     }
-    
+
     public void setState(String state) {
         this.state = state;
     }
-    
+
     public Restaurant getRestaurant() {
         return restaurant;
     }
-    
+
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
-    }
-    
-    public List<Reservation> getReservations() {
-        return reservations;
-    }
-    
-    public void setReservations(List<Reservation> reservations) {
-        this.reservations = reservations;
     }
 }
