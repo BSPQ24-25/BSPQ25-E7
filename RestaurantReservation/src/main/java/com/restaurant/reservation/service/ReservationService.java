@@ -6,10 +6,8 @@ import com.restaurant.reservation.model.RestaurantTable;
 import com.restaurant.reservation.dto.ReservationDTO;
 import com.restaurant.reservation.repository.CustomerRepository;
 import com.restaurant.reservation.repository.TableRepository;
-import com.restaurant.reservation.repository.UserRepository;
 import com.restaurant.reservation.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

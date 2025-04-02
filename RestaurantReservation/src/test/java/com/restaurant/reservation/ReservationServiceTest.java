@@ -50,7 +50,7 @@ public class ReservationServiceTest {
         Customer customer = new Customer();
         customer.setId(1L);
         RestaurantTable table = new RestaurantTable();
-        table.setTableId(1L);
+        table.setId(1L);
 
         when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));
         when(tableRepository.findById(1L)).thenReturn(Optional.of(table));
