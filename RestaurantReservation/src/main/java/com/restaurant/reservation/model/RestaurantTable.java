@@ -8,6 +8,7 @@ public class RestaurantTable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Column(name = "id") // este es el PK autoincremental
     private Long id;
 
@@ -35,6 +36,32 @@ public class RestaurantTable {
     }
 
     public void setCapacity(Integer capacity) {
+
+    private Long tableId;
+
+    private int capacity;
+
+    private String state;
+
+    @ManyToOne
+    @JoinColumn(name = "restaurantId")
+    private Restaurant restaurant;  // Relación con Restaurant
+
+    // Getters y setters
+    public Long getTableId() {
+        return tableId;
+    }
+
+    public void setTableId(Long tableId) {
+        this.tableId = tableId;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+      
         this.capacity = capacity;
     }
 
@@ -53,4 +80,6 @@ public class RestaurantTable {
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
     }
+
 }
+

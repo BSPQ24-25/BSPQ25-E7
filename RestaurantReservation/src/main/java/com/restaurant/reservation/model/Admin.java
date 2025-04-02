@@ -1,32 +1,19 @@
 package com.restaurant.reservation.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("ADMIN")
+@DiscriminatorValue("admin")
 public class Admin extends User {
 
-    private String adminLevel; 
-    private String department;
-    
-    // Getters y Setters
-    public String getAdminLevel() {
-        return adminLevel;
+    // Constructor vacío
+    public Admin() {}
+
+    // Constructor con parámetros
+    public Admin(String gmail, String name, String phone, String password) {
+        super(gmail, name, phone, password);
     }
-    
-    public void setAdminLevel(String adminLevel) {
-        this.adminLevel = adminLevel;
-    }
-    
-    public String getDepartment() {
-        return department;
-    }
-    
-    public void setDepartment(String department) {
-        this.department = department;
-    }
-    
-    public void manageRestaurantSettings(Restaurant restaurant) {
-    }
+
+    // Métodos adicionales si fueran necesarios
 }
