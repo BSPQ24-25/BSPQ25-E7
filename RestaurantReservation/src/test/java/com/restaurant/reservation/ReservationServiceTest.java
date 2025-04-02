@@ -7,6 +7,7 @@ import com.restaurant.reservation.model.RestaurantTable;
 import com.restaurant.reservation.repository.CustomerRepository;
 import com.restaurant.reservation.repository.ReservationRepository;
 import com.restaurant.reservation.repository.TableRepository;
+import com.restaurant.reservation.service.EmailService;
 import com.restaurant.reservation.service.ReservationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,13 +28,15 @@ public class ReservationServiceTest {
     private CustomerRepository customerRepository;
     private TableRepository tableRepository;
     private ReservationService reservationService;
+    private EmailService emailService;
 
     @BeforeEach
     void setUp() {
         reservationRepository = mock(ReservationRepository.class);
         customerRepository = mock(CustomerRepository.class);
         tableRepository = mock(TableRepository.class);
-        reservationService = new ReservationService(reservationRepository, customerRepository, tableRepository);
+        emailService = mock(EmailService.class); // Mockear EmailService
+        reservationService = new ReservationService(reservationRepository, customerRepository, tableRepository, emailService);
     }
 
     @Test
