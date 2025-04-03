@@ -18,14 +18,17 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final CustomerRepository customerRepository;
     private final TableRepository tableRepository;
+    private final EmailService emailService;
 
     @Autowired
-    public ReservationService(ReservationRepository reservationRepository, 
-                              CustomerRepository customerRepository, 
-                              TableRepository tableRepository) {
+    public ReservationService(ReservationRepository reservationRepository,
+                              CustomerRepository customerRepository,
+                              TableRepository tableRepository,
+                              EmailService emailService) {
         this.reservationRepository = reservationRepository;
         this.customerRepository = customerRepository;
         this.tableRepository = tableRepository;
+        this.emailService = emailService;
     }
 
     public Reservation createReservation(ReservationDTO reservationDTO) {
@@ -44,9 +47,18 @@ public class ReservationService {
         reservation.setDate(reservationDTO.getDate());
         reservation.setHour(reservationDTO.getHour());
         reservation.setnPeople(reservationDTO.getnPeople());
-        
+
         // Guardar la reserva en la base de datos
-        return reservationRepository.save(reservation);
+        Reservation savedReservation = reservationRepository.save(reservation);
+
+        // Enviar correo de confirmación
+        String orderDetails = "Reservation ID: " + savedReservation.getId() + "\n" +
+                              "Date: " + savedReservation.getDate() + "\n" +
+                              "Hour: " + savedReservation.getHour() + "\n" +
+                              "Number of People: " + savedReservation.getnPeople();
+        emailService.sendOrderConfirmationEmail(customer.getEmail(), orderDetails);
+
+        return savedReservation;
     }
 
     // Método para obtener todas las reservas de un cliente

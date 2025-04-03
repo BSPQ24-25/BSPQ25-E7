@@ -102,4 +102,6 @@ public class Reservation {
     public void setState(String state) {
         this.state = state;
     }
+
+    public Long getId() { return this.reservationId;}
 }
