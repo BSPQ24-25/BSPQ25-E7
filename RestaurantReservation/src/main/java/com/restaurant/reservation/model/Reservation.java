@@ -5,29 +5,46 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
+@Table(name = "Reservation")  // Añade esto para ser explícito
 public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "reservationId")  // Mapeo exacto
     private Long reservationId;
 
-    @ManyToOne
-    @JoinColumn(name = "customerId", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customerId", nullable = false)
     private Customer customer;
 
-    @ManyToOne
-    @JoinColumn(name = "tableId", referencedColumnName = "tableId")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tableId", nullable = false)
     private RestaurantTable table;
 
-    @ManyToOne
-    @JoinColumn(name = "restaurantId")  // Esta es la clave foránea que hace referencia a la tabla Restaurant
-    private Restaurant restaurant;
-
-
+    @Column(nullable = false)
     private LocalDate date;
+
+    @Column(nullable = false)
     private LocalTime hour;
+
+    @Column(nullable = false, name = "nPeople")  // Mapeo exacto a SQL
     private int nPeople;
+
+    @Column(nullable = false, columnDefinition = "VARCHAR(50) DEFAULT 'confirmed'")
     private String state;
+
+    // Constructores
+    public Reservation() {}
+
+    public Reservation(Customer customer, RestaurantTable table, 
+                      LocalDate date, LocalTime hour, int nPeople) {
+        this.customer = customer;
+        this.table = table;
+        this.date = date;
+        this.hour = hour;
+        this.nPeople = nPeople;
+        this.state = "confirmed";  // Valor por defecto
+    }
   
     // Getters y setters
     public Long getReservationId() {
@@ -52,14 +69,6 @@ public class Reservation {
 
     public void setTable(RestaurantTable table) {
         this.table = table;
-    }
-
-    public Restaurant getRestaurant() {
-        return restaurant;
-    }
-
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
     }
 
     public LocalDate getDate() {

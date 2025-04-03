@@ -11,8 +11,8 @@ public class Admin extends User {
     public Admin() {}
 
     // Constructor con parámetros
-    public Admin(String gmail, String name, String phone, String password) {
-        super(gmail, name, phone, password);
+    public Admin(String email, String name, String phone, String password) {
+        super(email, name, phone, password);
     }
 
     // Métodos adicionales si fueran necesarios
