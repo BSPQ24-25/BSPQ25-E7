@@ -53,8 +53,8 @@ public class UserService {
             );
         }
 
-        user.setGmail(registrationDTO.getEmail());
-        user.setName(registrationDTO.getName());
+        user.setEmail(registrationDTO.getEmail());
+        user.setUsername(registrationDTO.getName());
         user.setPhone(registrationDTO.getPhone());
         user.setPassword(passwordEncoder.encode(registrationDTO.getPassword()));
 
