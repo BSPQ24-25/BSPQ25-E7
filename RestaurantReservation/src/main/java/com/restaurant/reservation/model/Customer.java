@@ -11,8 +11,8 @@ public class Customer extends User {
     public Customer() {}
 
     // Constructor con parámetros
-    public Customer(String gmail, String name, String phone, String password) {
-        super(gmail, name, phone, password);
+    public Customer(String email, String name, String phone, String password) {
+        super(email, name, phone, password);
     }
 
     // Métodos adicionales si fueran necesarios

@@ -12,5 +12,5 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     Optional<Customer> findById(Long id);
 
     // Si quieres agregar más búsquedas por algún atributo, también puedes hacerlo
-    Optional<Customer> findByGmail(String email);  // Un ejemplo de búsqueda por email
+    Optional<Customer> findByEmail(String email);  // Un ejemplo de búsqueda por email
 }
