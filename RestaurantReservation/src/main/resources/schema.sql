@@ -24,7 +24,7 @@ CREATE TABLE user (
 );
 
 CREATE TABLE restaurant (
-    restaurant_id INT AUTO_INCREMENT PRIMARY KEY,
+    restaurant_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     availability_hours VARCHAR(255),
     capacity INT
@@ -32,7 +32,7 @@ CREATE TABLE restaurant (
 
 CREATE TABLE restaurant_table (
     table_id INT AUTO_INCREMENT PRIMARY KEY,
-    restaurant_id INT NOT NULL,
+    restaurant_id BIGINT NOT NULL,
     capacity INT NOT NULL,
     state VARCHAR(50) DEFAULT 'available',
     FOREIGN KEY (restaurant_id) REFERENCES restaurant(restaurant_id) ON DELETE CASCADE

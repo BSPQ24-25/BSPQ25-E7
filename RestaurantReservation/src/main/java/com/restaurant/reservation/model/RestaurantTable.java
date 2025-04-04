@@ -8,8 +8,8 @@ public class RestaurantTable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "tableId") // PK autoincremental
-    private Long tableId;
+    @Column(name = "table_id") // PK autoincremental
+    private Integer tableId;
 
     @Column(nullable = false)
     private Integer capacity;
@@ -22,11 +22,11 @@ public class RestaurantTable {
     private Restaurant restaurant;
 
     // Getters y Setters
-    public Long getId() {
+    public Integer getId() {
         return tableId;
     }
 
-    public void setId(Long tableId) {
+    public void setId(Integer tableId) {
         this.tableId = tableId;
     }
 
