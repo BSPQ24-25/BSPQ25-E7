@@ -10,15 +10,15 @@ public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "reservationId")  // Mapeo exacto
+    @Column(name = "reservation_id")  // Mapeo exacto
     private Long reservationId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customerId", nullable = false)
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tableId", nullable = false)
+    @JoinColumn(name = "table_id", nullable = false)
     private RestaurantTable table;
 
     @Column(nullable = false)

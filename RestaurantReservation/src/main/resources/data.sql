@@ -1,11 +1,11 @@
 -- 1. Usuarios (2 clientes y 2 admins)
 INSERT INTO user (email, username, phone, password, user_type) VALUES
 -- Clientes
-('cliente1@email.com', 'Ana García', '611111111', '$2a$10$Cliente1Hash', 'customer'),  -- password: cliente123
-('cliente2@email.com', 'Carlos Ruiz', '622222222', '$2a$10$Cliente2Hash', 'customer'), -- password: cliente456
+('cliente1@email.com', 'Ana García', '611111111', '1234', 'customer'),  -- password: cliente123
+('cliente2@email.com', 'Carlos Ruiz', '622222222', '1234', 'customer'), -- password: cliente456
 -- Admins
-('admin1@restaurante.com', 'Admin Principal', '633333333', '$2a$10$Admin1Hash', 'admin'),    -- password: admin123
-('gerente@restaurante.com', 'Gerente Sucursal', '644444444', '$2a$10$GerenteHash', 'admin'); -- password: gerente789
+('admin1@restaurante.com', 'Admin Principal', '633333333', '1234', 'admin'),    -- password: admin123
+('gerente@restaurante.com', 'Gerente Sucursal', '644444444', '1234', 'admin'); -- password: gerente789
 
 -- 2. Restaurantes (2 ejemplos)
 INSERT INTO restaurant (name, availability_hours, capacity) VALUES
