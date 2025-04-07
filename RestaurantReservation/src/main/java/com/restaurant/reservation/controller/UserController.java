@@ -5,21 +5,21 @@ import com.restaurant.reservation.dto.RegisterRequestDTO;
 import com.restaurant.reservation.dto.UserResponseDTO;
 import com.restaurant.reservation.service.AuthenticationService;
 import com.restaurant.reservation.service.UserService;
-import jakarta.validation.Valid;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "*") // o define tu frontend específico
+@CrossOrigin(origins = "*")
 public class UserController {
 
     private final UserService userService;
     private final AuthenticationService authenticationService;
-
-
-    
 
     @Autowired
     public UserController(UserService userService, AuthenticationService authenticationService) {
@@ -28,17 +28,26 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UserResponseDTO> registerUser(@Valid @RequestBody RegisterRequestDTO request) {
+    public ResponseEntity<UserResponseDTO> registerUser(@RequestBody RegisterRequestDTO request) {
         UserResponseDTO response = userService.registerUser(request);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@Valid @RequestBody LoginRequestDTO loginRequest) {
-        authenticationService.authenticate(loginRequest);
-        // Si llegamos aquí, autenticación exitosa
-        return ResponseEntity.ok("Login exitoso");
-    }
+    public ResponseEntity<?> loginUser(@RequestBody LoginRequestDTO loginRequest) {
+        // Autenticar el usuario
+        String token = authenticationService.authenticate(loginRequest);
 
+        // Obtener el usuario desde el servicio
+        UserResponseDTO user = userService.getUserByEmail(loginRequest.getEmail());
+
+        // Crear la respuesta como un Map
+        Map<String, String> response = new HashMap<>();
+        response.put("token", token);
+        response.put("userType", user.getUserType().toString());
+
+
+        return ResponseEntity.ok(response);
+    }
 
 }

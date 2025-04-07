@@ -1,4 +1,6 @@
 // Función para manejar el login
+// Función para manejar el login
+// Función para manejar el login
 async function loginUser(event) {
     event.preventDefault(); // Prevenir la recarga del formulario
 
@@ -12,18 +14,32 @@ async function loginUser(event) {
     });
 
     if (response.ok) {
-        const data = await response.json();
-        console.log('Login exitoso:', data);
+        const data = await response.json(); // Obtener la respuesta como JSON
+        console.log('Respuesta recibida del servidor:', data);  // Verificar los datos
+
+        const token = data.token;  // Token recibido
+        const userType = data.userType;  // UserType recibido
+
+        console.log('Login exitoso:', token, userType);
 
         // Guarda el token en localStorage
-        localStorage.setItem('token', data.token);
+        localStorage.setItem('token', token);
 
-        // Redirige al home
-        window.location.href = '/home.html';
+        // Redirigir a la página correcta según el tipo de usuario
+        if (userType === 'ADMIN') {
+            window.location.href = '/admin.html';
+        } else if (userType === 'CUSTOMER') {
+            window.location.href = '/customer.html';
+        } else {
+            alert('Tipo de usuario desconocido');
+        }
     } else {
         alert('Login failed!');
     }
 }
+
+
+
 
 // Función para manejar el registro
 async function registerUser(event) {

@@ -49,4 +49,11 @@ public class UserServiceImpl implements UserService {
                 savedUser.getUserType()
         );
     }
+
+    public UserResponseDTO getUserByEmail(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    
+        return new UserResponseDTO(user.getId(), user.getUsername(), user.getEmail(), user.getPhone(), user.getUserType());
+    }
 }

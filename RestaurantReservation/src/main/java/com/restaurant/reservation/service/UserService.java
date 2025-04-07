@@ -5,5 +5,6 @@ import com.restaurant.reservation.dto.UserResponseDTO;
 
 public interface UserService {
     UserResponseDTO registerUser(RegisterRequestDTO dto);
+    UserResponseDTO getUserByEmail(String email);
 }
 

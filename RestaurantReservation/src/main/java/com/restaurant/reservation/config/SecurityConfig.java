@@ -1,27 +1,31 @@
 package com.restaurant.reservation.config;
 
 import com.restaurant.reservation.repository.UserRepository;
+import com.restaurant.reservation.security.CustomAuthenticationSuccessHandler;
 import com.restaurant.reservation.security.CustomUserDetails;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 
 @Configuration
 public class SecurityConfig {
 
     private final UserRepository userRepository;
+    private final CustomAuthenticationSuccessHandler successHandler;
 
-    public SecurityConfig(UserRepository userRepository) {
+    public SecurityConfig(UserRepository userRepository, CustomAuthenticationSuccessHandler successHandler) {
         this.userRepository = userRepository;
+        this.successHandler = successHandler;
     }
+    
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -58,8 +62,14 @@ public class SecurityConfig {
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
+                .formLogin(form -> form
+                        .loginPage("/login.html") // Página de login personalizada
+                        .successHandler(successHandler) // AQUI USAMOS nuestro handler
+                        .permitAll()
+                )
                 .build();
     }
+
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
@@ -73,7 +83,4 @@ public class SecurityConfig {
                     "/register.html"
                 );
     }
-
-
-
 }

@@ -22,8 +22,8 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // Puedes usar roles o permisos. Aquí usamos el tipo de usuario como autoridad.
-        return Collections.singletonList(new SimpleGrantedAuthority(user.getUserType().name()));
+        // Asignamos roles en función del tipo de usuario (ADMIN o CUSTOMER)
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + user.getUserType().name()));
     }
 
     @Override
@@ -33,7 +33,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getEmail(); // Spring Security usa este campo como "username"
+        return user.getEmail(); // Spring Security usa el email como "username"
     }
 
     @Override
