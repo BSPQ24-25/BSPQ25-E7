@@ -5,17 +5,17 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
-@Table(name = "Reservation")  // Añade esto para ser explícito
+@Table(name = "reservation")
 public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "reservation_id")  // Mapeo exacto
+    @Column(name = "reservation_id")
     private Long reservationId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id", nullable = false)
-    private Customer customer;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user; // Ya no usamos 'Customer'
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "table_id", nullable = false)
@@ -27,7 +27,7 @@ public class Reservation {
     @Column(nullable = false)
     private LocalTime hour;
 
-    @Column(nullable = false, name = "nPeople")  // Mapeo exacto a SQL
+    @Column(nullable = false, name = "n_people")
     private int nPeople;
 
     @Column(nullable = false, columnDefinition = "VARCHAR(50) DEFAULT 'confirmed'")
@@ -36,16 +36,16 @@ public class Reservation {
     // Constructores
     public Reservation() {}
 
-    public Reservation(Customer customer, RestaurantTable table, 
+    public Reservation(User user, RestaurantTable table, 
                       LocalDate date, LocalTime hour, int nPeople) {
-        this.customer = customer;
+        this.user = user;
         this.table = table;
         this.date = date;
         this.hour = hour;
         this.nPeople = nPeople;
-        this.state = "confirmed";  // Valor por defecto
+        this.state = "confirmed";
     }
-  
+
     // Getters y setters
     public Long getReservationId() {
         return reservationId;
@@ -55,12 +55,12 @@ public class Reservation {
         this.reservationId = reservationId;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public User getUser() {
+        return user;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public RestaurantTable getTable() {
@@ -103,5 +103,7 @@ public class Reservation {
         this.state = state;
     }
 
-    public Long getId() { return this.reservationId;}
+    public Long getId() {
+        return this.reservationId;
+    }
 }

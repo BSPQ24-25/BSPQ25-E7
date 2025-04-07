@@ -6,15 +6,12 @@ import jakarta.validation.constraints.Pattern;
 import java.io.Serializable;
 
 @Entity
-
-@Table(name = "user") // Nombre exacto de tabla en minúsculas
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
-public abstract class User implements Serializable {
+@Table(name = "user")
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id") // Mapeo explícito
+    @Column(name = "id")
     private Long id;
 
     @NotBlank(message = "Email es obligatorio")
@@ -35,17 +32,22 @@ public abstract class User implements Serializable {
     @Column(name = "password", nullable = false, length = 100)
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "user_type", nullable = false)
+    private UserType userType;
+
     // Constructores
     public User() {}
 
-    public User(String email, String username, String phone, String password) {
+    public User(String email, String username, String phone, String password, UserType userType) {
         this.email = email;
         this.username = username;
         this.phone = phone;
         this.password = password;
+        this.userType = userType;
     }
 
-    // Getters y Setters mejorados
+    // Getters y setters
     public Long getId() {
         return id;
     }
@@ -58,11 +60,11 @@ public abstract class User implements Serializable {
         this.email = email != null ? email.trim().toLowerCase() : null;
     }
 
-    public String getUsername() { // Cambiado de getName() para consistencia
+    public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) { // Cambiado de setName()
+    public void setUsername(String username) {
         this.username = username != null ? username.trim() : null;
     }
 
@@ -82,7 +84,14 @@ public abstract class User implements Serializable {
         this.password = password;
     }
 
-    // Método útil para logging
+    public UserType getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -90,8 +99,7 @@ public abstract class User implements Serializable {
                ", email='" + email + '\'' +
                ", username='" + username + '\'' +
                ", phone='" + phone + '\'' +
-               ", userType='" + this.getClass().getAnnotation(DiscriminatorValue.class).value() + '\'' +
+               ", userType=" + userType +
                '}';
     }
 }
-
