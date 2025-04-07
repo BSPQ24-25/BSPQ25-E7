@@ -1,7 +1,9 @@
 package com.restaurant.reservation.controller;
 
+import com.restaurant.reservation.dto.LoginRequestDTO;
 import com.restaurant.reservation.dto.RegisterRequestDTO;
 import com.restaurant.reservation.dto.UserResponseDTO;
+import com.restaurant.reservation.service.AuthenticationService;
 import com.restaurant.reservation.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +16,15 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+    private final AuthenticationService authenticationService;
+
+
+    
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, AuthenticationService authenticationService) {
         this.userService = userService;
+        this.authenticationService = authenticationService;
     }
 
     @PostMapping("/register")
@@ -26,5 +33,12 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    // Opción: Aquí puedes añadir login si usas autenticación personalizada o JWT
+    @PostMapping("/login")
+    public ResponseEntity<String> loginUser(@Valid @RequestBody LoginRequestDTO loginRequest) {
+        authenticationService.authenticate(loginRequest);
+        // Si llegamos aquí, autenticación exitosa
+        return ResponseEntity.ok("Login exitoso");
+    }
+
+
 }
