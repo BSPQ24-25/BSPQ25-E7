@@ -1,14 +1,15 @@
 package com.restaurant.reservation.dto;
 
-import jakarta.validation.constraints.NotBlank;
-
 public class LoginRequestDTO {
-
-    @NotBlank
     private String email;
-
-    @NotBlank
     private String password;
+
+    public LoginRequestDTO() {}
+
+    public LoginRequestDTO(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
 
     // Getters y setters
     public String getEmail() {
@@ -16,7 +17,7 @@ public class LoginRequestDTO {
     }
 
     public void setEmail(String email) {
-        this.email = email != null ? email.trim().toLowerCase() : null;
+        this.email = email;
     }
 
     public String getPassword() {
