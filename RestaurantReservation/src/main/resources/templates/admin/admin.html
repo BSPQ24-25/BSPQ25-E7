@@ -9,8 +9,10 @@
     <div class="home-box">
         <h1>Welcome to the Restaurant Reservation System!</h1>
         <p>Admin</p>
-        <button class="btn logout-btn" onclick="logout()">Logout</button>
+        <form method="post" action="/logout">
+            <button type="submit" class="btn logout-btn">Logout</button>
+        </form>
+        
     </div>
-    <script src="js/auth.js"></script>
 </body>
 </html>

@@ -1,21 +1,19 @@
 package com.restaurant.reservation.controller;
 
 import com.restaurant.reservation.model.User;
+import com.restaurant.reservation.model.UserType;
 import com.restaurant.reservation.repository.UserRepository;
 import com.restaurant.reservation.security.CustomUserDetails;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
-@RestController
-@RequestMapping("/api/auth")
+@Controller
+@RequestMapping("/auth")
 public class AuthController {
 
     @Autowired
@@ -28,35 +26,45 @@ public class AuthController {
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
-    public Map<String, Object> login(@RequestBody Map<String, String> body) {
-        String email = body.get("email");
-        String password = body.get("password");
-
-        Authentication authentication = authenticationManager.authenticate(
+    public String loginForm(@RequestParam String email,
+                            @RequestParam String password) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(email, password)
-        );
+            );
 
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        User user = userDetails.getUser();
+            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+            User user = userDetails.getUser();
 
-        Map<String, Object> response = new HashMap<>();
-        response.put("token", "dummy-token"); // Aquí luego podemos generar un JWT real si quieres
-        response.put("userType", user.getUserType().name());
-
-        return response;
+            return switch (user.getUserType()) {
+                case ADMIN -> "redirect:/admin/home";
+                case CUSTOMER -> "redirect:/customer/home";
+            };
+        } catch (Exception e) {
+            return "redirect:/login?error=true";
+        }
     }
 
     @PostMapping("/register")
-    public Map<String, String> register(@RequestBody @Valid User user) {
-        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-            throw new RuntimeException("Email ya registrado");
+    public String registerForm(@RequestParam String username,
+                                @RequestParam String email,
+                                @RequestParam String phone,
+                                @RequestParam String password,
+                                @RequestParam String userType) {
+
+        if (userRepository.findByEmail(email).isPresent()) {
+            return "redirect:/register?error=exists";
         }
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        User user = new User();
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setPhone(phone);
+        user.setPassword(passwordEncoder.encode(password));
+        user.setUserType(UserType.valueOf(userType));
+
         userRepository.save(user);
 
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "User registered successfully");
-        return response;
+        return "redirect:/login?registered=true";
     }
 }

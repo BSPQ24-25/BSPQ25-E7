@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
-    <link href="css/styles.css" rel="stylesheet">
+    <link href="/css/styles.css" rel="stylesheet">
 </head>
 <body>
     <div class="auth-box">
         <h2>New Registration</h2>
-        <form id="registerForm" onsubmit="registerUser(event)">
+        <form method="post" action="/auth/register">
             <div class="input-group">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
@@ -24,7 +24,6 @@
             <div class="input-group">
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
-                <small>(Minimum 8 characters with numbers)</small>
             </div>
             <div class="input-group">
                 <label for="userType">User Type:</label>
@@ -36,10 +35,9 @@
             <button type="submit" class="btn auth-submit">Register</button>
         </form>
         <div class="auth-links">
-            <a href="login.html">Already have an account? Login</a>
-            <a href="index.html">← Back to home</a>
+            <a href="/login">Already have an account? Login</a>
+            <a href="/">← Back to home</a>
         </div>
     </div>
-    <script src="js/auth.js"></script>
 </body>
 </html>

@@ -45,24 +45,10 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-                .requestMatchers(
-                    "/", 
-                    "/index.html", 
-                    "/common/**", 
-                    "/css/**", 
-                    "/js/**", 
-                    "/images/**",
-                    "/api/auth/register", 
-                    "/api/auth/login"
-                ).permitAll()
-                .requestMatchers("/customer/**").hasAuthority("CUSTOMER")
-                .requestMatchers("/admin/**").hasAuthority("ADMIN")
-                .anyRequest().authenticated()                
-                )
+                .csrf(csrf -> csrf.disable()) // Desactiva CSRF para pruebas
+                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
                 .build();
     }
 
