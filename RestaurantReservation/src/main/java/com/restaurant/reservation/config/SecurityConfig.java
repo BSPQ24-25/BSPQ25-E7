@@ -49,38 +49,34 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                            "/", 
-                            "/index.html", 
-                            "/login.html", 
-                            "/register.html",
-                            "/css/**", 
-                            "/js/**", 
-                            "/images/**",
-                            "/api/auth/register", 
-                            "/api/auth/login"
-                        ).permitAll()
-                        .anyRequest().authenticated()
-                )
-                .formLogin(form -> form
-                        .loginPage("/login.html") // Página de login personalizada
-                        .successHandler(successHandler) // AQUI USAMOS nuestro handler
-                        .permitAll()
+                .requestMatchers(
+                    "/", 
+                    "/index.html", 
+                    "/common/**", 
+                    "/css/**", 
+                    "/js/**", 
+                    "/images/**",
+                    "/api/auth/register", 
+                    "/api/auth/login"
+                ).permitAll()
+                .requestMatchers("/customer/**").hasAuthority("CUSTOMER")
+                .requestMatchers("/admin/**").hasAuthority("ADMIN")
+                .anyRequest().authenticated()                
                 )
                 .build();
     }
 
 
+
+
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
-                .requestMatchers(
-                    "/css/**", 
-                    "/js/**", 
-                    "/images/**", 
-                    "/index.html", 
-                    "/login.html", 
-                    "/register.html"
-                );
+            .requestMatchers(
+                "/css/**", 
+                "/js/**", 
+                "/images/**"
+            );
     }
+
 }
