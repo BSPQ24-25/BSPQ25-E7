@@ -1,95 +1,115 @@
-/* package com.restaurant.reservation;
+package com.restaurant.reservation;
 
-import com.restaurant.reservation.dto.UserRegistrationDTO;
-import com.restaurant.reservation.model.Customer;
+import com.restaurant.reservation.dto.LoginRequestDTO;
+import com.restaurant.reservation.dto.RegisterRequestDTO;
 import com.restaurant.reservation.model.User;
+import com.restaurant.reservation.model.UserType;
 import com.restaurant.reservation.repository.UserRepository;
-import com.restaurant.reservation.service.UserService;
+import com.restaurant.reservation.security.CustomUserDetails;
+import com.restaurant.reservation.service.AuthService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 public class AuthServiceTest {
 
+    @Mock
     private UserRepository userRepository;
+
+    @Mock
     private PasswordEncoder passwordEncoder;
-    private UserService userService;
+
+    @Mock
+    private AuthenticationManager authenticationManager;
+
+    @InjectMocks
+    private AuthService authService;
+
+    private LoginRequestDTO loginDTO;
+    private User mockUser;
 
     @BeforeEach
-    void setUp() {
-        userRepository = mock(UserRepository.class);
-        passwordEncoder = mock(PasswordEncoder.class);
-        userService = new UserService(userRepository, passwordEncoder);
+    public void setUp() {
+        loginDTO = new LoginRequestDTO();
+        loginDTO.setEmail("cliente2@email.com");
+        loginDTO.setPassword("23456789B");
+
+        mockUser = new User();
+        mockUser.setEmail("cliente2@email.com");
+        mockUser.setPassword("hashedPassword");
+        mockUser.setUserType(UserType.CUSTOMER);
     }
 
     @Test
-    void testRegisterUser_Success() {
-        UserRegistrationDTO dto = new UserRegistrationDTO();
-        dto.setEmail("test@example.com");
-        dto.setPassword("1234");
-        dto.setName("David");
+    public void loginSuccessTest_asCustomer_shouldRedirectToCustomerHome() {
+        CustomUserDetails userDetails = new CustomUserDetails(mockUser);
+        Authentication auth = new UsernamePasswordAuthenticationToken(userDetails, null);
+
+        when(authenticationManager.authenticate(any())).thenReturn(auth);
+
+        String result = authService.login(loginDTO);
+
+        assertEquals("redirect:/customer/home", result);
+    }
+
+    @Test
+    public void loginSuccessTest_asAdmin_shouldRedirectToAdminHome() {
+        mockUser.setUserType(UserType.ADMIN);
+        CustomUserDetails userDetails = new CustomUserDetails(mockUser);
+        Authentication auth = new UsernamePasswordAuthenticationToken(userDetails, null);
+
+        when(authenticationManager.authenticate(any())).thenReturn(auth);
+
+        String result = authService.login(loginDTO);
+
+        assertEquals("redirect:/admin/home", result);
+    }
+
+        @Test
+    public void registerSuccessTest() {
+        RegisterRequestDTO dto = new RegisterRequestDTO();
+        dto.setEmail("nuevo@email.com");
+        dto.setUsername("Nuevo Usuario");
         dto.setPhone("123456789");
+        dto.setPassword("password123");
+        dto.setUserType(UserType.CUSTOMER);
 
-        // Simulando que el correo no existe en la base de datos
-        when(userRepository.existsByUsername("test@example.com")).thenReturn(false);
-        // Simulando que la contraseña se codifica correctamente
-        when(passwordEncoder.encode("1234")).thenReturn("encodedPassword");
+        when(userRepository.findByEmail(dto.getEmail())).thenReturn(Optional.empty());
+        when(passwordEncoder.encode(dto.getPassword())).thenReturn("encodedPass");
 
-        // Simulamos la creación de un Customer con los datos que pasamos en el DTO
-        User mockUser = new Customer();
-        mockUser.setName("test@example.com");
-        mockUser.setPassword("encodedPassword");
-        mockUser.setName("David");
-        mockUser.setPhone("123456789");
+        String result = authService.register(dto);
 
-        // Simulamos que el repositorio guarda el usuario correctamente
-        when(userRepository.save(any(User.class))).thenReturn(mockUser);
-
-        // Llamamos al método registerUser y verificamos que todo funcione bien
-        User registered = userService.registerUser(dto);
-
-        assertNotNull(registered);
-        assertEquals("test@example.com", registered.getName());
-        assertEquals("encodedPassword", registered.getPassword());
-        assertEquals("David", registered.getName());
-        assertEquals("123456789", registered.getPhone());
+        verify(userRepository).save(any(User.class));
+        assertEquals("redirect:/login?registered=true", result);
     }
 
     @Test
-    void testFindByUsername() {
-        // Creamos un objeto User (Customer) para ser retornado por el repositorio
-        User user = new Customer();
-        user.setName("test");
+    public void registerExistingUserTest_shouldRedirectToError() {
+        RegisterRequestDTO dto = new RegisterRequestDTO();
+        dto.setEmail("existente@email.com");
+        dto.setUsername("Usuario Existente");
+        dto.setPhone("987654321");
+        dto.setPassword("otraClave123");
+        dto.setUserType(UserType.ADMIN);
 
-        // Simulamos que el repositorio encuentra al usuario con el correo proporcionado
-        when(userRepository.findByUsername("test")).thenReturn(Optional.of(user));
+        when(userRepository.findByEmail(dto.getEmail())).thenReturn(Optional.of(new User()));
 
-        // Llamamos al método findByUsername y verificamos que el usuario se encontró correctamente
-        Optional<User> found = userService.findByUsername("test");
+        String result = authService.register(dto);
 
-        assertTrue(found.isPresent());
-        assertEquals("test", found.get().getName());
-    }
-
-    @Test
-    void testRegisterUser_UsernameAlreadyExists() {
-        UserRegistrationDTO dto = new UserRegistrationDTO();
-        dto.setEmail("test@example.com");
-        dto.setPassword("1234");
-        dto.setName("David");
-        dto.setPhone("123456789");
-
-        // Simulamos que el correo ya está registrado en la base de datos
-        when(userRepository.existsByUsername("test@example.com")).thenReturn(true);
-
-        // Verificamos que se lance una excepción cuando intentamos registrar un usuario con un correo ya existente
-        Exception exception = assertThrows(RuntimeException.class, () -> userService.registerUser(dto));
-        assertEquals("El email test@example.com ya está registrado", exception.getMessage());
+        verify(userRepository, never()).save(any(User.class));
+        assertEquals("redirect:/register?error=exists", result);
     }
 }
- */

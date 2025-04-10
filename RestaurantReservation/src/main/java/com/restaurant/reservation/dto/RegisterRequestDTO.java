@@ -65,6 +65,9 @@ public class RegisterRequestDTO {
         this.userType = userType;
     }
 
+    public RegisterRequestDTO() {
+        
+    }
 
     public RegisterRequestDTO(String email, String username, String phone, String password, UserType userType) {
         this.email = email;
