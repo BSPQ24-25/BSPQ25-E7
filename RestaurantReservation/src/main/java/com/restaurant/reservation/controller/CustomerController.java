@@ -1,14 +1,81 @@
 package com.restaurant.reservation.controller;
 
-public class CustomerController {
+import com.restaurant.reservation.dto.ReservationRequestDTO;
+import com.restaurant.reservation.model.Reservation;
+import com.restaurant.reservation.model.User;
+import com.restaurant.reservation.repository.ReservationRepository;
+import com.restaurant.reservation.repository.UserRepository;
+import com.restaurant.reservation.service.CustomerService;
 
-    //Habra que añadir los metodos de reservar, modificar y eliminar una mesa de un restaurante 
-    //Pasos a seguir (Mas o menos):
-    //1. Crear los metodos del controller GET, POST, PUT, DELETE y estos llamaran al service CustomerService.
-    //2. Crear la logica: En el customerservice hay que implementar la logica de los metodos del controller
-    //3. Es posible que haya que crear dtos que son informacion encapsulada de una clase para que se comunique informacion necesaria entre el service y controller. Por ejemplo un dto para el login llevara el mail y la contraseña no hace falta darle mas informacion
-    //4. Una vez que funcione y quieras implementarlo a una interfaz en un html, en pagecontroller se encargar de manejar los htmls asi que tendras que meter uno si creas un html
-    //EJEMPLO FLUJO:
-    //Cliente -> POST /reservar -> CustomerController -> ReservationService -> ReservationRepository -> BD
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/customer")
+public class CustomerController {
     
+    @Autowired
+    private CustomerService customerService;
+    
+    @Autowired  
+    private UserRepository userRepository;
+    
+    @Autowired 
+    private ReservationRepository reservationRepository;
+    
+    @GetMapping("/reservations")
+    public String getReservations(Model model) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+    
+        if (optionalUser.isEmpty()) {
+            model.addAttribute("reservations", List.of()); // ← clave: pasar lista vacía
+            model.addAttribute("errorMessage", "Your user is authenticated but no longer exists in the database.");
+            return "customer/reservations";
+        }
+    
+        User user = optionalUser.get();
+        List<Reservation> reservations = reservationRepository.findByUser(user);
+        model.addAttribute("reservations", reservations); // ← nunca null
+        return "customer/reservations";
+    }
+    
+    
+
+    
+    @GetMapping("/new-reservation")
+    public String showReservationForm(Model model) {
+        model.addAttribute("reservation", new ReservationRequestDTO());
+        return "customer/reservation";
+    }
+    
+    @PostMapping("/make-reservation")
+    public String makeReservation(@ModelAttribute ReservationRequestDTO reservationDTO, Model model) {
+        System.out.println("[Controller] Recibida solicitud de reserva");
+        System.out.println("Fecha: " + reservationDTO.getDate());
+        System.out.println("Hora: " + reservationDTO.getHour());
+        System.out.println("Personas: " + reservationDTO.getnPeople());
+    
+        try {
+            customerService.makeReservation(reservationDTO);
+            System.out.println("[Controller] Reserva creada correctamente. Redirigiendo...");
+            return "redirect:/customer/reservations?success=true";
+        } catch (RuntimeException e) {
+            System.out.println("[Controller] Error al crear la reserva: " + e.getMessage());
+            model.addAttribute("reservation", reservationDTO);
+            model.addAttribute("errorMessage", e.getMessage());
+            return "customer/reservation";
+        }
+    }
+    
+
 }

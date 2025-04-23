@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Reservations</title>
+    <link href="/css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-box">
+        <h2>My Reservations</h2>
+        <div th:if="${param.success}" class="success-message">
+            <p>Reservation successfully created!</p>
+        </div>
+        
+        <div th:if="${reservations.empty}">
+            <p>You don't have any reservations yet.</p>
+        </div>
+        <div th:unless="${reservations.empty}">
+            <div class="reservation-list">
+                <div class="reservation-card" th:each="reservation : ${reservations}">
+                    <h3>Reservation #<span th:text="${reservation.reservationId}"></span></h3>
+                    <p>Date: <span th:text="${reservation.date}"></span></p>
+                    <p>Time: <span th:text="${reservation.hour}"></span></p>
+                    <p>People: <span th:text="${reservation.nPeople}"></span></p>
+                    <p>Status: <span th:text="${reservation.state}"></span></p>
+                </div>
+            </div>
+        </div>
+        <div class="auth-links">
+            <a href="/customer/new-reservation" class="btn primary">New Reservation</a>
+            <a href="/customer/home">← Back to home</a>
+        </div>
+    </div>
+</body>
+</html>
