@@ -1,8 +1,8 @@
 package com.restaurant.reservation.controller;
 
-import com.restaurant.reservation.dto.LoginRequestDTO;
 import com.restaurant.reservation.dto.RegisterRequestDTO;
 import com.restaurant.reservation.model.UserType;
+import com.restaurant.reservation.repository.UserRepository;
 import com.restaurant.reservation.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,11 +15,8 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
-    @PostMapping("/login")
-    public String loginForm(@RequestParam String email,
-                            @RequestParam String password) {
-        return authService.login(new LoginRequestDTO(email, password));
-    }
+    @Autowired
+    private UserRepository userRepository;
 
     @PostMapping("/register")
     public String registerForm(@RequestParam String username,
@@ -27,6 +24,10 @@ public class AuthController {
                                 @RequestParam String phone,
                                 @RequestParam String password,
                                 @RequestParam String userType) {
+
+        if (userRepository.findByEmail(email).isPresent()) {
+            return "redirect:/register.html?error=true";
+        }
 
         RegisterRequestDTO dto = new RegisterRequestDTO(
                 email,
@@ -36,6 +37,7 @@ public class AuthController {
                 UserType.valueOf(userType)
         );
 
-        return authService.register(dto);
+        authService.register(dto);
+        return "redirect:/login.html?registered=true";
     }
 }

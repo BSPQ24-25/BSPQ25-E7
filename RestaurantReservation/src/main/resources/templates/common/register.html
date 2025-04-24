@@ -8,10 +8,16 @@
 <body>
     <div class="auth-box">
         <h2>New Registration</h2>
+
+        <!-- Mensaje de error opcional -->
+        <div th:if="${param.error}" class="error-message">
+            An account with this email already exists.
+        </div>
+
         <form method="post" action="/auth/register">
             <div class="input-group">
                 <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
+                <input type="text" id="username" name="username" required minlength="2">
             </div>
             <div class="input-group">
                 <label for="email">Email:</label>
@@ -19,11 +25,11 @@
             </div>
             <div class="input-group">
                 <label for="phone">Phone:</label>
-                <input type="tel" id="phone" name="phone" required>
+                <input type="tel" id="phone" name="phone" required pattern="\\+?[0-9\\s\\-]{7,15}">
             </div>
             <div class="input-group">
                 <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="password" name="password" required minlength="6">
             </div>
             <div class="input-group">
                 <label for="userType">User Type:</label>
@@ -34,8 +40,9 @@
             </div>
             <button type="submit" class="btn auth-submit">Register</button>
         </form>
+
         <div class="auth-links">
-            <a href="/login">Already have an account? Login</a>
+            <a href="/login.html">Already have an account? Login</a>
             <a href="/">← Back to home</a>
         </div>
     </div>

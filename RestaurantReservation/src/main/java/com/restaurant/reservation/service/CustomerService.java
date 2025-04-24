@@ -29,13 +29,7 @@ public class CustomerService {
     
     @Transactional
     public void makeReservation(ReservationRequestDTO reservationDTO) {
-        System.out.println("Buscando mesa para:");
-        System.out.println("→ Fecha: " + reservationDTO.getDate());
-        System.out.println("→ Hora: " + reservationDTO.getHour());
-        System.out.println("→ Personas: " + reservationDTO.getnPeople());
-    
-        reservationDTO.setHour(reservationDTO.getHour().withSecond(0).withNano(0));
-        System.out.println("Hora normalizada: " + reservationDTO.getHour());
+        
     
         List<RestaurantTable> tables = tableRepository.findAvailableTables(
             reservationDTO.getDate(),
