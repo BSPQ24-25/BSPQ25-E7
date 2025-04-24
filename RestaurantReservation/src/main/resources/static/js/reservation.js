@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Validación del formulario de reserva
+    // Validación de cantidad de personas (ya estaba)
     const form = document.querySelector('form');
     if(form) {
         form.addEventListener('submit', function(e) {
@@ -9,5 +9,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert('Number of people must be at least 1');
             }
         });
+    }
+
+    // Mostrar error desde backend si lo hay
+    const errorMessage = document.getElementById('error-message-content');
+    if (errorMessage && errorMessage.textContent.trim() !== '') {
+        const popup = document.getElementById('error-popup');
+        popup.style.display = 'block';
     }
 });
