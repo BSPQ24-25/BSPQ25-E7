@@ -1,18 +1,52 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Home - Restaurant</title>
+    <title>Admin Dashboard</title>
     <link href="/css/styles.css" rel="stylesheet">
 </head>
-<body onload="checkAuthentication()">
-    <div class="home-box">
-        <h1>Welcome to the Restaurant Reservation System!</h1>
-        <p>Admin</p>
-        <form method="post" action="/logout">
-            <button type="submit" class="btn logout-btn">Logout</button>
-        </form>
-        
+<body>
+
+<div class="home-box">
+    <h1>Welcome to the Restaurant Reservation System!</h1>
+    <p>Admin</p>
+
+    <!-- Tabla de reservas -->
+    <table id="reservation-table" class="styled-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>User</th>
+                <th>Date</th>
+                <th>Hour</th>
+                <th>People</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="res : ${reservations}" th:data-id="${res.id}" onclick="selectReservation(this)">
+                <td th:text="${res.id}">1</td>
+                <td th:text="${res.user.email}">user@example.com</td>
+                <td th:text="${res.date}">2025-04-30</td>
+                <td th:text="${res.hour}">19:00</td>
+                <td th:text="${res.nPeople}">4</td>
+                <td th:text="${res.state}">confirmed</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Botones de acción -->
+    <div style="margin-top: 20px;">
+        <button id="confirm-btn" class="btn action-btn" onclick="confirmAction('confirm')">Confirmar Reserva</button>
+        <button id="cancel-btn" class="btn action-btn" onclick="confirmAction('cancel')">Cancelar Reserva</button>
     </div>
+
+    <!-- Formulario logout -->
+    <form method="post" action="/logout" style="margin-top: 30px;">
+        <button type="submit" class="btn logout-btn">Logout</button>
+    </form>
+</div>
+
+<script src="/js/administration.js"></script>
 </body>
 </html>

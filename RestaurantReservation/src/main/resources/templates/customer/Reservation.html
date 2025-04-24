@@ -8,12 +8,13 @@
 <body>
     <div class="auth-box">
         <h2>New Reservation</h2>
-        <p th:text="'ERROR TEST DEBUG: ' + ${errorMessage}"></p>
+
+        <!-- ALERTA DE ERROR -->
+        <div id="error-popup" class="popup-error" style="display: none;">
+            <span id="error-message-content" th:text="${errorMessage}"></span>
+        </div>
+
         <form th:action="@{/customer/make-reservation}" th:object="${reservation}" method="post">
-            <div th:if="${errorMessage}" class="error-message" style="margin-bottom: 1rem; color: red;">
-                <strong>¡Esto debería mostrarse si hay error!</strong>
-                <strong th:text="${errorMessage}"></strong>
-            </div>
             <div class="input-group">
                 <label for="date">Date:</label>
                 <input type="date" id="date" th:field="*{date}" required>
@@ -28,9 +29,12 @@
             </div>
             <button type="submit" class="btn auth-submit">Make Reservation</button>
         </form>
+
         <div class="auth-links">
             <a href="/customer/home">← Back to home</a>
         </div>
     </div>
+
+    <script src="/js/reservation.js"></script>
 </body>
 </html>
