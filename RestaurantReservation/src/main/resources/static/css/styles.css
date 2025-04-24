@@ -16,30 +16,37 @@ body {
     align-items: center;
 }
 
-.auth-box, .welcome-box {
+/* ==== BOXES ==== */
+.auth-box,
+.welcome-box,
+.home-box {
     background: white;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     padding: 30px;
     width: 100%;
     max-width: 450px;
-    margin: 20px;
-}
-
-h1, h2 {
-    color: #2c3e50;
-    margin-bottom: 20px;
+    margin: 20px auto;
     text-align: center;
 }
 
-h1 {
-    font-size: 2rem;
+.home-box {
+    max-width: 600px;
+    padding: 40px 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
-h2 {
-    font-size: 1.5rem;
+/* ==== HEADINGS ==== */
+h1, h2 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; }
+
+/* ==== INPUTS ==== */
 .input-group {
     margin-bottom: 20px;
 }
@@ -72,6 +79,7 @@ small {
     font-size: 0.8rem;
 }
 
+/* ==== BUTTONS ==== */
 .btn {
     display: inline-block;
     padding: 12px 20px;
@@ -84,29 +92,31 @@ small {
     transition: background-color 0.3s;
 }
 
-.primary {
-    background-color: #3498db;
-    color: white;
-}
+.btn.primary { background-color: #3498db; color: white; }
+.btn.primary:hover { background-color: #2980b9; }
 
-.primary:hover {
-    background-color: #2980b9;
-}
+.btn.secondary { background-color: #2ecc71; color: white; }
+.btn.secondary:hover { background-color: #27ae60; }
 
-.secondary {
-    background-color: #2ecc71;
-    color: white;
-}
-
-.secondary:hover {
-    background-color: #27ae60;
-}
+.btn.logout-btn { background-color: #e74c3c; color: white; }
 
 .auth-submit {
     width: 100%;
     margin-top: 10px;
 }
 
+.auth-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.auth-buttons .btn {
+    min-width: 120px;
+}
+
+/* ==== LINKS ==== */
 .auth-links {
     margin-top: 20px;
     text-align: center;
@@ -124,18 +134,36 @@ small {
     color: #2980b9;
 }
 
-.error {
-    border-color: #e74c3c !important;
-}
-
+/* ==== ALERTS ==== */
 .error-message {
     color: #e74c3c;
-    font-size: 0.85rem;
-    margin-top: 5px;
-    display: none;
+    font-weight: bold;
+    margin-bottom: 15px;
 }
 
-/* Reserva */
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 15px;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.popup-error,
+.popup-success {
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.popup-error { background-color: #f44336; color: white; }
+.popup-success { background-color: #d4edda; color: #155724; }
+
+/* ==== RESERVAS ==== */
 .reservation-form {
     max-width: 500px;
     margin: 2rem auto;
@@ -156,39 +184,13 @@ small {
     border-radius: 4px;
 }
 
-.btn.primary {
-    background-color: #3498db;
-    color: white;
-}
-
-.btn.secondary {
-    background-color: #2ecc71;
-    color: white;
-}
-
-.btn.logout-btn {
-    background-color: #e74c3c;
-    color: white;
-}
-
-.home-box {
-    text-align: center;
-    background: white;
-    padding: 40px 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    max-width: 600px;
-    width: 100%;
-    margin: auto;
-}
-
+/* ==== HOME & ROLES ==== */
 .button-group {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     gap: 15px;
-    margin-top: 20px;
-    margin-bottom: 30px;
+    margin: 20px 0 30px;
 }
 
 .logout-form {
@@ -201,70 +203,15 @@ small {
     margin-top: 10px;
 }
 
-.popup-error {
-    background-color: #f44336;
-    color: white;
-    padding: 12px 20px;
-    margin: 20px 0;
-    border-radius: 5px;
-    font-weight: bold;
-    text-align: center;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-}
-
-/* Estilo general unificado para login y registro */
-.auth-box {
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    padding: 40px 30px;
-    max-width: 400px;
-    width: 100%;
-    margin: auto;
-    text-align: center;
-}
-
-.auth-box h1 {
-    font-size: 1.8rem;
-    margin-bottom: 30px;
-}
-
-.auth-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 20px;
-}
-
-.auth-buttons .btn {
-    min-width: 120px;
-}
-
-.error-message {
-    color: #e74c3c;
-    font-weight: bold;
-    margin-bottom: 15px;
-}
-
-.success-message {
-    background-color: #d4edda;
-    color: #155724;
-    padding: 15px;
-    border: 1px solid #c3e6cb;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-/* admin */
-
+/* ==== ADMIN TABLE ==== */
 .styled-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
-.styled-table th, .styled-table td {
+.styled-table th,
+.styled-table td {
     border: 1px solid #ccc;
     padding: 10px;
     text-align: center;

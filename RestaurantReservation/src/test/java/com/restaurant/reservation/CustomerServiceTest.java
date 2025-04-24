@@ -1,0 +1,101 @@
+package com.restaurant.reservation;
+
+import com.restaurant.reservation.dto.ReservationRequestDTO;
+import com.restaurant.reservation.model.Reservation;
+import com.restaurant.reservation.model.RestaurantTable;
+import com.restaurant.reservation.model.User;
+import com.restaurant.reservation.repository.ReservationRepository;
+import com.restaurant.reservation.repository.RestaurantTableRepository;
+import com.restaurant.reservation.repository.UserRepository;
+import com.restaurant.reservation.service.CustomerService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
+
+public class CustomerServiceTest {
+
+    @Mock private ReservationRepository reservationRepository;
+    @Mock private RestaurantTableRepository tableRepository;
+    @Mock private UserRepository userRepository;
+
+    @InjectMocks private CustomerService customerService;
+
+    private ReservationRequestDTO validDTO;
+    private User user;
+    private RestaurantTable table;
+
+    @BeforeEach
+    public void setup() {
+        MockitoAnnotations.openMocks(this);
+
+        validDTO = new ReservationRequestDTO();
+        validDTO.setDate(LocalDate.now().plusDays(1));
+        validDTO.setHour(LocalTime.of(13, 30));
+        validDTO.setnPeople(2);
+
+        user = new User();
+        user.setEmail("user@email.com");
+
+        table = new RestaurantTable();
+        table.setCapacity(4);
+        table.setState("available");
+
+        SecurityContextHolder.getContext().setAuthentication(
+            new UsernamePasswordAuthenticationToken("user@email.com", null)
+        );
+    }
+
+    @Test
+    public void makeReservation_success() {
+        when(userRepository.findByEmail("user@email.com")).thenReturn(Optional.of(user));
+        when(tableRepository.findAvailableTables(any(), any(), anyInt()))
+                .thenReturn(List.of(table));
+
+        customerService.makeReservation(validDTO);
+
+        verify(reservationRepository, times(1)).save(any(Reservation.class));
+    }
+
+    @Test
+    public void makeReservation_userNotFound_throwsException() {
+        when(userRepository.findByEmail("user@email.com")).thenReturn(Optional.empty());
+
+        assertThrows(RuntimeException.class, () -> customerService.makeReservation(validDTO));
+    }
+
+    @Test
+    public void makeReservation_noAvailableTables_throwsException() {
+        when(userRepository.findByEmail("user@email.com")).thenReturn(Optional.of(user));
+        when(tableRepository.findAvailableTables(any(), any(), anyInt()))
+                .thenReturn(Collections.emptyList());
+
+        assertThrows(RuntimeException.class, () -> customerService.makeReservation(validDTO));
+    }
+
+    @Test
+    public void makeReservation_withPastDate_throwsException() {
+        validDTO.setDate(LocalDate.now().minusDays(1));
+
+        assertThrows(RuntimeException.class, () -> customerService.makeReservation(validDTO));
+    }
+
+    @Test
+    public void makeReservation_outOfOpeningHours_throwsException() {
+        validDTO.setHour(LocalTime.of(4, 0)); // Outside the allowed time range
+
+        assertThrows(RuntimeException.class, () -> customerService.makeReservation(validDTO));
+    }
+}
