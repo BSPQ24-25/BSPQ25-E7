@@ -19,6 +19,10 @@ public class AuthService {
     private PasswordEncoder passwordEncoder;
 
     public void register(RegisterRequestDTO dto) {
+        if (userRepository.findByEmail(dto.getEmail()).isPresent()) {
+            throw new IllegalArgumentException("The user already exists");
+        }
+
         User user = new User(
                 dto.getEmail(),
                 dto.getUsername(),
@@ -29,3 +33,4 @@ public class AuthService {
         userRepository.save(user);
     }
 }
+

@@ -9,11 +9,18 @@
     <div class="auth-box">
         <h2>Client Login</h2>
 
-        <div th:if="${param.error}" class="error-message">
-            Invalid username or password
+        <!-- POPUP ERROR -->
+        <div th:if="${param.error}">
+            <div class="popup-error">
+                Invalid username or password
+            </div>
         </div>
-        <div th:if="${param.logout}" class="success-message">
-            You have been logged out successfully
+
+        <!-- POPUP LOGOUT -->
+        <div th:if="${param.logout}">
+            <div class="popup-success">
+                You have been logged out successfully
+            </div>
         </div>
 
         <form method="post" action="/login">
