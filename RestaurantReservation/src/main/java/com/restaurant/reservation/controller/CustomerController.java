@@ -51,7 +51,6 @@ public class CustomerController {
     @GetMapping("/new-reservation")
     public String showReservationForm(Model model) {
         model.addAttribute("reservation", new ReservationRequestDTO());
-        model.addAttribute("errorMessage", "DEBUG - Esto debería aparecer");
         return "customer/reservation";
     }
 

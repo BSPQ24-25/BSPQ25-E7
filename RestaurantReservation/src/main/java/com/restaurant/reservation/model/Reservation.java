@@ -30,7 +30,7 @@ public class Reservation {
     @Column(nullable = false, name = "n_people")
     private int nPeople;
 
-    @Column(nullable = false, columnDefinition = "VARCHAR(50) DEFAULT 'confirmed'")
+    @Column(nullable = false)
     private String state;
 
     // Constructores
