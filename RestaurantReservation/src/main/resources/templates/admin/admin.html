@@ -17,23 +17,23 @@
             <tr>
                 <th>ID</th>
                 <th>User</th>
-                <th>Date</th>
+                <th style="min-width: 120px">Date</th>
                 <th>Hour</th>
                 <th>People</th>
                 <th>Status</th>
             </tr>
         </thead>
         <tbody>
-            <tr th:each="res : ${reservations}" th:data-id="${res.id}" onclick="selectReservation(this)">
+            <tr th:each="res : ${reservations}" th:attr="data-id=${res.id}">
                 <td th:text="${res.id}">1</td>
                 <td th:text="${res.user.email}">user@example.com</td>
                 <td th:text="${res.date}">2025-04-30</td>
                 <td th:text="${res.hour}">19:00</td>
                 <td th:text="${res.nPeople}">4</td>
-                <td th:text="${res.state}">confirmed</td>
+                <td th:text="${res.state}">pending</td>
             </tr>
-        </tbody>
-    </table>
+        </tbody>        
+    </table>    
 
     <!-- Botones de acción -->
     <div style="margin-top: 20px;">

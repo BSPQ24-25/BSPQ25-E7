@@ -6,8 +6,13 @@ import com.restaurant.reservation.model.User;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
     List<Reservation> findByUser(User user);
+    
+    @Query("SELECT r FROM Reservation r JOIN FETCH r.user")
+    List<Reservation> findAllWithUser();
+
 
 }

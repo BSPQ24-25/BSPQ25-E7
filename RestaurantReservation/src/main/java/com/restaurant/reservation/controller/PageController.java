@@ -21,11 +21,6 @@ public class PageController {
         return "common/register";
     }
 
-    @GetMapping("/admin/home")
-    public String adminHome() {
-        return "admin/admin"; // apunta a templates/admin/admin.html
-    }
-
     @GetMapping("/customer/home")
     public String customerHome() {
         return "customer/customer"; // apunta a templates/customer/customer.html

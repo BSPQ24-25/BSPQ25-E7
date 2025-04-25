@@ -76,7 +76,7 @@ public class CustomerService {
         reservation.setDate(reservationDate);
         reservation.setHour(reservationHour);
         reservation.setnPeople(numberOfPeople);
-        reservation.setState("confirmed");
+        reservation.setState("pending");
 
         reservationRepository.save(reservation);
 
