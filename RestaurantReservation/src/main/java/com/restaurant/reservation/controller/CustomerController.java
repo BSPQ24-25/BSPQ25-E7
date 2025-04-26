@@ -73,4 +73,28 @@ public class CustomerController {
             return "customer/reservation"; // Vuelve al formulario con mensaje de error
         }
     }
+
+
+    @PutMapping("/reservations/{id}")
+    @ResponseBody
+    public String updateReservation(@PathVariable Long id, @RequestBody ReservationRequestDTO dto) {
+        try {
+            customerService.updateReservation(id, dto);
+            return "Reserva actualizada con éxito";
+        } catch (RuntimeException e) {
+            return "Error al actualizar reserva: " + e.getMessage();
+        }
+    }
+
+    @DeleteMapping("/reservations/{id}")
+    @ResponseBody
+    public String deleteReservation(@PathVariable Long id) {
+        try {
+            customerService.deleteReservation(id);
+            return "Reserva eliminada con éxito";
+        } catch (RuntimeException e) {
+            return "Error al eliminar reserva: " + e.getMessage();
+        }
+    }
+
 }

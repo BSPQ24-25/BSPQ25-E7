@@ -4,17 +4,65 @@
     <meta charset="UTF-8">
     <title>My Reservations</title>
     <link href="/css/styles.css" rel="stylesheet">
+    <script>
+        function showEditForm(id) {
+            const form = document.getElementById('edit-form-' + id);
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+
+        async function deleteReservation(id) {
+            const confirmed = confirm("Are you sure you want to cancel this reservation?");
+            if (!confirmed) return;
+
+            const response = await fetch(`/customer/reservations/${id}`, {
+                method: 'DELETE'
+            });
+
+            if (response.ok) {
+                alert("Reservation deleted");
+                location.reload();
+            } else {
+                const error = await response.text();
+                alert("Error: " + error);
+            }
+        }
+
+        async function updateReservation(id) {
+            const form = document.getElementById('edit-form-' + id);
+            const date = form.querySelector('[name="date"]').value;
+            const hour = form.querySelector('[name="hour"]').value;
+            const nPeople = form.querySelector('[name="nPeople"]').value;
+
+            const response = await fetch(`/customer/reservations/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ date, hour, nPeople })
+            });
+
+            if (response.ok) {
+                alert("Reservation updated");
+                location.reload();
+            } else {
+                const error = await response.text();
+                alert("Error: " + error);
+            }
+        }
+    </script>
 </head>
 <body>
     <div class="auth-box">
         <h2>My Reservations</h2>
+
         <div th:if="${param.success}" class="success-message">
             <p>Reservation successfully created!</p>
         </div>
-        
+
         <div th:if="${reservations.empty}">
             <p>You don't have any reservations yet.</p>
         </div>
+
         <div th:unless="${reservations.empty}">
             <div class="reservation-list">
                 <div class="reservation-card" th:each="reservation : ${reservations}">
@@ -23,9 +71,21 @@
                     <p>Time: <span th:text="${reservation.hour}"></span></p>
                     <p>People: <span th:text="${reservation.nPeople}"></span></p>
                     <p>Status: <span th:text="${reservation.state}"></span></p>
+
+                    <button class="btn small" th:onclick="'showEditForm(' + ${reservation.reservationId} + ')'">Edit</button>
+                    <button class="btn small danger" th:onclick="'deleteReservation(' + ${reservation.reservationId} + ')'">Cancel</button>
+
+                    <div class="edit-form" th:attr="id='edit-form-' + ${reservation.reservationId}" style="display: none;">
+                        <h4>Edit Reservation</h4>
+                        <label>Date: <input type="date" name="date" th:value="${reservation.date}"></label><br>
+                        <label>Time: <input type="time" name="hour" th:value="${reservation.hour}"></label><br>
+                        <label>People: <input type="number" name="nPeople" th:value="${reservation.nPeople}"></label><br>
+                        <button class="btn small success" th:onclick="'updateReservation(' + ${reservation.reservationId} + ')'">Save</button>
+                    </div>
                 </div>
             </div>
         </div>
+
         <div class="auth-links">
             <a href="/customer/new-reservation" class="btn primary">New Reservation</a>
             <a href="/customer/home">← Back to home</a>
