@@ -83,5 +83,63 @@ public class CustomerService {
         System.out.println("✔️ Reserva creada para " + user.getEmail() +
                        " el " + reservationDate + " a las " + reservationHour +
                        " para " + numberOfPeople + " personas.");
-    }    
+    }
+    
+    
+
+
+
+
+
+
+
+
+    @Transactional
+    public void updateReservation(Long id, ReservationRequestDTO dto) {
+        Reservation reservation = reservationRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
+
+        // Validar que la reserva pertenece al usuario actual
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (!reservation.getUser().getEmail().equals(email)) {
+            throw new RuntimeException("No tienes permiso para modificar esta reserva");
+        }
+
+        // Validaciones similares a makeReservation
+        if (dto.getDate().isBefore(LocalDate.now())) {
+            throw new PastDateReservationException();
+        }
+        if (dto.getHour().isBefore(LocalTime.of(12, 0)) || dto.getHour().isAfter(LocalTime.of(23, 0))) {
+            throw new InvalidReservationTimeException();
+        }
+
+        List<RestaurantTable> tables = tableRepository.findAvailableTables(
+            dto.getDate(), dto.getHour(), dto.getnPeople());
+
+        if (tables.isEmpty()) {
+            throw new NoTableWithEnoughCapacityException(dto.getnPeople());
+        }
+
+        reservation.setTable(tables.get(0));
+        reservation.setDate(dto.getDate());
+        reservation.setHour(dto.getHour());
+        reservation.setnPeople(dto.getnPeople());
+        reservation.setState("updated");
+
+        reservationRepository.save(reservation);
+    }
+
+    @Transactional
+    public void deleteReservation(Long id) {
+        Reservation reservation = reservationRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
+
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (!reservation.getUser().getEmail().equals(email)) {
+            throw new RuntimeException("No tienes permiso para eliminar esta reserva");
+        }
+
+        reservationRepository.deleteById(id);
+    }
+
 }
