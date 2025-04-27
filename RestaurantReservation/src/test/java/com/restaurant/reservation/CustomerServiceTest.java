@@ -23,6 +23,9 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 public class CustomerServiceTest {
@@ -98,4 +101,58 @@ public class CustomerServiceTest {
 
         assertThrows(RuntimeException.class, () -> customerService.makeReservation(validDTO));
     }
+
+
+    @Test
+    public void updateReservation_success() {
+        Reservation reservation = new Reservation();
+        reservation.setUser(user); // La reserva pertenece al usuario
+
+        when(reservationRepository.findById(anyLong())).thenReturn(Optional.of(reservation));
+        when(tableRepository.findAvailableTables(any(), any(), anyInt()))
+                .thenReturn(List.of(table));
+
+        customerService.updateReservation(1L, validDTO);
+
+        verify(reservationRepository, times(1)).save(reservation);
+    }
+
+    @Test
+    public void updateReservation_wrongUser_throwsException() {
+        User anotherUser = new User();
+        anotherUser.setEmail("another@email.com");
+
+        Reservation reservation = new Reservation();
+        reservation.setUser(anotherUser); // Otro usuario, no el que está autenticado
+
+        when(reservationRepository.findById(anyLong())).thenReturn(Optional.of(reservation));
+
+        assertThrows(RuntimeException.class, () -> customerService.updateReservation(1L, validDTO));
+    }
+
+    @Test
+    public void deleteReservation_success() {
+        Reservation reservation = new Reservation();
+        reservation.setUser(user); // La reserva pertenece al usuario
+
+        when(reservationRepository.findById(anyLong())).thenReturn(Optional.of(reservation));
+
+        customerService.deleteReservation(1L);
+
+        verify(reservationRepository, times(1)).deleteById(1L);
+    }
+
+    @Test
+    public void deleteReservation_wrongUser_throwsException() {
+        User anotherUser = new User();
+        anotherUser.setEmail("another@email.com");
+
+        Reservation reservation = new Reservation();
+        reservation.setUser(anotherUser);
+
+        when(reservationRepository.findById(anyLong())).thenReturn(Optional.of(reservation));
+
+        assertThrows(RuntimeException.class, () -> customerService.deleteReservation(1L));
+    }
+
 }
