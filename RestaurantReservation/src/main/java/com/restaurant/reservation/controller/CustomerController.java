@@ -6,13 +6,14 @@ import com.restaurant.reservation.model.User;
 import com.restaurant.reservation.repository.ReservationRepository;
 import com.restaurant.reservation.repository.UserRepository;
 import com.restaurant.reservation.service.CustomerService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,13 +24,12 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
-    @Autowired  
+    @Autowired
     private UserRepository userRepository;
 
-    @Autowired 
+    @Autowired
     private ReservationRepository reservationRepository;
 
-    // Show list of reservations of the user
     @GetMapping("/reservations")
     public String getReservations(Model model) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -47,14 +47,20 @@ public class CustomerController {
         return "customer/reservations";
     }
 
-    // Show the form of a new reservation
     @GetMapping("/new-reservation")
     public String showReservationForm(Model model) {
         model.addAttribute("reservation", new ReservationRequestDTO());
+    
+        List<LocalTime> availableHours = generateTimeSlots();
+        model.addAttribute("availableHours", availableHours);
+    
+        // NUEVO: pasamos la fecha mínima ya calculada
+        model.addAttribute("minDate", java.time.LocalDate.now().toString());
+    
         return "customer/reservation";
     }
 
-    // Process the form of reservation
+
     @PostMapping("/make-reservation")
     public String makeReservation(@ModelAttribute ReservationRequestDTO reservationDTO, Model model) {
         System.out.println("[Controller] Recibida solicitud de reserva");
@@ -69,8 +75,43 @@ public class CustomerController {
         } catch (RuntimeException e) {
             System.out.println("[Controller] Error al crear la reserva: " + e.getMessage());
             model.addAttribute("reservation", reservationDTO);
+            model.addAttribute("availableHours", generateTimeSlots()); // AÑADIDO AQUÍ
             model.addAttribute("errorMessage", e.getMessage());
-            return "customer/reservation"; // Vuelve al formulario con mensaje de error
+            return "customer/reservation";
         }
+    }
+
+    @PutMapping("/reservations/{id}")
+    @ResponseBody
+    public String updateReservation(@PathVariable Long id, @RequestBody ReservationRequestDTO dto) {
+        try {
+            customerService.updateReservation(id, dto);
+            return "Reserva actualizada con éxito";
+        } catch (RuntimeException e) {
+            return "Error al actualizar reserva: " + e.getMessage();
+        }
+    }
+
+    @DeleteMapping("/reservations/{id}")
+    @ResponseBody
+    public String deleteReservation(@PathVariable Long id) {
+        try {
+            customerService.deleteReservation(id);
+            return "Reserva eliminada con éxito";
+        } catch (RuntimeException e) {
+            return "Error al eliminar reserva: " + e.getMessage();
+        }
+    }
+
+    private List<LocalTime> generateTimeSlots() {
+        List<LocalTime> slots = new ArrayList<>();
+        LocalTime start = LocalTime.of(12, 0);
+        LocalTime end = LocalTime.of(23, 0);
+
+        while (start.isBefore(end)) {
+            slots.add(start);
+            start = start.plusMinutes(30);
+        }
+        return slots;
     }
 }
