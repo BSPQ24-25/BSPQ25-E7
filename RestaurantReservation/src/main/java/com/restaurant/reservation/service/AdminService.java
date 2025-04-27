@@ -5,6 +5,7 @@ import com.restaurant.reservation.model.Reservation;
 import com.restaurant.reservation.repository.ReservationRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.nio.charset.StandardCharsets;
 
 @Service
 public class AdminService {
@@ -29,12 +30,13 @@ public class AdminService {
         reservation.setState("cancelled");
         reservationRepository.save(reservation);
 
-        // ENVÍO DE EMAIL
+        // ENVÍO DE EMAIL con plantilla HTML
         String userEmail = reservation.getUser().getEmail();
+        String htmlContent = loadTemplate("templates/email/cancellation_email.html");
         emailSenderService.sendEmail(
             userEmail,
             "Reservation Cancelled",
-            "Dear customer,\n\nYour reservation has been cancelled.\n\nThank you!"
+            htmlContent
         );
     }
 
@@ -46,12 +48,24 @@ public class AdminService {
         reservation.setState("confirmed");
         reservationRepository.save(reservation);
 
-        // ENVÍO DE EMAIL
+        // ENVÍO DE EMAIL con plantilla HTML
         String userEmail = reservation.getUser().getEmail();
+        String htmlContent = loadTemplate("templates/email/confirmation_email.html");
         emailSenderService.sendEmail(
             userEmail,
             "Reservation Confirmed",
-            "Dear customer,\n\nYour reservation has been confirmed successfully.\n\nThank you!"
+            htmlContent
         );
+    }
+
+    private String loadTemplate(String path) {
+        try {
+            return new String(
+                getClass().getClassLoader().getResourceAsStream(path).readAllBytes(),
+                StandardCharsets.UTF_8
+            );
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to load email template: " + path, e);
+        }
     }
 }

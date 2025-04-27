@@ -1,9 +1,11 @@
 package com.restaurant.reservation.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
 public class EmailSenderService {
@@ -11,23 +13,24 @@ public class EmailSenderService {
     @Autowired
     private JavaMailSender mailSender;
 
-    public void sendEmail(String to, String subject, String text) {
+    public void sendEmail(String to, String subject, String htmlContent) {
         System.out.println("[EmailSenderService] Preparando email...");
         System.out.println("A: " + to);
         System.out.println("Asunto: " + subject);
-        System.out.println("Cuerpo: " + text);
 
         try {
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom("cosanostra.software.restaurante@gmail.com"); 
-            message.setTo(to);
-            message.setSubject(subject);
-            message.setText(text);
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+            helper.setFrom("cosanostra.software.restaurante@gmail.com");
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(htmlContent, true); // true indica que es HTML
 
             System.out.println("[EmailSenderService] Enviando mensaje...");
             mailSender.send(message);
             System.out.println("[EmailSenderService] ✔️ Email enviado correctamente");
-        } catch (Exception e) {
+        } catch (MessagingException e) {
             System.out.println("[EmailSenderService] ❌ Error enviando email: " + e.getMessage());
             e.printStackTrace();
         }
