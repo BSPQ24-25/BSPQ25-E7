@@ -39,4 +39,9 @@ public class ReservationRequestDTO {
     public void setnPeople(int nPeople) {
         this.nPeople = nPeople;
     }
+    
+    public boolean isValidTime() {
+        int minute = hour.getMinute();
+        return minute == 0 || minute == 30;
+    }
 }

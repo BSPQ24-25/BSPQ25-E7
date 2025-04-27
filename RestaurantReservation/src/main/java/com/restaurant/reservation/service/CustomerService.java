@@ -1,6 +1,5 @@
 package com.restaurant.reservation.service;
 
-// Añadir estos imports:
 import com.restaurant.reservation.dto.ReservationRequestDTO;
 import com.restaurant.reservation.exception.InvalidReservationTimeException;
 import com.restaurant.reservation.exception.NoTableWithEnoughCapacityException;
@@ -23,36 +22,45 @@ import java.util.List;
 
 @Service
 public class CustomerService {
-    
+
     @Autowired
     private ReservationRepository reservationRepository;
-    
+
     @Autowired
     private RestaurantTableRepository tableRepository;
-    
+
     @Autowired
     private UserRepository userRepository;
-    
+
     @Transactional
     public void makeReservation(ReservationRequestDTO reservationDTO) {
-
         LocalDate reservationDate = reservationDTO.getDate();
         LocalTime reservationHour = reservationDTO.getHour();
         int numberOfPeople = reservationDTO.getnPeople();
 
-        // 🚫 No se permite reservar en fechas pasadas
+        // ✅ Validar que la hora es en intervalos de 30 minutos
+        if (!reservationDTO.isValidTime()) {
+            throw new InvalidReservationTimeException("Las reservas deben ser en horas completas o medias horas (ej: 12:00 o 12:30)");
+        }
+
+        // 🚫 No reservar fechas pasadas
         if (reservationDate.isBefore(LocalDate.now())) {
             throw new PastDateReservationException();
         }
 
-        // 🕒 Horario permitido del restaurante: 12:00 - 23:00
+        // 🕒 Verificar horario permitido del restaurante
         LocalTime openingTime = LocalTime.of(12, 0);
         LocalTime closingTime = LocalTime.of(23, 0);
         if (reservationHour.isBefore(openingTime) || reservationHour.isAfter(closingTime)) {
             throw new InvalidReservationTimeException();
         }
 
-        // 🔍 Buscar mesas disponibles con capacidad suficiente
+        // 🔍 Verificar que la hora concreta tenga disponibilidad
+        if (!isTimeSlotAvailable(reservationDate, reservationHour)) {
+            throw new InvalidReservationTimeException("La hora seleccionada no está disponible");
+        }
+
+        // 🔎 Buscar mesas disponibles con capacidad suficiente
         List<RestaurantTable> tables = tableRepository.findAvailableTables(
             reservationDate,
             reservationHour,
@@ -68,7 +76,7 @@ public class CustomerService {
         User user = userRepository.findByEmail(email)
             .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        // 🪑 Seleccionar primera mesa válida y crear la reserva
+        // 🪑 Crear la reserva
         RestaurantTable selectedTable = tables.get(0);
         Reservation reservation = new Reservation();
         reservation.setUser(user);
@@ -81,45 +89,47 @@ public class CustomerService {
         reservationRepository.save(reservation);
 
         System.out.println("✔️ Reserva creada para " + user.getEmail() +
-                       " el " + reservationDate + " a las " + reservationHour +
-                       " para " + numberOfPeople + " personas.");
+                           " el " + reservationDate + " a las " + reservationHour +
+                           " para " + numberOfPeople + " personas.");
     }
-    
-    
-
-
-
-
-
-
-
 
     @Transactional
     public void updateReservation(Long id, ReservationRequestDTO dto) {
         Reservation reservation = reservationRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
 
-        // Validar que la reserva pertenece al usuario actual
+        // ✅ Validar que la reserva pertenece al usuario autenticado
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         if (!reservation.getUser().getEmail().equals(email)) {
             throw new RuntimeException("No tienes permiso para modificar esta reserva");
         }
 
-        // Validaciones similares a makeReservation
+        // ✅ Validaciones similares a creación
+        if (!dto.isValidTime()) {
+            throw new InvalidReservationTimeException("Las reservas deben ser en horas completas o medias horas (ej: 12:00 o 12:30)");
+        }
         if (dto.getDate().isBefore(LocalDate.now())) {
             throw new PastDateReservationException();
         }
         if (dto.getHour().isBefore(LocalTime.of(12, 0)) || dto.getHour().isAfter(LocalTime.of(23, 0))) {
             throw new InvalidReservationTimeException();
         }
+        if (!isTimeSlotAvailable(dto.getDate(), dto.getHour())) {
+            throw new InvalidReservationTimeException("La hora seleccionada no está disponible");
+        }
 
+        // 🔎 Buscar mesas disponibles
         List<RestaurantTable> tables = tableRepository.findAvailableTables(
-            dto.getDate(), dto.getHour(), dto.getnPeople());
+            dto.getDate(),
+            dto.getHour(),
+            dto.getnPeople()
+        );
 
         if (tables.isEmpty()) {
             throw new NoTableWithEnoughCapacityException(dto.getnPeople());
         }
 
+        // ✏️ Actualizar datos de la reserva
         reservation.setTable(tables.get(0));
         reservation.setDate(dto.getDate());
         reservation.setHour(dto.getHour());
@@ -142,4 +152,19 @@ public class CustomerService {
         reservationRepository.deleteById(id);
     }
 
+    // Métodos auxiliares
+    private boolean isTimeSlotAvailable(LocalDate date, LocalTime hour) {
+        // 🔢 Contar reservas existentes para esa fecha y hora
+        long existingReservations = reservationRepository.countByDateAndHour(date, hour);
+
+        // 🧮 Obtener capacidad total del restaurante
+        int totalCapacity = getTotalRestaurantCapacity();
+
+        return existingReservations < totalCapacity;
+    }
+
+    private int getTotalRestaurantCapacity() {
+        // 🛠️ Esto se puede adaptar a tu modelo real
+        return 100; // Ejemplo de capacidad máxima del restaurante
+    }
 }
