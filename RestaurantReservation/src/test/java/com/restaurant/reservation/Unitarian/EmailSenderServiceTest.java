@@ -1,5 +1,5 @@
 
-package com.restaurant.reservation;
+package com.restaurant.reservation.Unitarian;
 
 import com.restaurant.reservation.service.EmailSenderService;
 

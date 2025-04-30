@@ -1,4 +1,4 @@
-package com.restaurant.reservation;
+package com.restaurant.reservation.Performance;
 
 import com.restaurant.reservation.dto.ReservationRequestDTO;
 import com.restaurant.reservation.model.Reservation;

@@ -1,4 +1,4 @@
-package com.restaurant.reservation;
+package com.restaurant.reservation.Unitarian;
 
 import com.restaurant.reservation.model.Reservation;
 import com.restaurant.reservation.model.User;
