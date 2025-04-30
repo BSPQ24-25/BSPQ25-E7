@@ -33,4 +33,12 @@ public class AdminController {
         adminService.confirmReservation(id);
         return "redirect:/admin/home";
     }
+
+    @GetMapping("/config-restaurant")
+    public String getRestaurantConfigPage(Model model) {
+        model.addAttribute("lunchHours", adminService.findLunchHours()); // Example value
+        model.addAttribute("dinnerHours", adminService.findDinnerHours()); // Example value
+        return "admin/restaurant_config";
+    }
+
 }

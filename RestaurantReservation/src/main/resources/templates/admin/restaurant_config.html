@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Availability Hours</title>
+</head>
+<body>
+    <h1>Update Restaurant Availability Hours</h1>
+    <form action="/admin/restaurant-config/update-hours" method="post">
+        <label for="lunchHours">Lunch Hours:</label>
+        <input type="text" id="lunchHours" name="availableHours"
+               placeholder="e.g., 12:00-15:00"
+               th:value="${lunchHours}" required>
+        <br>
+        <label for="dinnerHours">Dinner Hours:</label>
+        <input type="text" id="dinnerHours" name="availableHours"
+               placeholder="e.g., 19:30-23:00"
+               th:value="${dinnerHours}" required>
+        <br>
+        <button type="submit">Update Hours</button>
+    </form>
+    <br>
+    <button onclick="window.location.href='/admin/home'">Go to Home</button>
+</body>
+</html>

@@ -4,8 +4,8 @@ INSERT INTO user (email, username, phone, password, user_type) VALUES
 ('admin1@restaurante.com', 'Admin Principal', '633333333', '1234', 'ADMIN'),
 ('gerente@restaurante.com', 'Gerente Sucursal', '644444444', '1234', 'ADMIN');
 
-INSERT INTO restaurant (restaurant_id, name, availability_hours, capacity)
-VALUES (1, 'Cosa Nostra', '12:00-15:00,19:30-23:00', 30);
+INSERT INTO restaurant (restaurant_id, name, capacity)
+VALUES (1, 'Cosa Nostra', 30);
 
 
 INSERT INTO restaurant_table (table_id, restaurant_id, capacity, state)

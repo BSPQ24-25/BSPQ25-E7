@@ -5,9 +5,11 @@ import com.restaurant.reservation.exception.InvalidReservationTimeException;
 import com.restaurant.reservation.exception.NoTableWithEnoughCapacityException;
 import com.restaurant.reservation.exception.PastDateReservationException;
 import com.restaurant.reservation.model.Reservation;
+import com.restaurant.reservation.model.Restaurant;
 import com.restaurant.reservation.model.RestaurantTable;
 import com.restaurant.reservation.model.User;
 import com.restaurant.reservation.repository.ReservationRepository;
+import com.restaurant.reservation.repository.RestaurantRepository;
 import com.restaurant.reservation.repository.RestaurantTableRepository;
 import com.restaurant.reservation.repository.UserRepository;
 
@@ -22,6 +24,9 @@ import java.util.List;
 
 @Service
 public class CustomerService {
+
+    @Autowired
+    private RestaurantRepository restaurantRepository;
 
     @Autowired
     private ReservationRepository reservationRepository;
@@ -49,10 +54,20 @@ public class CustomerService {
         }
 
         // 🕒 Verificar horario permitido del restaurante
-        LocalTime openingTime = LocalTime.of(12, 0);
-        LocalTime closingTime = LocalTime.of(23, 0);
-        if (reservationHour.isBefore(openingTime) || reservationHour.isAfter(closingTime)) {
-            throw new InvalidReservationTimeException();
+        Restaurant restaurant = restaurantRepository.findAll()
+                .stream()
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Restaurant not found"));
+
+        boolean isWithinAvailability = restaurant.getAvailabilityHours().stream().anyMatch(range -> {
+            String[] times = range.split("-");
+            LocalTime startTime = LocalTime.parse(times[0]);
+            LocalTime endTime = LocalTime.parse(times[1]);
+            return !reservationHour.isBefore(startTime) && !reservationHour.isAfter(endTime);
+        });
+
+        if (!isWithinAvailability) {
+            throw new InvalidReservationTimeException("La hora seleccionada no está dentro del horario de disponibilidad del restaurante");
         }
 
         // 🔍 Verificar que la hora concreta tenga disponibilidad
