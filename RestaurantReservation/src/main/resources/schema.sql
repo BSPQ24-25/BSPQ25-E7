@@ -27,7 +27,6 @@ CREATE TABLE user (
 CREATE TABLE restaurant (
     restaurant_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
-    availability_hours VARCHAR(255),
     capacity INT
 );
 

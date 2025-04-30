@@ -20,7 +20,7 @@ public class Restaurant {
         joinColumns = @JoinColumn(name = "restaurant_id")
     )
     @Column(name = "availability_hours")
-    private List<String> availabilityHours;
+    private List<String> availability_hours;
 
     @Column(nullable = false)
     private Integer capacity;
@@ -46,11 +46,11 @@ public class Restaurant {
     }
 
     public List<String> getAvailabilityHours() {
-        return availabilityHours;
+        return availability_hours;
     }
 
     public void setAvailabilityHours(List<String> availabilityHours) {
-        this.availabilityHours = availabilityHours;
+        this.availability_hours = availabilityHours;
     }
 
     public Integer getCapacity() {

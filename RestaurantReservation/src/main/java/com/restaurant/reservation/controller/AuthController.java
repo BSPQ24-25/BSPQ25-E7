@@ -26,7 +26,7 @@ public class AuthController {
                                 @RequestParam String userType) {
 
         if (userRepository.findByEmail(email).isPresent()) {
-            return "redirect:/register.html?error=true";
+            return "common/register.html?error=true";
         }
 
         RegisterRequestDTO dto = new RegisterRequestDTO(
@@ -38,6 +38,6 @@ public class AuthController {
         );
 
         authService.register(dto);
-        return "redirect:/login.html?registered=true";
+        return "common/login.html?registered=true";
     }
 }
