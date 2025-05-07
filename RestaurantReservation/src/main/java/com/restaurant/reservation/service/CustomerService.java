@@ -32,6 +32,9 @@ public class CustomerService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private AdminService adminService;
+
     @Transactional
     public void makeReservation(ReservationRequestDTO reservationDTO) {
         LocalDate reservationDate = reservationDTO.getDate();
@@ -49,8 +52,9 @@ public class CustomerService {
         }
 
         // 🕒 Verificar horario permitido del restaurante
-        LocalTime openingTime = LocalTime.of(12, 0);
-        LocalTime closingTime = LocalTime.of(23, 0);
+        LocalTime openingTime = LocalTime.parse(adminService.getOpeningHour());
+        LocalTime closingTime = LocalTime.parse(adminService.getClosingHour());
+        
         if (reservationHour.isBefore(openingTime) || reservationHour.isAfter(closingTime)) {
             throw new InvalidReservationTimeException();
         }
@@ -108,12 +112,17 @@ public class CustomerService {
         if (!dto.isValidTime()) {
             throw new InvalidReservationTimeException("Las reservas deben ser en horas completas o medias horas (ej: 12:00 o 12:30)");
         }
+        
         if (dto.getDate().isBefore(LocalDate.now())) {
             throw new PastDateReservationException();
         }
-        if (dto.getHour().isBefore(LocalTime.of(12, 0)) || dto.getHour().isAfter(LocalTime.of(23, 0))) {
-            throw new InvalidReservationTimeException();
+        
+        LocalTime openingTime = LocalTime.parse(adminService.getOpeningHour());
+        LocalTime closingTime = LocalTime.parse(adminService.getClosingHour());
+        if (dto.getHour().isBefore(openingTime) || dto.getHour().isAfter(closingTime)) {
+            throw new InvalidReservationTimeException("La hora está fuera del horario permitido");
         }
+
         if (!isTimeSlotAvailable(dto.getDate(), dto.getHour())) {
             throw new InvalidReservationTimeException("La hora seleccionada no está disponible");
         }

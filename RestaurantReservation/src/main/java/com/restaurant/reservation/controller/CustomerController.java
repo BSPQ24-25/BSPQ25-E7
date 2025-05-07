@@ -6,6 +6,7 @@ import com.restaurant.reservation.model.User;
 import com.restaurant.reservation.repository.ReservationRepository;
 import com.restaurant.reservation.repository.UserRepository;
 import com.restaurant.reservation.service.CustomerService;
+import com.restaurant.reservation.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,9 @@ public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
+
+    @Autowired
+    private AdminService adminService;
 
     @Autowired
     private UserRepository userRepository;
@@ -105,13 +109,15 @@ public class CustomerController {
 
     private List<LocalTime> generateTimeSlots() {
         List<LocalTime> slots = new ArrayList<>();
-        LocalTime start = LocalTime.of(12, 0);
-        LocalTime end = LocalTime.of(23, 0);
-
-        while (start.isBefore(end)) {
-            slots.add(start);
-            start = start.plusMinutes(30);
+    
+        // Obtener horas configuradas por el admin
+        LocalTime opening = LocalTime.parse(adminService.getOpeningHour());
+        LocalTime closing = LocalTime.parse(adminService.getClosingHour()).minusMinutes(30); // último turno comienza 30 min antes del cierre
+    
+        while (!opening.isAfter(closing)) {
+            slots.add(opening);
+            opening = opening.plusMinutes(30);
         }
         return slots;
-    }
+    }    
 }

@@ -35,6 +35,28 @@
         </tbody>        
     </table>    
 
+    <!-- Formulario para modificar el horario del restaurante -->
+    <div style="margin-top: 40px; padding: 20px; border: 1px solid #ccc; border-radius: 8px;">
+        <h2 style="text-align: center;">Modify Opening Hours</h2>
+        <form method="post" action="/admin/config/updateHours">
+            <div style="display: flex; justify-content: center; gap: 40px; margin-bottom: 20px;">
+                <div>
+                    <label for="openingHour">Opening Hour:</label>
+                    <input type="time" id="openingHour" name="openingHour" th:value="${openingHour}" required>
+                </div>
+
+                <div>
+                    <label for="closingHour">Closing Hour:</label>
+                    <input type="time" id="closingHour" name="closingHour" th:value="${closingHour}" required>
+                </div>
+            </div>
+
+            <div style="text-align: center;">
+                <button type="submit" class="btn action-btn">Update Hours</button>
+            </div>
+        </form>
+    </div>
+
     <!-- Botones de acción -->
     <div style="margin-top: 20px;">
         <button id="confirm-btn" class="btn action-btn" onclick="confirmAction('confirm')">Confirm Reservation</button>
