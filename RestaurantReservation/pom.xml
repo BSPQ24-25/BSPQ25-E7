@@ -29,6 +29,7 @@
 		<java.version>17</java.version>
 		<server.hostname>127.0.0.1</server.hostname>
 		<server.port>8080</server.port>
+		<doxygen.config.file>${basedir}/src/main/resources/Doxyfile</doxygen.config.file>
 	</properties>
 
 	<dependencies>
@@ -119,6 +120,50 @@
 
 	<build>
 		<plugins>
+
+			<plugin>
+				<groupId>com.soebes.maven.plugins</groupId>
+				<artifactId>doxygen-maven-plugin</artifactId>
+				<version>1.1.0</version>
+				<executions>
+					<execution>
+					<id>generate-doxygen-site</id>
+					<phase>site</phase>
+					<goals>
+						<goal>report</goal>
+					</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<configurationFile>${doxygen.config.file}</configurationFile>
+				</configuration>
+				</plugin>
+
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.3.1</version>
+				<executions>
+					<execution>
+					<id>copy-doxygen-site-to-docs</id>
+					<phase>post-site</phase>
+					<goals>
+						<goal>copy-resources</goal>
+					</goals>
+					<configuration>
+						<outputDirectory>${basedir}/docs/doxygen</outputDirectory>
+						<resources>
+						<resource>
+							<directory>${project.build.directory}/doxygen/html</directory>
+							<filtering>false</filtering>
+						</resource>
+						</resources>
+					</configuration>
+					</execution>
+				</executions>
+				</plugin>
+
+
+
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -142,7 +187,68 @@
 					</arguments>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.12</version>
+				<executions>
+					<execution>
+					<goals>
+						<goal>prepare-agent</goal>
+					</goals>
+					</execution>
+					<execution>
+					<id>report</id>
+					<phase>test</phase>
+					<goals>
+						<goal>report</goal>
+					</goals>
+					</execution>
+				</executions>
+				</plugin>
+
+				<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.1.2</version>
+				</plugin>
+
+				<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>3.1.2</version>
+				</plugin>
 		</plugins>
 	</build>
 
+	<reporting>
+		<plugins>
+			<plugin>
+			<groupId>org.jacoco</groupId>
+			<artifactId>jacoco-maven-plugin</artifactId>
+			<version>0.8.12</version>
+			<reportSets>
+				<reportSet>
+				<reports>
+					<report>report</report>
+				</reports>
+				</reportSet>
+			</reportSets>
+			</plugin>
+
+			<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-surefire-report-plugin</artifactId>
+			<version>3.1.2</version>
+			<reportSets>
+				<reportSet>
+				<reports>
+					<report>report-only</report>
+				</reports>
+				</reportSet>
+			</reportSets>
+			</plugin>
+		</plugins>
+		</reporting>
 </project>
