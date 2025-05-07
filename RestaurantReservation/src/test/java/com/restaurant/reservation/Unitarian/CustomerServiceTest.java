@@ -7,7 +7,9 @@ import com.restaurant.reservation.model.User;
 import com.restaurant.reservation.repository.ReservationRepository;
 import com.restaurant.reservation.repository.RestaurantTableRepository;
 import com.restaurant.reservation.repository.UserRepository;
+import com.restaurant.reservation.service.AdminService;
 import com.restaurant.reservation.service.CustomerService;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -33,6 +35,7 @@ public class CustomerServiceTest {
     @Mock private ReservationRepository reservationRepository;
     @Mock private RestaurantTableRepository tableRepository;
     @Mock private UserRepository userRepository;
+    @Mock private AdminService adminService;
 
     @InjectMocks private CustomerService customerService;
 
@@ -59,6 +62,13 @@ public class CustomerServiceTest {
         SecurityContextHolder.getContext().setAuthentication(
             new UsernamePasswordAuthenticationToken("user@email.com", null)
         );
+
+        // ✅ Mocking opening hours
+        when(adminService.getOpeningHourAsTime()).thenReturn(LocalTime.of(12, 0));
+        when(adminService.getClosingHourAsTime()).thenReturn(LocalTime.of(23, 0));
+
+        when(adminService.getOpeningHour()).thenReturn("12:00");
+        when(adminService.getClosingHour()).thenReturn("23:00");
     }
 
     @Test

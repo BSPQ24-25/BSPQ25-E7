@@ -7,6 +7,7 @@ import com.restaurant.reservation.model.User;
 import com.restaurant.reservation.repository.ReservationRepository;
 import com.restaurant.reservation.repository.RestaurantTableRepository;
 import com.restaurant.reservation.repository.UserRepository;
+import com.restaurant.reservation.service.AdminService;
 import com.restaurant.reservation.service.CustomerService;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -21,6 +22,9 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 public class CustomerServicePerformanceTest {
@@ -28,15 +32,13 @@ public class CustomerServicePerformanceTest {
     @Mock private ReservationRepository reservationRepository;
     @Mock private RestaurantTableRepository tableRepository;
     @Mock private UserRepository userRepository;
+    @Mock private AdminService adminService;
 
     @InjectMocks private CustomerService customerService;
 
     private ReservationRequestDTO dto;
     private User user;
     private RestaurantTable table;
-
-
-    
 
     @BeforeEach
     public void setup() {
@@ -57,6 +59,13 @@ public class CustomerServicePerformanceTest {
         SecurityContextHolder.getContext().setAuthentication(
             new UsernamePasswordAuthenticationToken("user@email.com", null)
         );
+
+        // Mocking opening hours
+        when(adminService.getOpeningHourAsTime()).thenReturn(LocalTime.of(12, 0));
+        when(adminService.getClosingHourAsTime()).thenReturn(LocalTime.of(23, 0));
+
+        when(adminService.getOpeningHour()).thenReturn("12:00");
+        when(adminService.getClosingHour()).thenReturn("23:00");
     }
 
     @Test
