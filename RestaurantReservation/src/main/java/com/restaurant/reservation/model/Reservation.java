@@ -15,7 +15,7 @@ public class Reservation {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    private User user; // Ya no usamos 'Customer'
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "table_id", nullable = false)
@@ -33,11 +33,13 @@ public class Reservation {
     @Column(nullable = false)
     private String state;
 
-    // Constructores
+    @OneToOne(mappedBy = "reservation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Review review;
+
+    // Constructors
     public Reservation() {}
 
-    public Reservation(User user, RestaurantTable table, 
-                      LocalDate date, LocalTime hour, int nPeople) {
+    public Reservation(User user, RestaurantTable table, LocalDate date, LocalTime hour, int nPeople) {
         this.user = user;
         this.table = table;
         this.date = date;
@@ -46,7 +48,7 @@ public class Reservation {
         this.state = "confirmed";
     }
 
-    // Getters y setters
+    // Getters and Setters
     public Long getReservationId() {
         return reservationId;
     }
@@ -105,5 +107,13 @@ public class Reservation {
 
     public Long getId() {
         return this.reservationId;
+    }
+
+    public Review getReview() {
+        return review;
+    }
+
+    public void setReview(Review review) {
+        this.review = review;
     }
 }
