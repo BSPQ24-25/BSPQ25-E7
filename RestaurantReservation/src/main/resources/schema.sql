@@ -52,3 +52,15 @@ CREATE TABLE reservation (
     FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
     FOREIGN KEY (table_id) REFERENCES restaurant_table(table_id) ON DELETE CASCADE
 );
+
+CREATE TABLE review (
+    review_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    customer_id BIGINT NOT NULL,
+    reservation_id BIGINT NOT NULL UNIQUE,
+    rating INT NOT NULL CHECK (rating BETWEEN 1 AND 5),
+    comment VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (customer_id) REFERENCES user(id) ON DELETE CASCADE
+    FOREIGN KEY (reservation_id) REFERENCES reservation(reservation_id) ON DELETE CASCADE
+);
