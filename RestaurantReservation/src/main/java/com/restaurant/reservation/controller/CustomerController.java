@@ -47,6 +47,15 @@ public class CustomerController {
 
         User user = optionalUser.get();
         List<Reservation> reservations = reservationRepository.findByUser(user);
+
+        // Update the state of the reservations
+        for (Reservation reservation : reservations) {
+            if (reservation.getDate().isBefore(java.time.LocalDate.now()) && reservation.getState().equals("confirmed")) {
+                reservation.setState("completed");
+                reservationRepository.save(reservation);
+            }
+        }
+
         model.addAttribute("reservations", reservations);
         return "customer/reservations";
     }

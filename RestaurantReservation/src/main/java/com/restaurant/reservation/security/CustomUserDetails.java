@@ -20,6 +20,10 @@ public class CustomUserDetails implements UserDetails {
         return user;
     }
 
+    public Long getId() {
+        return user.getId();
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // Asignamos roles en función del tipo de usuario (ADMIN o CUSTOMER)

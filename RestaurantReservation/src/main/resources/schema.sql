@@ -60,7 +60,7 @@ CREATE TABLE review (
     rating INT NOT NULL CHECK (rating BETWEEN 1 AND 5),
     comment VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-
-    FOREIGN KEY (customer_id) REFERENCES user(id) ON DELETE CASCADE
+    
+    FOREIGN KEY (customer_id) REFERENCES user(id) ON DELETE CASCADE,
     FOREIGN KEY (reservation_id) REFERENCES reservation(reservation_id) ON DELETE CASCADE
 );

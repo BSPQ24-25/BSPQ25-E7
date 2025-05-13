@@ -50,6 +50,12 @@
             }
         }
     </script>
+    <script th:if="${currentUser != null}" th:inline="javascript">
+        const CURRENT_USER_ID = [[${currentUser.id}]];
+    </script>
+    <script th:if="${currentUser == null}" th:inline="javascript">
+        const CURRENT_USER_ID = null;
+    </script>
 </head>
 <body>
     <div class="auth-box">
@@ -74,6 +80,32 @@
 
                     <button class="btn small" th:onclick="'showEditForm(' + ${reservation.reservationId} + ')'">Edit</button>
                     <button class="btn small danger" th:onclick="'deleteReservation(' + ${reservation.reservationId} + ')'">Cancel</button>
+                    <th:block th:if="${reservation.state.equals('completed')} and ${reservation.review} == null">
+                        <button class="btn small" th:attr="onclick=|toggleReviewForm(${reservation.reservationId})|">Review</button>
+                    </th:block>
+
+                    <div th:attr="id='reviewError-' + ${reservation.reservationId}" class="popup-error" style="display: none; margin-top: 1rem;">
+                        <span th:attr="id='reviewErrorMessage-' + ${reservation.reservationId}"></span>
+                    </div>
+                    <div th:attr="id='reviewSuccess-' + ${reservation.reservationId}" class="popup-success" style="display: none; margin-top: 1rem;">
+                        Review submitted successfully!
+                    </div>
+
+                    <div class="review-form" th:attr="id='review-form-' + ${reservation.reservationId}" style="display: none;">
+                        <h4>Leave a Review</h4>
+                        <form th:attr="id='reviewForm-' + ${reservation.reservationId}">
+                            <input type="hidden" name="reservationId" th:value="${reservation.reservationId}">
+                        
+                            <label for="rating">Rating (1-5):</label>
+                            <input type="number" name="rating" min="1" max="5" required><br>
+                        
+                            <label for="comment">Comment:</label>
+                            <textarea name="comment" maxlength="255"></textarea><br>
+                        
+                            <button type="button" class="btn small success" th:attr="onclick=|submitReview(${reservation.reservationId})|">Submit</button>
+                        </form>
+                        <div th:attr="id='reviewMessage-' + ${reservation.reservationId}"></div>
+                    </div>
 
                     <div class="edit-form" th:attr="id='edit-form-' + ${reservation.reservationId}" style="display: none;">
                         <h4>Edit Reservation</h4>
@@ -91,5 +123,26 @@
             <a href="/customer/home">← Back to home</a>
         </div>
     </div>
+
+    <!-- Review Modal -->
+    <div id="reviewModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeReviewModal()">&times;</span>
+            <h2>Leave a Review</h2>
+            <form id="reviewForm">
+                <input type="hidden" id="reservationId" name="reservationId">
+
+                <label for="rating">Rating (1-5):</label>
+                <input type="number" id="rating" name="rating" min="1" max="5" required><br>
+
+                <label for="comment">Comment:</label>
+                <textarea id="comment" name="comment" maxlength="255"></textarea><br>
+
+                <button type="submit" class="btn small success">Submit</button>
+            </form>
+            <div id="reviewMessage"></div>
+        </div>
+    </div>
+    <script src="/js/reservation.js"></script>
 </body>
 </html>
