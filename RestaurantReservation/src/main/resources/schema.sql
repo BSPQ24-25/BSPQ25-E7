@@ -64,3 +64,10 @@ CREATE TABLE review (
     FOREIGN KEY (customer_id) REFERENCES user(id) ON DELETE CASCADE,
     FOREIGN KEY (reservation_id) REFERENCES reservation(reservation_id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS notification (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    message VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    seen BOOLEAN DEFAULT FALSE
+);

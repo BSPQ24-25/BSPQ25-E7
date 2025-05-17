@@ -19,6 +19,46 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log("Reserva seleccionada:", selectedId);
         });
     });
+
+    // Sistema de notificaciones 🔔
+    const notifBtn = document.getElementById('notification-btn');
+    const notifPopup = document.getElementById('notification-popup');
+    const notifList = document.getElementById('notification-list');
+
+    notifBtn.addEventListener('click', () => {
+        if (notifPopup.classList.contains('hidden')) {
+            fetch('/admin/notifications')
+                .then(res => res.json())
+                .then(data => {
+                    notifList.innerHTML = ''; // limpiamos la lista
+                    if (data.length === 0) {
+                        notifList.innerHTML = '<li>No hay notificaciones nuevas.</li>';
+                    } else {
+                        data.forEach(n => {
+                            const li = document.createElement('li');
+                            li.textContent = n.message;
+                            notifList.appendChild(li);
+                        });
+
+                        // 🟢 MARCAR COMO LEÍDAS
+                        return fetch('/admin/notifications/mark-as-read', {
+                            method: 'POST'
+                        });
+                    }
+
+                    notifPopup.classList.remove('hidden');
+                })
+                .catch(err => {
+                    notifList.innerHTML = '<li>Error al cargar notificaciones.</li>';
+                    notifPopup.classList.remove('hidden');
+                    console.error("Error cargando notificaciones:", err);
+                });
+
+            notifPopup.classList.remove('hidden');
+        } else {
+            notifPopup.classList.add('hidden');
+        }
+    });
 });
 
 function confirmAction(action) {
