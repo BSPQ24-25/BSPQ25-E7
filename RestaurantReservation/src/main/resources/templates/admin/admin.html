@@ -26,7 +26,7 @@
         <tbody>
             <tr th:each="res : ${reservations}" th:attr="data-id=${res.id}">
                 <td th:text="${res.id}">1</td>
-                <td th:text="${res.user.email}">user@example.com</td>
+                <td class="email-cell" th:text="${res.user.email}">user@example.com</td>
                 <td th:text="${res.date}">2025-04-30</td>
                 <td th:text="${res.hour}">19:00</td>
                 <td th:text="${res.nPeople}">4</td>
@@ -61,6 +61,13 @@
     <div style="margin-top: 20px;">
         <button id="confirm-btn" class="btn action-btn" onclick="confirmAction('confirm')">Confirm Reservation</button>
         <button id="cancel-btn" class="btn action-btn" onclick="confirmAction('cancel')">Cancel Reservation</button>
+    </div>
+
+    <div class="notification-container">
+        <button id="notification-btn" class="btn notification-btn">🔔</button>
+        <div id="notification-popup" class="notification-popup hidden">
+            <ul id="notification-list"></ul>
+        </div>
     </div>
 
     <!-- Formulario logout -->

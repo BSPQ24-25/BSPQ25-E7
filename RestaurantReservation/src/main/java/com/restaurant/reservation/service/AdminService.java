@@ -8,21 +8,25 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.restaurant.reservation.model.Reservation;
+import com.restaurant.reservation.repository.NotificationRepository;
 import com.restaurant.reservation.repository.ReservationRepository;
+import com.restaurant.reservation.model.Notification;
 
 @Service
 public class AdminService {
 
     private final ReservationRepository reservationRepository;
     private final EmailSenderService emailSenderService;
+    private final NotificationRepository notificationRepository;
     
     private String openingHour = "09:00";
     private String closingHour = "22:00";
 
 
-    public AdminService(ReservationRepository reservationRepository, EmailSenderService emailSenderService) {
+    public AdminService(ReservationRepository reservationRepository, EmailSenderService emailSenderService, NotificationRepository notificationRepository) {
         this.reservationRepository = reservationRepository;
         this.emailSenderService = emailSenderService;
+        this.notificationRepository = notificationRepository;
     }
 
     public String getOpeningHour() {
@@ -89,6 +93,11 @@ public class AdminService {
         );
     }
 
+    @Transactional
+    public void markAllNotificationsAsSeen() {
+        notificationRepository.markAllAsSeen(); 
+    }
+
     private String loadTemplate(String path) {
         try {
             return new String(
@@ -98,5 +107,9 @@ public class AdminService {
         } catch (Exception e) {
             throw new RuntimeException("Failed to load email template: " + path, e);
         }
+    }
+
+    public List<Notification> getUnreadNotifications() {
+        return notificationRepository.findBySeenFalse();
     }
 }

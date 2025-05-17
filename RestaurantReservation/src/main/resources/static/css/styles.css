@@ -229,3 +229,80 @@ small {
 .action-btn {
     margin-right: 10px;
 }
+
+/* 📦 Caja blanca principal */
+.home-box {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 📊 Estilo de la tabla */
+.styled-table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+    table-layout: auto;
+}
+
+.styled-table th,
+.styled-table td {
+    text-align: left;
+    padding: 10px;
+    white-space: nowrap;
+    border-bottom: 1px solid #ddd;
+}
+
+.styled-table th {
+    background-color: #f4f4f4;
+}
+
+/* ✂️ Columna email para acortar si hace falta */
+.email-cell {
+    max-width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.notification-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 999;
+}
+
+.notification-btn {
+    background-color: white;
+    border: 2px solid #ccc;
+    padding: 8px 12px;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.notification-popup {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    width: 280px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.notification-popup.hidden {
+    display: none;
+}
+
+#notification-list li {
+    list-style: none;
+    padding: 6px 0;
+    border-bottom: 1px solid #eee;
+}

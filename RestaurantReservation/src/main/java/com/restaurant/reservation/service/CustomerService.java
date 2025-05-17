@@ -7,7 +7,9 @@ import com.restaurant.reservation.exception.PastDateReservationException;
 import com.restaurant.reservation.model.Reservation;
 import com.restaurant.reservation.model.RestaurantTable;
 import com.restaurant.reservation.model.User;
+import com.restaurant.reservation.model.Notification;
 import com.restaurant.reservation.repository.ReservationRepository;
+import com.restaurant.reservation.repository.NotificationRepository;
 import com.restaurant.reservation.repository.RestaurantTableRepository;
 import com.restaurant.reservation.repository.UserRepository;
 
@@ -34,6 +36,9 @@ public class CustomerService {
 
     @Autowired
     private AdminService adminService;
+
+    @Autowired
+    private NotificationRepository notificationRepository;
 
     @Transactional
     public void makeReservation(ReservationRequestDTO reservationDTO) {
@@ -95,6 +100,10 @@ public class CustomerService {
         System.out.println("✔️ Reserva creada para " + user.getEmail() +
                            " el " + reservationDate + " a las " + reservationHour +
                            " para " + numberOfPeople + " personas.");
+        
+                           
+        notificationRepository.save(new Notification("Nueva reserva de " + user.getEmail()));
+
     }
 
     @Transactional
@@ -157,6 +166,8 @@ public class CustomerService {
         if (!reservation.getUser().getEmail().equals(email)) {
             throw new RuntimeException("No tienes permiso para eliminar esta reserva");
         }
+
+        notificationRepository.save(new Notification("Reserva cancelada por " + reservation.getUser().getEmail()));
 
         reservationRepository.deleteById(id);
     }
