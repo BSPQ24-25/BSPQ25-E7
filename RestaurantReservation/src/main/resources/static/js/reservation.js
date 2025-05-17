@@ -60,9 +60,29 @@ document.getElementById('reviewForm').addEventListener('submit', function (e) {
     });
 });
 
+function initializeStarRating() {
+    document.querySelectorAll('.star-rating').forEach(container => {
+        const stars = container.querySelectorAll('.star');
+        const hiddenInput = container.nextElementSibling; // The hidden input for rating
+
+        stars.forEach(star => {
+            star.addEventListener('click', () => {
+                const value = star.getAttribute('data-value');
+                hiddenInput.value = value;
+
+                // Update star colors
+                stars.forEach(s => {
+                    s.classList.toggle('selected', s.getAttribute('data-value') <= value);
+                });
+            });
+        });
+    });
+}
+
 function toggleReviewForm(reservationId) {
     const form = document.getElementById('review-form-' + reservationId);
     form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    initializeStarRating();
 }
 
 function submitReview(reservationId) {
