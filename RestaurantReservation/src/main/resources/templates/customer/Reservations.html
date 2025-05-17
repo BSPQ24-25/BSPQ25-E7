@@ -95,13 +95,19 @@
                         <h4>Leave a Review</h4>
                         <form th:attr="id='reviewForm-' + ${reservation.reservationId}">
                             <input type="hidden" name="reservationId" th:value="${reservation.reservationId}">
-                        
                             <label for="rating">Rating (1-5):</label>
-                            <input type="number" name="rating" min="1" max="5" required><br>
-                        
+                            <div class="star-rating">
+                                <span class="star" data-value="1">&#9733;</span>
+                                <span class="star" data-value="2">&#9733;</span>
+                                <span class="star" data-value="3">&#9733;</span>
+                                <span class="star" data-value="4">&#9733;</span>
+                                <span class="star" data-value="5">&#9733;</span>
+                            </div>
+                            <input type="hidden" name="rating" value="0" required><br>
+
                             <label for="comment">Comment:</label>
                             <textarea name="comment" maxlength="255"></textarea><br>
-                        
+
                             <button type="button" class="btn small success" th:attr="onclick=|submitReview(${reservation.reservationId})|">Submit</button>
                         </form>
                         <div th:attr="id='reviewMessage-' + ${reservation.reservationId}"></div>
@@ -132,8 +138,15 @@
             <form id="reviewForm">
                 <input type="hidden" id="reservationId" name="reservationId">
 
-                <label for="rating">Rating (1-5):</label>
-                <input type="number" id="rating" name="rating" min="1" max="5" required><br>
+                <label for="rating">Rating:</label>
+                <div class="star-rating">
+                    <span class="star" data-value="1">&#9733;</span>
+                    <span class="star" data-value="2">&#9733;</span>
+                    <span class="star" data-value="3">&#9733;</span>
+                    <span class="star" data-value="4">&#9733;</span>
+                    <span class="star" data-value="5">&#9733;</span>
+                </div>
+                <input type="hidden" name="rating" value="0" required><br>
 
                 <label for="comment">Comment:</label>
                 <textarea id="comment" name="comment" maxlength="255"></textarea><br>

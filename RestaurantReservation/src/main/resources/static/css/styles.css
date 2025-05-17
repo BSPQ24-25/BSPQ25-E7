@@ -306,3 +306,13 @@ small {
     padding: 6px 0;
     border-bottom: 1px solid #eee;
 }
+
+.star {
+    font-size: 2rem;
+    color: gray;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.star.selected {
+    color: gold;
+}
