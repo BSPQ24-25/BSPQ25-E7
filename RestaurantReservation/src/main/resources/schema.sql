@@ -42,7 +42,7 @@ CREATE TABLE restaurant_table (
 
 -- Crear tabla reservation
 CREATE TABLE reservation (
-    reservation_id INT AUTO_INCREMENT PRIMARY KEY,
+    reservation_id BIGINT  AUTO_INCREMENT PRIMARY KEY,
     user_id BIGINT NOT NULL,
     table_id INT NOT NULL,
     date DATE NOT NULL,
