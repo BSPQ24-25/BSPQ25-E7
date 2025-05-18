@@ -8,6 +8,14 @@
 <body data-page = "admin">
 
 <div class="home-box">
+    <div style="margin-top: 20px; text-align: center;">
+        <label for="lang-selector" style="font-weight: bold; margin-right: 10px;" data-translate="language_label">Language:</label>
+        <select id="lang-selector" style="padding: 5px; border-radius: 5px;">
+            <option value="en">English</option>
+            <option value="es">Español</option>
+            <option value="ita">Italiano</option>
+        </select>
+    </div>
     <h1 data-translate="welcome"></h1>
     <p data-translate="admin"></p>
 
@@ -56,8 +64,8 @@
     </div>
 
     <div>
-        <button id="confirm-btn" class="btn action-btn" data-translate="confirm_reservation"></button>
-        <button id="cancel-btn" class="btn action-btn" data-translate="cancel_reservation"></button>
+        <button id="confirm-btn" class="btn action-btn" onclick="confirmAction('confirm')" data-translate="confirm_reservation"></button>
+        <button id="cancel-btn" class="btn action-btn" onclick="confirmAction('cancel')" data-translate="cancel_reservation"></button>
     </div>
 
     <div class="notification-container">
@@ -71,15 +79,6 @@
         <button type="submit" class="btn logout-btn" data-translate="logout"></button>
     </form>
 
-</div>
-
-<div>
-    <label for="lang-selector">Language:</label>
-    <select id="lang-selector">
-        <option value="en">English</option>
-        <option value="es">Español</option>
-        <option value="ita">Italiano</option>
-    </select>
 </div>
 
 <script src="/js/translation.js"></script>

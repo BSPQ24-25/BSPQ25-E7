@@ -7,6 +7,14 @@
 </head>
 <body data-page="customer" onload="checkAuthentication(); loadTranslations();">
     <div class="home-box">
+        <div style="margin-top: 20px; text-align: center;">
+            <label for="lang-selector" style="font-weight: bold; margin-right: 10px;" data-translate="language_label">Language:</label>
+            <select id="lang-selector" style="padding: 5px; border-radius: 5px;">
+                <option value="en">English</option>
+                <option value="es">Español</option>
+                <option value="ita">Italiano</option>
+            </select>
+        </div>
         <h1 data-translate="welcome_message">Welcome to the Restaurant Reservation System!</h1>
         <div class="button-group">
             <a href="/customer/new-reservation" class="btn primary" data-translate="make_reservation">Make Reservation</a>
@@ -18,15 +26,6 @@
         </form>
 
         <p class="role-text" data-translate="role_text">Customer</p>
-    </div>
-
-    <div class="lang-selector">
-        <label for="lang-selector" data-translate="language_label">Language:</label>
-        <select id="lang-selector" onchange="loadTranslations()">
-            <option value="en">English</option>
-            <option value="es" selected>Español</option>
-            <option value="ita">Italiano</option>
-        </select>
     </div>
 
     <script src="/js/translation.js"></script>

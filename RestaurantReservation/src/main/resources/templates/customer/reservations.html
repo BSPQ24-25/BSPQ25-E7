@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>My Reservations</title>
+    <title data-translate="my_reservations_title">My Reservations</title>
     <link href="/css/styles.css" rel="stylesheet">
     <script>
         function showEditForm(id) {
@@ -57,45 +57,60 @@
         const CURRENT_USER_ID = null;
     </script>
 </head>
-<body data-page="reservations">
+<body data-page="customer">
     <div class="auth-box">
-        <h2>My Reservations</h2>
+        <div style="margin-top: 20px; text-align: center;">
+            <label for="lang-selector" style="font-weight: bold; margin-right: 10px;" data-translate="language_label">Language:</label>
+            <select id="lang-selector" style="padding: 5px; border-radius: 5px;">
+                <option value="en">English</option>
+                <option value="es">Español</option>
+                <option value="ita">Italiano</option>
+            </select>
+        </div>
+        <h2 data-translate="my_reservations_heading">My Reservations</h2>
 
         <div th:if="${param.success}" class="success-message">
-            <p>Reservation successfully created!</p>
+            <p data-translate="reservation_created_success">Reservation successfully created!</p>
         </div>
 
         <div th:if="${reservations.empty}">
-            <p>You don't have any reservations yet.</p>
+            <p data-translate="no_reservations_message">You don't have any reservations yet.</p>
         </div>
 
         <div th:unless="${reservations.empty}">
             <div class="reservation-list">
                 <div class="reservation-card" th:each="reservation : ${reservations}">
-                    <h3>Reservation #<span th:text="${reservation.reservationId}"></span></h3>
-                    <p>Date: <span th:text="${reservation.date}"></span></p>
-                    <p>Time: <span th:text="${reservation.hour}"></span></p>
-                    <p>People: <span th:text="${reservation.nPeople}"></span></p>
-                    <p>Status: <span th:text="${reservation.state}"></span></p>
+                    <h3><span data-translate="reservation_number">Reservation #</span><span th:text="${reservation.reservationId}"></span></h3>
+                    <p><span data-translate="reservation_date">Date:</span> <span th:text="${reservation.date}"></span></p>
+                    <p><span data-translate="reservation_time">Time:</span> <span th:text="${reservation.hour}"></span></p>
+                    <p><span data-translate="reservation_people">People:</span> <span th:text="${reservation.nPeople}"></span></p>
+                    <p><span data-translate="reservation_status">Status:</span> <span th:text="${reservation.state}"></span></p>
 
-                    <button class="btn small" th:onclick="'showEditForm(' + ${reservation.reservationId} + ')'">Edit</button>
-                    <button class="btn small danger" th:onclick="'deleteReservation(' + ${reservation.reservationId} + ')'">Cancel</button>
+                    <button class="btn small" th:onclick="'showEditForm(' + ${reservation.reservationId} + ')'">
+                        <span data-translate="edit_button">Edit</span>
+                    </button>
+                    <button class="btn small danger" th:onclick="'deleteReservation(' + ${reservation.reservationId} + ')'">
+                        <span data-translate="cancel_button">Cancel</span>
+                    </button>
+
                     <th:block th:if="${reservation.state.equals('completed')} and ${reservation.review} == null">
-                        <button class="btn small" th:attr="onclick=|toggleReviewForm(${reservation.reservationId})|">Review</button>
+                        <button class="btn small" th:attr="onclick=|toggleReviewForm(${reservation.reservationId})|">
+                            <span data-translate="review_button">Review</span>
+                        </button>
                     </th:block>
 
                     <div th:attr="id='reviewError-' + ${reservation.reservationId}" class="popup-error" style="display: none; margin-top: 1rem;">
                         <span th:attr="id='reviewErrorMessage-' + ${reservation.reservationId}"></span>
                     </div>
                     <div th:attr="id='reviewSuccess-' + ${reservation.reservationId}" class="popup-success" style="display: none; margin-top: 1rem;">
-                        Review submitted successfully!
+                        <span data-translate="review_success">Review submitted successfully!</span>
                     </div>
 
                     <div class="review-form" th:attr="id='review-form-' + ${reservation.reservationId}" style="display: none;">
-                        <h4>Leave a Review</h4>
+                        <h4 data-translate="review_button">Leave a Review</h4>
                         <form th:attr="id='reviewForm-' + ${reservation.reservationId}">
                             <input type="hidden" name="reservationId" th:value="${reservation.reservationId}">
-                            <label for="rating">Rating (1-5):</label>
+                            <label for="rating" data-translate="rating_label">Rating (1-5):</label>
                             <div class="star-rating">
                                 <span class="star" data-value="1">&#9733;</span>
                                 <span class="star" data-value="2">&#9733;</span>
@@ -105,57 +120,35 @@
                             </div>
                             <input type="hidden" name="rating" value="0" required><br>
 
-                            <label for="comment">Comment:</label>
+                            <label for="comment" data-translate="comment_label">Comment:</label>
                             <textarea name="comment" maxlength="255"></textarea><br>
 
-                            <button type="button" class="btn small success" th:attr="onclick=|submitReview(${reservation.reservationId})|">Submit</button>
+                            <button type="button" class="btn small success" th:attr="onclick=|submitReview(${reservation.reservationId})|">
+                                <span data-translate="submit_button">Submit</span>
+                            </button>
                         </form>
                         <div th:attr="id='reviewMessage-' + ${reservation.reservationId}"></div>
                     </div>
 
                     <div class="edit-form" th:attr="id='edit-form-' + ${reservation.reservationId}" style="display: none;">
-                        <h4>Edit Reservation</h4>
-                        <label>Date: <input type="date" name="date" th:value="${reservation.date}"></label><br>
-                        <label>Time: <input type="time" name="hour" th:value="${reservation.hour}"></label><br>
-                        <label>People: <input type="number" name="nPeople" th:value="${reservation.nPeople}"></label><br>
-                        <button class="btn small success" th:onclick="'updateReservation(' + ${reservation.reservationId} + ')'">Save</button>
+                        <h4 data-translate="edit_reservation">Edit Reservation</h4>
+                        <label><span data-translate="reservation_date">Date:</span> <input type="date" name="date" th:value="${reservation.date}"></label><br>
+                        <label><span data-translate="reservation_time">Time:</span> <input type="time" name="hour" th:value="${reservation.hour}"></label><br>
+                        <label><span data-translate="reservation_people">People:</span> <input type="number" name="nPeople" th:value="${reservation.nPeople}"></label><br>
+                        <button class="btn small success" th:onclick="'updateReservation(' + ${reservation.reservationId} + ')'">
+                            <span data-translate="submit_button">Save</span>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="auth-links">
-            <a href="/customer/new-reservation" class="btn primary">New Reservation</a>
-            <a href="/customer/home">← Back to home</a>
+            <a href="/customer/new-reservation" class="btn primary" data-translate="new_reservation_button">New Reservation</a>
+            <a href="/customer/home" data-translate="back_to_home">← Back to home</a>
         </div>
     </div>
 
-    <!-- Review Modal -->
-    <div id="reviewModal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <span class="close" onclick="closeReviewModal()">&times;</span>
-            <h2>Leave a Review</h2>
-            <form id="reviewForm">
-                <input type="hidden" id="reservationId" name="reservationId">
-
-                <label for="rating">Rating:</label>
-                <div class="star-rating">
-                    <span class="star" data-value="1">&#9733;</span>
-                    <span class="star" data-value="2">&#9733;</span>
-                    <span class="star" data-value="3">&#9733;</span>
-                    <span class="star" data-value="4">&#9733;</span>
-                    <span class="star" data-value="5">&#9733;</span>
-                </div>
-                <input type="hidden" name="rating" value="0" required><br>
-
-                <label for="comment">Comment:</label>
-                <textarea id="comment" name="comment" maxlength="255"></textarea><br>
-
-                <button type="submit" class="btn small success">Submit</button>
-            </form>
-            <div id="reviewMessage"></div>
-        </div>
-    </div>
     <script src="/js/reservation.js"></script>
     <script src="/js/translation.js"></script>
 </body>
