@@ -2,8 +2,10 @@ package com.restaurant.reservation.Unitarian;
 
 import com.restaurant.reservation.dto.ReservationRequestDTO;
 import com.restaurant.reservation.model.Reservation;
+import com.restaurant.reservation.model.Restaurant;
 import com.restaurant.reservation.model.RestaurantTable;
 import com.restaurant.reservation.model.User;
+import com.restaurant.reservation.model.Notification;
 import com.restaurant.reservation.repository.NotificationRepository;
 import com.restaurant.reservation.repository.ReservationRepository;
 import com.restaurant.reservation.repository.RestaurantTableRepository;
@@ -13,11 +15,14 @@ import com.restaurant.reservation.service.CustomerService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -26,6 +31,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -187,4 +193,69 @@ public class CustomerServiceTest {
         assert(reservations.size() == 1);
         assert(reservations.get(0).getDate().isBefore(LocalDate.now()));
     }
+
+    @Test
+    public void shouldGenerateNotificationOnReservationCreation() {
+
+        SecurityContext context = SecurityContextHolder.createEmptyContext();
+        Authentication auth = new UsernamePasswordAuthenticationToken("user@email.com", null);
+        context.setAuthentication(auth);
+        SecurityContextHolder.setContext(context);
+
+        User user = new User();
+        user.setEmail("user@email.com");
+        when(userRepository.findByEmail("user@email.com")).thenReturn(Optional.of(user));
+
+        when(adminService.getOpeningHour()).thenReturn("09:00");
+        when(adminService.getClosingHour()).thenReturn("22:00");
+        when(tableRepository.findAvailableTables(any(), any(), anyInt()))
+            .thenReturn(List.of(new RestaurantTable()));
+
+        Restaurant mockedRestaurant = new Restaurant();
+        mockedRestaurant.setAvailabilityHours(List.of("09:00-22:00"));
+
+        ReservationRequestDTO dto = new ReservationRequestDTO(
+            LocalDate.now().plusDays(1),
+            LocalTime.of(13, 30),
+            2
+        );
+
+        customerService.makeReservation(dto);
+
+        ArgumentCaptor<Notification> notifCaptor = ArgumentCaptor.forClass(Notification.class);
+        verify(notificationRepository).save(notifCaptor.capture());
+
+        Notification notif = notifCaptor.getValue();
+        assertTrue(notif.getMessage().toLowerCase().contains("reserva"));
+    }
+
+    @Test
+    public void shouldGenerateNotificationOnReservationCancellation() {
+        
+        String email = "user@email.com";
+        SecurityContext context = SecurityContextHolder.createEmptyContext();
+        Authentication auth = new UsernamePasswordAuthenticationToken(email, null);
+        context.setAuthentication(auth);
+        SecurityContextHolder.setContext(context);
+
+        User user = new User();
+        user.setEmail(email);
+
+        Reservation reservation = new Reservation();
+        reservation.setUser(user);
+        reservation.setDate(LocalDate.now().plusDays(1));
+        reservation.setHour(LocalTime.of(13, 30));
+
+        when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
+        when(reservationRepository.findById(anyLong())).thenReturn(Optional.of(reservation));
+
+        customerService.deleteReservation(1L);
+
+        ArgumentCaptor<Notification> notifCaptor = ArgumentCaptor.forClass(Notification.class);
+        verify(notificationRepository).save(notifCaptor.capture());
+
+        Notification notif = notifCaptor.getValue();
+        assertTrue(notif.getMessage().toLowerCase().contains("cancelación") || notif.getMessage().toLowerCase().contains("cancelada"));
+    }
+
 }
