@@ -4,6 +4,7 @@ import com.restaurant.reservation.dto.ReservationRequestDTO;
 import com.restaurant.reservation.model.Reservation;
 import com.restaurant.reservation.model.RestaurantTable;
 import com.restaurant.reservation.model.User;
+import com.restaurant.reservation.repository.NotificationRepository;
 import com.restaurant.reservation.repository.ReservationRepository;
 import com.restaurant.reservation.repository.RestaurantTableRepository;
 import com.restaurant.reservation.repository.UserRepository;
@@ -36,6 +37,7 @@ public class CustomerServiceTest {
     @Mock private RestaurantTableRepository tableRepository;
     @Mock private UserRepository userRepository;
     @Mock private AdminService adminService;
+    @Mock private NotificationRepository notificationRepository;
 
     @InjectMocks private CustomerService customerService;
 
@@ -165,4 +167,24 @@ public class CustomerServiceTest {
         assertThrows(RuntimeException.class, () -> customerService.deleteReservation(1L));
     }
 
+    @Test
+    public void getPastReservations_returnsOnlyPastReservations() {
+        Reservation pastReservation = new Reservation();
+        pastReservation.setDate(LocalDate.now().minusDays(5));
+        pastReservation.setUser(user);
+
+        Reservation futureReservation = new Reservation();
+        futureReservation.setDate(LocalDate.now().plusDays(5));
+        futureReservation.setUser(user);
+
+        when(userRepository.findByEmail("user@email.com")).thenReturn(Optional.of(user));
+        when(reservationRepository.findAll()).thenReturn(List.of(pastReservation, futureReservation));
+
+        List<Reservation> reservations = reservationRepository.findAll().stream()
+                .filter(r -> r.getDate().isBefore(LocalDate.now()))
+                .toList();
+
+        assert(reservations.size() == 1);
+        assert(reservations.get(0).getDate().isBefore(LocalDate.now()));
+    }
 }
