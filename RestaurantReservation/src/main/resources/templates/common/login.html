@@ -7,6 +7,14 @@
 </head>
 <body data-page = "auth">
     <div class="auth-box">
+        <div style="margin-top: 20px; text-align: center;">
+            <label for="lang-selector" style="font-weight: bold; margin-right: 10px;" data-translate="language_label">Language:</label>
+            <select id="lang-selector" style="padding: 5px; border-radius: 5px;">
+                <option value="en">English</option>
+                <option value="es">Español</option>
+                <option value="ita">Italiano</option>
+            </select>
+        </div>
         <h2 data-translate="client_login">Client Login</h2>
 
         <!-- POPUP ERROR -->
@@ -38,15 +46,6 @@
         <div class="auth-links">
             <a href="/" data-translate="back_to_home">← Back to home</a>
         </div>
-    </div>
-
-    <div class="lang-selector">
-        <label for="lang-selector" data-translate="language_label">Language:</label>
-        <select id="lang-selector">
-            <option value="en">English</option>
-            <option value="es">Español</option>
-            <option value="ita">Italiano</option>
-        </select>
     </div>
 
     <script src="/js/translation.js"></script>

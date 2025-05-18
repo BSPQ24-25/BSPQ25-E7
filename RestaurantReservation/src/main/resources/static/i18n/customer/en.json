@@ -22,5 +22,10 @@
     "edit_button": "Edit",
     "cancel_button": "Cancel",
     "review_button": "Review",
-    "new_reservation_button": "New Reservation"
+    "new_reservation_button": "New Reservation",
+    "review_success": "Review submitted successfully!",
+    "rating_label": "Rating:",
+    "comment_label": "Comment:",
+    "submit_button": "Submit",
+    "edit_reservation": "Edit Reservation"
 }
