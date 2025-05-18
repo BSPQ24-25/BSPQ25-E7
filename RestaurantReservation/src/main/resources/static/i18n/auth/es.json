@@ -1,0 +1,20 @@
+{
+    "client_login": "Inicio de Sesión del Cliente",
+    "invalid_credentials": "Usuario o contraseña inválidos",
+    "logout_success": "Has cerrado sesión con éxito",
+    "email": "Correo Electrónico:",
+    "password": "Contraseña:",
+    "login": "Iniciar Sesión",
+    "back_to_home": "← Volver a inicio",
+    "register_title": "Registro",
+    "new_registration": "Nuevo Registro",
+    "email_exists": "Ya existe una cuenta con este correo electrónico.",
+    "username": "Nombre de Usuario:",
+    "phone": "Teléfono:",
+    "user_type": "Tipo de Usuario:",
+    "customer": "Cliente",
+    "admin": "Administrador",
+    "register": "Registrarse",
+    "already_have_account": "¿Ya tienes una cuenta? Inicia sesión",
+    "language_label": "Idioma:"
+}

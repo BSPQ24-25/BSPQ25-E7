@@ -2,16 +2,27 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Restaurant - Home</title>
+    <title data-translate="home_title">Restaurant - Home</title>
     <link href="css/styles.css" rel="stylesheet">
 </head>
-<body>
+<body data-page="index">
     <div class="auth-box">
-        <h1>Welcome to Restaurant Reservation System</h1>
+        <h1 data-translate="welcome_message">Welcome to Restaurant Reservation System</h1>
         <div class="auth-buttons">
-            <a href="/login" class="btn primary">Login</a>
-            <a href="/register" class="btn secondary">Register</a>
+            <a href="/login" class="btn primary" data-translate="login">Login</a>
+            <a href="/register" class="btn secondary" data-translate="register">Register</a>
         </div>
     </div>
+
+    <div class="lang-selector">
+        <label for="lang-selector" data-translate="language_label">Language:</label>
+        <select id="lang-selector">
+            <option value="en">English</option>
+            <option value="es">Español</option>
+            <option value="ita">Italiano</option>
+        </select>
+    </div>
+
+    <script src="/js/translation.js"></script>
 </body>
 </html>

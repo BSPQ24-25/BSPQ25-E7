@@ -56,7 +56,9 @@ public class SecurityConfig {
                     "/css/**", 
                     "/js/**", 
                     "/images/**", 
-                    "/auth/register"
+                    "/auth/register",
+                        "/i18n/**" // Permite acceso a archivos de i18n
+
                 ).permitAll()
                 .anyRequest().authenticated()
             )

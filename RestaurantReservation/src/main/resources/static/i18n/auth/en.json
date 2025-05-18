@@ -1,0 +1,20 @@
+{
+    "client_login": "Client Login",
+    "invalid_credentials": "Invalid username or password",
+    "logout_success": "You have been logged out successfully",
+    "email": "Email:",
+    "password": "Password:",
+    "login": "Login",
+    "back_to_home": "← Back to home",
+    "register_title": "Register",
+    "new_registration": "New Registration",
+    "email_exists": "An account with this email already exists.",
+    "username": "Username:",
+    "phone": "Phone:",
+    "user_type": "User Type:",
+    "customer": "Customer",
+    "admin": "Admin",
+    "register": "Register",
+    "already_have_account": "Already have an account? Login",
+    "language_label": "Language:"
+}
