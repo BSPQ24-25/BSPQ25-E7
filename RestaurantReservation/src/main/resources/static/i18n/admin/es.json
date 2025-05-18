@@ -1,0 +1,17 @@
+{
+    "welcome": "¡Bienvenido al Sistema de Reservas del Restaurante!",
+    "admin": "Administrador",
+    "table_id": "ID",
+    "table_user": "Usuario",
+    "table_date": "Fecha",
+    "table_hour": "Hora",
+    "table_people": "Personas",
+    "table_status": "Estado",
+    "modify_hours": "Modificar Horarios de Apertura",
+    "opening_hour": "Hora de Apertura:",
+    "closing_hour": "Hora de Cierre:",
+    "update_hours": "Actualizar Horarios",
+    "confirm_reservation": "Confirmar Reserva",
+    "cancel_reservation": "Cancelar Reserva",
+    "logout": "Cerrar Sesión"
+}

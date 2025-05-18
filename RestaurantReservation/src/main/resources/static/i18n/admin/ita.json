@@ -1,0 +1,17 @@
+{
+    "welcome": "Benvenuto nel Sistema di Prenotazione del Ristorante!",
+    "admin": "Amministratore",
+    "table_id": "ID",
+    "table_user": "Utente",
+    "table_date": "Data",
+    "table_hour": "Ora",
+    "table_people": "Persone",
+    "table_status": "Stato",
+    "modify_hours": "Modifica Orari di Apertura",
+    "opening_hour": "Ora di Apertura:",
+    "closing_hour": "Ora di Chiusura:",
+    "update_hours": "Aggiorna Orari",
+    "confirm_reservation": "Conferma Prenotazione",
+    "cancel_reservation": "Annulla Prenotazione",
+    "logout": "Disconnettersi"
+}

@@ -2,23 +2,34 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Home - Restaurant</title>
+    <title data-translate="home_title">Home - Restaurant</title>
     <link href="/css/styles.css" rel="stylesheet">
 </head>
-<body onload="checkAuthentication()">
+<body data-page="customer" onload="checkAuthentication(); loadTranslations();">
     <div class="home-box">
-        <h1>Welcome to the Restaurant Reservation System!</h1>
+        <h1 data-translate="welcome_message">Welcome to the Restaurant Reservation System!</h1>
         <div class="button-group">
-            <a href="/customer/new-reservation" class="btn primary">Make Reservation</a>
-            <a href="/customer/reservations" class="btn secondary">My Reservations</a>
+            <a href="/customer/new-reservation" class="btn primary" data-translate="make_reservation">Make Reservation</a>
+            <a href="/customer/reservations" class="btn secondary" data-translate="my_reservations">My Reservations</a>
         </div>
-    
+
         <form method="post" action="/logout" class="logout-form">
-            <button type="submit" class="btn logout-btn">Logout</button>
+            <button type="submit" class="btn logout-btn" data-translate="logout">Logout</button>
         </form>
-    
-        <p class="role-text">Customer</p>
-    </div>    
+
+        <p class="role-text" data-translate="role_text">Customer</p>
+    </div>
+
+    <div class="lang-selector">
+        <label for="lang-selector" data-translate="language_label">Language:</label>
+        <select id="lang-selector" onchange="loadTranslations()">
+            <option value="en">English</option>
+            <option value="es" selected>Español</option>
+            <option value="ita">Italiano</option>
+        </select>
+    </div>
+
+    <script src="/js/translation.js"></script>
     <script src="/js/auth.js"></script>
 </body>
 </html>
