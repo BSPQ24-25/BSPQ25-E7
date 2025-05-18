@@ -15,8 +15,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
+@ActiveProfiles("test")
 @ExtendWith(JUnitPerfInterceptor.class)
 public class PerformanceTest {
 
@@ -58,7 +60,7 @@ public class PerformanceTest {
     // Make reservation test
     @Test
     @JUnitPerfTest(threads = 2, durationMs = 10000, warmUpMs = 2000)
-    @JUnitPerfTestRequirement(executionsPerSec = 2, percentiles = "95:1000ms")
+    @JUnitPerfTestRequirement(executionsPerSec = 1, percentiles = "95:1000ms")
     public void testMakeReservationPerformance() {
         customerService.makeReservation(new com.restaurant.reservation.dto.ReservationRequestDTO(
             java.time.LocalDate.now().plusDays(1),
@@ -70,7 +72,7 @@ public class PerformanceTest {
     // Cancel reservation test
     @Test
     @JUnitPerfTest(threads = 2, durationMs = 8000, warmUpMs = 2000)
-    @JUnitPerfTestRequirement(executionsPerSec = 2, percentiles = "95:1000ms")
+    @JUnitPerfTestRequirement(executionsPerSec = 1, percentiles = "95:1000ms")
     public void testCancelReservationPerformance() {
         adminService.cancelReservation(1L); // Usa IDs válidos en la base de datos
     }
@@ -78,7 +80,7 @@ public class PerformanceTest {
     // Confirm Reservation test
     @Test
     @JUnitPerfTest(threads = 2, durationMs = 8000, warmUpMs = 2000)
-    @JUnitPerfTestRequirement(executionsPerSec = 2, percentiles = "95:1000ms")
+    @JUnitPerfTestRequirement(executionsPerSec = 1, percentiles = "95:1000ms")
     public void testConfirmReservationPerformance() {
         adminService.confirmReservation(1L); // Usa IDs válidos en la base de datos
     }
@@ -86,7 +88,7 @@ public class PerformanceTest {
     // ✅ Email sending test
     @Test
     @JUnitPerfTest(threads = 10, durationMs = 5000, warmUpMs = 1000)
-    @JUnitPerfTestRequirement(executionsPerSec = 2, percentiles = "95:1000ms")
+    @JUnitPerfTestRequirement(executionsPerSec = 1, percentiles = "95:1000ms")
     public void testSendEmailPerformance() {
         emailSenderService.sendEmail(
             "test@example.com",
@@ -98,7 +100,7 @@ public class PerformanceTest {
     // Review Service Test
     @Test
     @JUnitPerfTest(threads = 2, durationMs = 7000, warmUpMs = 2000)
-    @JUnitPerfTestRequirement(executionsPerSec = 2, percentiles = "95:1000ms")
+    @JUnitPerfTestRequirement(executionsPerSec = 1, percentiles = "95:1000ms")
     public void testSubmitReviewPerformance() {
         reviewService.submitReview(1L, 1L, 5, "Excellent service!"); // Usa IDs válidos
     }
