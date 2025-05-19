@@ -20,9 +20,6 @@ public class LoginRequestDTO {
     @NotBlank
     private String password;
 
-    // Getters and setters
-}
-
     // Getters y setters
     public String getEmail() {
         return email;
