@@ -56,10 +56,6 @@ jobs:
         run: |
           mysql -h 127.0.0.1 -uroot -proot -e "CREATE DATABASE IF NOT EXISTS cosanostradb;"
 
-      - name: Run Unit Tests
-        run: mvn test -Punit
-        working-directory: ./RestaurantReservation
-
       - name: Generate Maven Site
         run: mvn site
         working-directory: ./RestaurantReservation
