@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/**
+ * Service responsible for user authentication and token generation.
+ */
 @Service
 public class AuthenticationService {
 
@@ -19,25 +22,27 @@ public class AuthenticationService {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
+    /**
+     * Authenticates a user based on email and password.
+     * If the credentials are valid, a JWT token is generated and returned.
+     *
+     * @param loginRequestDTO DTO containing login credentials.
+     * @return A JWT token if authentication is successful.
+     * @throws RuntimeException if the email or password is incorrect.
+     */
     public String authenticate(LoginRequestDTO loginRequestDTO) {
-        // Buscar el usuario por el email
         Optional<User> userOptional = userRepository.findByEmail(loginRequestDTO.getEmail());
 
-        // Verificar si el usuario existe
         if (userOptional.isEmpty()) {
             throw new RuntimeException("Email o contraseña incorrectos");
         }
 
-        // Obtener el usuario
         User user = userOptional.get();
-
-        // Verificar si la contraseña es correcta (usando BCrypt)
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         if (!encoder.matches(loginRequestDTO.getPassword(), user.getPassword())) {
             throw new RuntimeException("Email o contraseña incorrectos");
         }
 
-        // Si la autenticación es exitosa, generar el token JWT
         return jwtTokenProvider.generateToken(user);
     }
 }

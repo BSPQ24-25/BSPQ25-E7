@@ -3,17 +3,30 @@ package com.restaurant.reservation.model;
 import jakarta.persistence.*;
 import java.util.List;
 
+/**
+ * Represents a restaurant.
+ * Contains its capacity, available hours, and its tables.
+ */
 @Entity
 public class Restaurant {
 
+    /**
+     * Unique identifier for the restaurant.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "restaurant_id")
     private Long id;
 
+    /**
+     * Name of the restaurant.
+     */
     @Column(nullable = false)
     private String name;
 
+    /**
+     * List of availability hours for the restaurant.
+     */
     @ElementCollection
     @CollectionTable(
         name = "restaurant_availability_hours",
@@ -22,11 +35,18 @@ public class Restaurant {
     @Column(name = "availability_hours")
     private List<String> availabilityHours;
 
+    /**
+     * Total seating capacity of the restaurant.
+     */
     @Column(nullable = false)
     private Integer capacity;
 
+    /**
+     * List of tables available in the restaurant.
+     */
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RestaurantTable> tables;
+
 
     // Getters y Setters
     public Long getId() {

@@ -2,13 +2,26 @@ package com.restaurant.reservation.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
+/**
+ * Data Transfer Object used for user login requests.
+ * Contains login credentials (email and password).
+ */
 public class LoginRequestDTO {
 
+    /**
+     * User's email address.
+     */
     @NotBlank
     private String email;
 
+    /**
+     * User's password.
+     */
     @NotBlank
     private String password;
+
+    // Getters and setters
+}
 
     // Getters y setters
     public String getEmail() {

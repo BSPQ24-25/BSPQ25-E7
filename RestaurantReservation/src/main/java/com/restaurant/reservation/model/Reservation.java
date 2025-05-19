@@ -4,34 +4,59 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+/**
+ * Represents a reservation made by a user for a specific table and time.
+ */
 @Entity
 @Table(name = "reservation")
 public class Reservation {
 
+    /**
+     * Unique identifier for the reservation.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reservation_id")
     private Long reservationId;
 
+    /**
+     * The user who made the reservation.
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    private User user; // Ya no usamos 'Customer'
+    private User user;
 
+    /**
+     * The table reserved.
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "table_id", nullable = false)
     private RestaurantTable table;
 
+    /**
+     * The date of the reservation.
+     */
     @Column(nullable = false)
     private LocalDate date;
 
+    /**
+     * The time of the reservation.
+     */
     @Column(nullable = false)
     private LocalTime hour;
 
+    /**
+     * Number of people included in the reservation.
+     */
     @Column(nullable = false, name = "n_people")
     private int nPeople;
 
+    /**
+     * The state of the reservation (e.g., confirmed).
+     */
     @Column(nullable = false, columnDefinition = "VARCHAR(50) DEFAULT 'confirmed'")
     private String state;
+
 
     // Constructores
     public Reservation() {}
