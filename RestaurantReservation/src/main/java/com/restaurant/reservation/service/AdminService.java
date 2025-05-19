@@ -14,7 +14,7 @@ import com.restaurant.reservation.model.Notification;
 
 /**
  * @class AdminService
- * @brief Servicio para gestionar funciones administrativas del restaurante.
+ * @brief Servicio para gestionar funciones administrativas del restaurante
  */
 @Service
 public class AdminService {
