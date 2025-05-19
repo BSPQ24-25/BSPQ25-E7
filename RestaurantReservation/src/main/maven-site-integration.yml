@@ -1,0 +1,48 @@
+name: Build and Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      db:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: cosanostradb
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -uroot -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Cache Maven dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          ${{ runner.os }}-maven-
+
+    - name: Run Maven build
+      run: mvn clean install -Dspring.datasource.url=jdbc:mysql://localhost:3306/cosanostradb
