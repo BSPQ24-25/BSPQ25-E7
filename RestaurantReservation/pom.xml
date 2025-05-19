@@ -107,6 +107,43 @@
 		</dependency>
     </dependencies>
 
+<profiles>
+	<profile>
+       		<id>unit</id>
+        	<properties>
+        		<skipUnitTests>false</skipUnitTests>
+        		<skipTests>false</skipTests>
+        	</properties>
+	</profile>
+	
+	<profile>
+		<id>integration</id>
+		<properties>
+			<skipIntegrationTests>false</skipIntegrationTests>
+			<skipTests>false</skipTests>
+		</properties>
+	</profile>
+	
+	<profile>
+		<id>performance</id>
+		<properties>
+			<skipPerformanceTests>false</skipPerformanceTests>
+			<skipTests>false</skipTests>
+		</properties>
+	</profile>
+	
+	<profile>
+		<id>all-tests</id>
+		<properties>
+			<skipUnitTests>false</skipUnitTests>
+			<skipIntegrationTests>false</skipIntegrationTests>
+			<skipPerformanceTests>false</skipPerformanceTests>
+			<skipTests>false</skipTests>
+		</properties>
+	</profile>
+</profiles>
+
+	
     <build>
         <plugins>
             <plugin>
