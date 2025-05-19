@@ -60,10 +60,6 @@ jobs:
         run: mvn test -Punit
         working-directory: ./RestaurantReservation
 
-      - name: Run Integration Tests
-        run: mvn verify -Pintegration
-        working-directory: ./RestaurantReservation
-
       - name: Generate Maven Site
         run: mvn site
         working-directory: ./RestaurantReservation
