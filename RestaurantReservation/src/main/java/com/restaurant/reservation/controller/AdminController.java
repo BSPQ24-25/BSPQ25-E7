@@ -15,6 +15,9 @@ import java.util.List;
 import com.restaurant.reservation.model.Notification; 
 import com.restaurant.reservation.repository.NotificationRepository;
 
+/**
+ * Controller that handles admin operations such as viewing reservations and notifications.
+ */
 @Controller
 @RequestMapping("/admin")
 public class AdminController {

@@ -3,6 +3,9 @@ package com.restaurant.reservation.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+/**
+ * Controller to handle navigation to public and customer pages.
+ */
 @Controller
 public class PageController {
 

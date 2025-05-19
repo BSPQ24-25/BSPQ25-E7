@@ -6,32 +6,53 @@ import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+/**
+ * Represents a review made by a customer for a reservation.
+ */
 @Entity
 @Table(name = "review")
 public class Review implements Serializable {
 
+    /**
+     * Unique identifier for the review.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_id")
     private Long reviewId;
 
+    /**
+     * The customer who made the review.
+     */
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private User customer;
 
+    /**
+     * The reservation being reviewed.
+     */
     @OneToOne
     @JoinColumn(name = "reservation_id", nullable = false, unique = true)
     private Reservation reservation;
 
-    @Min(value = 1, message = "Rating must be at least 1")
-    @Max(value = 5, message = "Rating cannot be greater than 5")
+    /**
+     * Rating given in the review (1 to 5).
+     */
+    @Min(1)
+    @Max(5)
     @Column(name = "rating", nullable = false)
     private int rating;
 
-    @Size(max = 255, message = "Comment cannot exceed 255 characters")
+    /**
+     * Optional comment from the customer.
+     */
+    @Size(max = 255)
     @Column(name = "comment", length = 255)
     private String comment;
 
+    /**
+     * Timestamp when the review was created.
+     */
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 

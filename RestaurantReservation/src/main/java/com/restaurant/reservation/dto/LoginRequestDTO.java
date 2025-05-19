@@ -1,5 +1,9 @@
 package com.restaurant.reservation.dto;
 
+/**
+ * @class LoginRequestDTO
+ * @brief DTO de entrada para la autenticación de usuarios.
+ */
 public class LoginRequestDTO {
     private String email;
     private String password;

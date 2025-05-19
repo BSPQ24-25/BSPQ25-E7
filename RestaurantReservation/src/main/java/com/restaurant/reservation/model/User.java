@@ -5,33 +5,55 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import java.io.Serializable;
 
+/**
+ * Represents a user of the system.
+ * A user can be either an admin or a customer, identified by email.
+ */
 @Entity
 @Table(name = "user")
 public class User implements Serializable {
 
+    /**
+     * Unique identifier for the user.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @NotBlank(message = "Email es obligatorio")
+    /**
+     * User email (must be unique and valid format).
+     */
+    @NotBlank
+    @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$")
     @Column(name = "email", nullable = false, unique = true, length = 100)
-    @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$", message = "Formato de email inválido")
     private String email;
 
-    @NotBlank(message = "Nombre de usuario es obligatorio")
+    /**
+     * Username of the user.
+     */
+    @NotBlank
     @Column(name = "username", nullable = false, length = 100)
     private String username;
 
-    @NotBlank(message = "Teléfono es obligatorio")
+    /**
+     * Phone number of the user.
+     */
+    @NotBlank
+    @Pattern(regexp = "^[+]?[(]?[0-9]{1,4}[)]?[-\\s./0-9]*$")
     @Column(name = "phone", nullable = false, length = 50)
-    @Pattern(regexp = "^[+]?[(]?[0-9]{1,4}[)]?[-\\s./0-9]*$", message = "Formato de teléfono inválido")
     private String phone;
 
-    @NotBlank(message = "Contraseña es obligatoria")
+    /**
+     * Password for the account.
+     */
+    @NotBlank
     @Column(name = "password", nullable = false, length = 100)
     private String password;
 
+    /**
+     * Role of the user in the system (e.g. ADMIN, CUSTOMER).
+     */
     @Enumerated(EnumType.STRING)
     @Column(name = "user_type", nullable = false)
     private UserType userType;

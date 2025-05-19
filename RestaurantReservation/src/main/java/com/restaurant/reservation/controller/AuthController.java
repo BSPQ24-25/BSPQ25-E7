@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controller that handles user registration.
+ */
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
@@ -18,6 +21,15 @@ public class AuthController {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Processes the user registration form submission.
+     * @param username the new user's username
+     * @param email the new user's email
+     * @param phone the new user's phone
+     * @param password the new user's password
+     * @param userType the type of user (ADMIN/CUSTOMER)
+     * @return redirect URL
+     */
     @PostMapping("/register")
     public String registerForm(@RequestParam String username,
                                 @RequestParam String email,

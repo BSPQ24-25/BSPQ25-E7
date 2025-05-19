@@ -27,6 +27,16 @@ public class ReviewService {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * @brief Envía una reseña para una reserva completada.
+     * @param customerId ID del cliente.
+     * @param reservationId ID de la reserva.
+     * @param rating Puntuación otorgada.
+     * @param comment Comentario adicional.
+     * @return Review creada.
+     * @throws IllegalStateException si la reserva no es válida para reseñar.
+     */
+
     @Transactional
     public Review submitReview(Long customerId, Long reservationId, int rating, String comment) {
         Optional<User> customerOpt = userRepository.findById(customerId);
@@ -55,13 +65,31 @@ public class ReviewService {
         return reviewRepository.save(review);
     }
 
+    /**
+     * @brief Obtiene todas las reseñas realizadas por un cliente.
+     * @param customerId ID del cliente.
+     * @return Lista de reseñas.
+     */
+
     public List<Review> getReviewsByCustomer(Long customerId) {
         return reviewRepository.findByCustomerId(customerId);
     }
 
+    /**
+     * @brief Obtiene todas las reseñas dirigidas al restaurante.
+     * @param restaurantId ID del restaurante.
+     * @return Lista de reseñas.
+     */
+    
     public List<Review> getReviewsByRestaurant(Long restaurantId) {
         return reviewRepository.findByRestaurantId(restaurantId);
     }
+
+    /**
+     * @brief Verifica si una reserva ya fue reseñada.
+     * @param reservationId ID de la reserva.
+     * @return true si ya fue reseñada, false en caso contrario.
+     */
 
     public boolean hasReservationBeenReviewed(Long reservationId) {
         return reviewRepository.existsByReservationId(reservationId);

@@ -2,6 +2,11 @@ package com.restaurant.reservation.dto;
 
 import com.restaurant.reservation.model.UserType;
 
+/**
+ * @class UserResponseDTO
+ * @brief DTO de salida para representar datos públicos de un usuario.
+ */
+
 public class UserResponseDTO {
 
     private Long id;
@@ -9,6 +14,15 @@ public class UserResponseDTO {
     private String username;
     private String phone;
     private UserType userType;
+
+    /**
+     * @brief Constructor con todos los campos.
+     * @param id ID del usuario.
+     * @param email Email del usuario.
+     * @param username Nombre de usuario.
+     * @param phone Teléfono del usuario.
+     * @param userType Tipo de usuario (ADMIN, CUSTOMER).
+     */
 
     // Constructor
     public UserResponseDTO(Long id, String email, String username, String phone, UserType userType) {

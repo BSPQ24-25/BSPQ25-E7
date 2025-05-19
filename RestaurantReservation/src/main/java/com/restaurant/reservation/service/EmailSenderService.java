@@ -13,6 +13,13 @@ public class EmailSenderService {
     @Autowired
     private JavaMailSender mailSender;
 
+    /**
+     * @brief Envía un correo electrónico HTML.
+     * @param to Dirección de destino.
+     * @param subject Asunto del correo.
+     * @param htmlContent Contenido en formato HTML.
+     */
+
     public void sendEmail(String to, String subject, String htmlContent) {
         System.out.println("[EmailSenderService] Preparando email...");
         System.out.println("A: " + to);

@@ -5,6 +5,10 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+/**
+ * @class ReviewRequestDTO
+ * @brief DTO de entrada para enviar una nueva reseña.
+ */
 public class ReviewRequestDTO {
 
     @NotNull(message = "Customer ID is required.")

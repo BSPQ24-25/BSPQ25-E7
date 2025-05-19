@@ -40,6 +40,14 @@ public class CustomerService {
     @Autowired
     private NotificationRepository notificationRepository;
 
+    /**
+     * @brief Crea una nueva reserva para el usuario autenticado.
+     * @param reservationDTO Datos de la reserva.
+     * @throws InvalidReservationTimeException si la hora es inválida o está ocupada.
+     * @throws PastDateReservationException si la fecha está en el pasado.
+     * @throws NoTableWithEnoughCapacityException si no hay mesas suficientes.
+     */
+    
     @Transactional
     public void makeReservation(ReservationRequestDTO reservationDTO) {
         LocalDate reservationDate = reservationDTO.getDate();

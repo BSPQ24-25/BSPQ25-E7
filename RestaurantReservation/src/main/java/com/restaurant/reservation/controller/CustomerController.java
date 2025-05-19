@@ -18,6 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Controller that handles customer-side reservation operations.
+ */
 @Controller
 @RequestMapping("/customer")
 public class CustomerController {

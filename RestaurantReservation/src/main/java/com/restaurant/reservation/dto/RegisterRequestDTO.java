@@ -5,6 +5,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
+/**
+ * @class RegisterRequestDTO
+ * @brief DTO de entrada para el registro de un nuevo usuario.
+ */
 public class RegisterRequestDTO {
 
     @NotBlank
@@ -69,6 +73,14 @@ public class RegisterRequestDTO {
         
     }
 
+    /**
+     * @brief Constructor completo.
+     * @param email Email del usuario.
+     * @param username Nombre de usuario.
+     * @param phone Teléfono del usuario.
+     * @param password Contraseña.
+     * @param userType Tipo de usuario (ADMIN o CUSTOMER).
+     */
     public RegisterRequestDTO(String email, String username, String phone, String password, UserType userType) {
         this.email = email;
         this.username = username;
