@@ -1,0 +1,4 @@
+var _custom_authentication_success_handler_8java =
+[
+    [ "com.restaurant.reservation.security.CustomAuthenticationSuccessHandler", "classcom_1_1restaurant_1_1reservation_1_1security_1_1_custom_authentication_success_handler.html", "classcom_1_1restaurant_1_1reservation_1_1security_1_1_custom_authentication_success_handler" ]
+];

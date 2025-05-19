@@ -1,0 +1,5 @@
+var namespacecom_1_1restaurant_1_1reservation_1_1security =
+[
+    [ "CustomAuthenticationSuccessHandler", "classcom_1_1restaurant_1_1reservation_1_1security_1_1_custom_authentication_success_handler.html", "classcom_1_1restaurant_1_1reservation_1_1security_1_1_custom_authentication_success_handler" ],
+    [ "CustomUserDetails", "classcom_1_1restaurant_1_1reservation_1_1security_1_1_custom_user_details.html", "classcom_1_1restaurant_1_1reservation_1_1security_1_1_custom_user_details" ]
+];
