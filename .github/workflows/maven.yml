@@ -21,10 +21,10 @@ jobs:
         ports:
           - 3306:3306
         options: >-
-          --health-cmd="mysqladmin ping -h localhost -uroot -proot"
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot"
           --health-interval=10s
           --health-timeout=5s
-          --health-retries=3
+          --health-retries=5
 
 
     steps:
@@ -54,12 +54,16 @@ jobs:
 
       - name: Create database schema if needed
         run: |
-          mysql -h 127.0.0.1 -uroot -proot -e "CREATE DATABASE IF NOT EXISTS restaurant_db;"
+          mysql -h 127.0.0.1 -uroot -proot -e "CREATE DATABASE IF NOT EXISTS cosanostradb;"
 
-      - name: Run Maven Tests
-        run: ./mvnw test
+      - name: Run Unit Tests
+        run: mvn test -Punit
+        working-directory: ./RestaurantReservation
+
+      - name: Run Integration Tests
+        run: mvn verify -Pintegration
         working-directory: ./RestaurantReservation
 
       - name: Generate Maven Site
-        run: ./mvnw site
+        run: mvn site
         working-directory: ./RestaurantReservation
