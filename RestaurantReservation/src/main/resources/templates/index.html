@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title data-translate="home_title">Restaurant - Home</title>
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body data-page="index">
+    <div class="auth-box">
+        <div style="margin-top: 20px; text-align: center;">
+            <label for="lang-selector" style="font-weight: bold; margin-right: 10px;" data-translate="language_label">Language:</label>
+            <select id="lang-selector" style="padding: 5px; border-radius: 5px;">
+                <option value="en">English</option>
+                <option value="es">Español</option>
+                <option value="ita">Italiano</option>
+            </select>
+        </div>
+        <h1 data-translate="welcome_message">Welcome to Restaurant Reservation System</h1>
+        <div class="auth-buttons">
+            <a href="/login" class="btn primary" data-translate="login">Login</a>
+            <a href="/register" class="btn secondary" data-translate="register">Register</a>
+        </div>
+    </div>
+
+    <script src="/js/translation.js"></script>
+</body>
+</html>

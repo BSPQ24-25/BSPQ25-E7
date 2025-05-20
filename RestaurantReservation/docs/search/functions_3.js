@@ -1,5 +1,6 @@
 var searchData=
 [
+<<<<<<< HEAD
   ['generatetoken_0',['generateToken',['../classcom_1_1restaurant_1_1reservation_1_1security_1_1_jwt_token_provider.html#a6ae5c44950181669b25857fa789ff9a7',1,'com::restaurant::reservation::security::JwtTokenProvider']]],
   ['getauthorities_1',['getAuthorities',['../classcom_1_1restaurant_1_1reservation_1_1security_1_1_custom_user_details.html#a973359b3bccf74adae6b4978beac04a8',1,'com::restaurant::reservation::security::CustomUserDetails']]],
   ['getavailabilityhours_2',['getAvailabilityHours',['../classcom_1_1restaurant_1_1reservation_1_1model_1_1_restaurant.html#ab908882d6ce7b1dd12d98f45b0bf908a',1,'com::restaurant::reservation::model::Restaurant']]],
@@ -22,4 +23,7 @@ var searchData=
   ['getuserbyemail_19',['getUserByEmail',['../interfacecom_1_1restaurant_1_1reservation_1_1service_1_1_user_service.html#a48d052e54453c721c9775a864e872d74',1,'com.restaurant.reservation.service.UserService.getUserByEmail()'],['../classcom_1_1restaurant_1_1reservation_1_1service_1_1_user_service_impl.html#a65190d253381df8bf53868dc229bfb06',1,'com.restaurant.reservation.service.UserServiceImpl.getUserByEmail()']]],
   ['getusername_20',['getUsername',['../classcom_1_1restaurant_1_1reservation_1_1dto_1_1_register_request_d_t_o.html#a07d504754f3d3e605c250eebe4786569',1,'com.restaurant.reservation.dto.RegisterRequestDTO.getUsername()'],['../classcom_1_1restaurant_1_1reservation_1_1dto_1_1_user_response_d_t_o.html#aded98ba0eaef60474461438d4aa8e83b',1,'com.restaurant.reservation.dto.UserResponseDTO.getUsername()'],['../classcom_1_1restaurant_1_1reservation_1_1model_1_1_user.html#aabeaf995eed6083afc73ff160873678b',1,'com.restaurant.reservation.model.User.getUsername()'],['../classcom_1_1restaurant_1_1reservation_1_1security_1_1_custom_user_details.html#a04a9f681c861b89ad72d8f1fd20d93b4',1,'com.restaurant.reservation.security.CustomUserDetails.getUsername()']]],
   ['getusertype_21',['getUserType',['../classcom_1_1restaurant_1_1reservation_1_1dto_1_1_register_request_d_t_o.html#a66e49a9b891d94ec1d5d26ab3304d54e',1,'com.restaurant.reservation.dto.RegisterRequestDTO.getUserType()'],['../classcom_1_1restaurant_1_1reservation_1_1dto_1_1_user_response_d_t_o.html#a508eff5534f7ff280aea97de3b0cf6fd',1,'com.restaurant.reservation.dto.UserResponseDTO.getUserType()'],['../classcom_1_1restaurant_1_1reservation_1_1model_1_1_user.html#a8da8edf31ede5d011d95eca4d6563609',1,'com.restaurant.reservation.model.User.getUserType()']]]
+=======
+  ['existsbyreservationid_0',['existsByReservationId',['../interfacecom_1_1restaurant_1_1reservation_1_1repository_1_1_review_repository.html#ab9c1c5ddeb540dabbbd2c2ddb388b5b8',1,'com::restaurant::reservation::repository::ReviewRepository']]]
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
 ];

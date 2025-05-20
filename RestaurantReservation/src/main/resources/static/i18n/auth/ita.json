@@ -1,0 +1,20 @@
+{
+    "client_login": "Accesso Cliente",
+    "invalid_credentials": "Nome utente o password non validi",
+    "logout_success": "Disconnessione avvenuta con successo",
+    "email": "Email:",
+    "password": "Password:",
+    "login": "Accedi",
+    "back_to_home": "← Torna alla home",
+    "register_title": "Registrazione",
+    "new_registration": "Nuova Registrazione",
+    "email_exists": "Esiste già un account con questa email.",
+    "username": "Nome Utente:",
+    "phone": "Telefono:",
+    "user_type": "Tipo di Utente:",
+    "customer": "Cliente",
+    "admin": "Amministratore",
+    "register": "Registrati",
+    "already_have_account": "Hai già un account? Accedi",
+    "language_label": "Lingua:"
+}

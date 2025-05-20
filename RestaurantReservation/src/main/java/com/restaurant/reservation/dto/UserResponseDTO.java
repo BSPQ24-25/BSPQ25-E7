@@ -3,8 +3,15 @@ package com.restaurant.reservation.dto;
 import com.restaurant.reservation.model.UserType;
 
 /**
+<<<<<<< HEAD
  * Data Transfer Object used to send user data in API responses.
  */
+=======
+ * @class UserResponseDTO
+ * @brief DTO de salida para representar datos públicos de un usuario.
+ */
+
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
 public class UserResponseDTO {
 
     private Long id;             /**< User's unique identifier. */
@@ -14,6 +21,7 @@ public class UserResponseDTO {
     private UserType userType;   /**< User type (e.g., ADMIN or CUSTOMER). */
 
     /**
+<<<<<<< HEAD
      * Constructs a UserResponseDTO with user information.
      * @param id User ID
      * @param email Email address
@@ -21,6 +29,17 @@ public class UserResponseDTO {
      * @param phone Phone number
      * @param userType Type of user
      */
+=======
+     * @brief Constructor con todos los campos.
+     * @param id ID del usuario.
+     * @param email Email del usuario.
+     * @param username Nombre de usuario.
+     * @param phone Teléfono del usuario.
+     * @param userType Tipo de usuario (ADMIN, CUSTOMER).
+     */
+
+    // Constructor
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
     public UserResponseDTO(Long id, String email, String username, String phone, UserType userType) {
         this.id = id;
         this.email = email;

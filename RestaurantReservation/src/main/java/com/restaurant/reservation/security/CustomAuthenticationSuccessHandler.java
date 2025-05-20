@@ -23,11 +23,11 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         String role = userDetails.getUser().getUserType().name();
 
         if (role.equals("ADMIN")) {
-            response.sendRedirect("/admin.html");
+            response.sendRedirect("/admin/home");
         } else if (role.equals("CUSTOMER")) {
-            response.sendRedirect("/customer.html");
+            response.sendRedirect("/customer/home");
         } else {
-            response.sendRedirect("/index.html"); // Por si acaso
+            response.sendRedirect("/"); // Fallback al home
         }
     }
 }

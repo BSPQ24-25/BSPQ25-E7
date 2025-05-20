@@ -6,8 +6,13 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 /**
+<<<<<<< HEAD
  * Data Transfer Object used to register a new user.
  * Contains user credentials and contact details.
+=======
+ * @class RegisterRequestDTO
+ * @brief DTO de entrada para el registro de un nuevo usuario.
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
  */
 public class RegisterRequestDTO {
 
@@ -82,6 +87,26 @@ public class RegisterRequestDTO {
     }
 
     public void setUserType(UserType userType) {
+        this.userType = userType;
+    }
+
+    public RegisterRequestDTO() {
+        
+    }
+
+    /**
+     * @brief Constructor completo.
+     * @param email Email del usuario.
+     * @param username Nombre de usuario.
+     * @param phone Teléfono del usuario.
+     * @param password Contraseña.
+     * @param userType Tipo de usuario (ADMIN o CUSTOMER).
+     */
+    public RegisterRequestDTO(String email, String username, String phone, String password, UserType userType) {
+        this.email = email;
+        this.username = username;
+        this.phone = phone;
+        this.password = password;
         this.userType = userType;
     }
 }

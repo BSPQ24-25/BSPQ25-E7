@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title data-translate="login_title">Login</title>
+    <link href="/css/styles.css" rel="stylesheet">
+</head>
+<body data-page = "auth">
+    <div class="auth-box">
+        <div style="margin-top: 20px; text-align: center;">
+            <label for="lang-selector" style="font-weight: bold; margin-right: 10px;" data-translate="language_label">Language:</label>
+            <select id="lang-selector" style="padding: 5px; border-radius: 5px;">
+                <option value="en">English</option>
+                <option value="es">Español</option>
+                <option value="ita">Italiano</option>
+            </select>
+        </div>
+        <h2 data-translate="client_login">Client Login</h2>
+
+        <!-- POPUP ERROR -->
+        <div th:if="${param.error}">
+            <div class="popup-error" data-translate="invalid_credentials">
+                Invalid username or password
+            </div>
+        </div>
+
+        <!-- POPUP LOGOUT -->
+        <div th:if="${param.logout}">
+            <div class="popup-success" data-translate="logout_success">
+                You have been logged out successfully
+            </div>
+        </div>
+
+        <form method="post" action="/login" id="login-form">
+            <div class="input-group">
+                <label for="email" data-translate="email">Email:</label>
+                <input type="email" id="email" name="username" autocomplete="username" required>
+            </div>
+            <div class="input-group">
+                <label for="password" data-translate="password">Password:</label>
+                <input type="password" id="password" name="password" autocomplete="current-password" required>
+            </div>
+            <button type="submit" class="btn auth-submit" data-translate="login">Login</button>
+        </form>
+
+        <div class="auth-links">
+            <a href="/" data-translate="back_to_home">← Back to home</a>
+        </div>
+    </div>
+
+    <script src="/js/translation.js"></script>
+    <script src="/js/auth.js"></script>
+
+</body>
+</html>

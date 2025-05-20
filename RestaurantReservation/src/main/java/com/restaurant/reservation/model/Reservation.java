@@ -5,7 +5,11 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 /**
+<<<<<<< HEAD
  * Represents a reservation made by a user for a specific table and time.
+=======
+ * Represents a reservation made by a user for a restaurant table.
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
  */
 @Entity
 @Table(name = "reservation")
@@ -34,24 +38,37 @@ public class Reservation {
     private RestaurantTable table;
 
     /**
+<<<<<<< HEAD
      * The date of the reservation.
+=======
+     * Date of the reservation.
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
      */
     @Column(nullable = false)
     private LocalDate date;
 
     /**
+<<<<<<< HEAD
      * The time of the reservation.
+=======
+     * Time of the reservation.
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
      */
     @Column(nullable = false)
     private LocalTime hour;
 
     /**
+<<<<<<< HEAD
      * Number of people included in the reservation.
+=======
+     * Number of people for the reservation.
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
      */
     @Column(nullable = false, name = "n_people")
     private int nPeople;
 
     /**
+<<<<<<< HEAD
      * The state of the reservation (e.g., confirmed).
      */
     @Column(nullable = false, columnDefinition = "VARCHAR(50) DEFAULT 'confirmed'")
@@ -59,10 +76,33 @@ public class Reservation {
 
 
     // Constructores
+=======
+     * Current state of the reservation (e.g. confirmed, cancelled).
+     */
+    @Column(nullable = false)
+    private String state;
+
+    /**
+     * Review associated with the reservation.
+     */
+    @OneToOne(mappedBy = "reservation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Review review;
+
+    /**
+     * Default constructor.
+     */
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
     public Reservation() {}
 
-    public Reservation(User user, RestaurantTable table, 
-                      LocalDate date, LocalTime hour, int nPeople) {
+    /**
+     * Constructor with required fields.
+     * @param user user who made the reservation
+     * @param table reserved table
+     * @param date date of reservation
+     * @param hour time of reservation
+     * @param nPeople number of people
+     */
+    public Reservation(User user, RestaurantTable table, LocalDate date, LocalTime hour, int nPeople) {
         this.user = user;
         this.table = table;
         this.date = date;
@@ -71,7 +111,7 @@ public class Reservation {
         this.state = "confirmed";
     }
 
-    // Getters y setters
+    // Getters and Setters
     public Long getReservationId() {
         return reservationId;
     }
@@ -130,5 +170,13 @@ public class Reservation {
 
     public Long getId() {
         return this.reservationId;
+    }
+
+    public Review getReview() {
+        return review;
+    }
+
+    public void setReview(Review review) {
+        this.review = review;
     }
 }

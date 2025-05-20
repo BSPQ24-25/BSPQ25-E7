@@ -1,5 +1,6 @@
 var searchData=
 [
+<<<<<<< HEAD
   ['securityconfig_0',['SecurityConfig',['../classcom_1_1restaurant_1_1reservation_1_1config_1_1_security_config.html#a97d38c334c94807e929d8bc4518246aa',1,'com::restaurant::reservation::config::SecurityConfig']]],
   ['setavailabilityhours_1',['setAvailabilityHours',['../classcom_1_1restaurant_1_1reservation_1_1model_1_1_restaurant.html#a2ae8e03879f6fd20b76923a765421c39',1,'com::restaurant::reservation::model::Restaurant']]],
   ['setcapacity_2',['setCapacity',['../classcom_1_1restaurant_1_1reservation_1_1model_1_1_restaurant.html#a8759e0eacb613ea61b2bfdbd47456d58',1,'com.restaurant.reservation.model.Restaurant.setCapacity()'],['../classcom_1_1restaurant_1_1reservation_1_1model_1_1_restaurant_table.html#af665a9d5243c31136669bb6cf13aadfb',1,'com.restaurant.reservation.model.RestaurantTable.setCapacity()']]],
@@ -19,4 +20,7 @@ var searchData=
   ['setuser_16',['setUser',['../classcom_1_1restaurant_1_1reservation_1_1model_1_1_reservation.html#aeed9c975467562234c5494e1fad55f42',1,'com::restaurant::reservation::model::Reservation']]],
   ['setusername_17',['setUsername',['../classcom_1_1restaurant_1_1reservation_1_1dto_1_1_register_request_d_t_o.html#affdd1ad6bc52348ab31d676bb8890a19',1,'com.restaurant.reservation.dto.RegisterRequestDTO.setUsername()'],['../classcom_1_1restaurant_1_1reservation_1_1model_1_1_user.html#ac65492646867a68dbbe94c658c04e652',1,'com.restaurant.reservation.model.User.setUsername()']]],
   ['setusertype_18',['setUserType',['../classcom_1_1restaurant_1_1reservation_1_1dto_1_1_register_request_d_t_o.html#add37d83097c716a70f1fb83557ac1abe',1,'com.restaurant.reservation.dto.RegisterRequestDTO.setUserType()'],['../classcom_1_1restaurant_1_1reservation_1_1model_1_1_user.html#ac2deb64a1ad7c4c0b475d92f5f9a8616',1,'com.restaurant.reservation.model.User.setUserType()']]]
+=======
+  ['onauthenticationsuccess_0',['onAuthenticationSuccess',['../classcom_1_1restaurant_1_1reservation_1_1security_1_1_custom_authentication_success_handler.html#ad6e788b8a28abc31919882048cd826a6',1,'com::restaurant::reservation::security::CustomAuthenticationSuccessHandler']]]
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
 ];

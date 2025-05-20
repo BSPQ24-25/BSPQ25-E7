@@ -3,8 +3,12 @@ package com.restaurant.reservation.model;
 import jakarta.persistence.*;
 
 /**
+<<<<<<< HEAD
  * Represents a table within a restaurant.
  * Each table has a capacity and a state (e.g., available, reserved).
+=======
+ * Represents a table in a restaurant.
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
  */
 @Entity
 @Table(name = "restaurant_table")
@@ -25,13 +29,21 @@ public class RestaurantTable {
     private Integer capacity;
 
     /**
+<<<<<<< HEAD
      * Current state of the table (e.g., available, occupied).
+=======
+     * Current state of the table (e.g. available, reserved).
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
      */
     @Column(nullable = false)
     private String state;
 
     /**
+<<<<<<< HEAD
      * The restaurant to which the table belongs.
+=======
+     * Restaurant to which the table belongs.
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)

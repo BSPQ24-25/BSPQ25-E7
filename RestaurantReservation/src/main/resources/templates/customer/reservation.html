@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title data-translate="new_reservation_title">New Reservation</title>
+    <link href="/css/styles.css" rel="stylesheet">
+</head>
+<body data-page="customer">
+    <div class="auth-box">
+        <div style="display: flex; justify-content: flex-end; padding: 20px;">
+            <label for="lang-selector" style="margin-right: 10px; font-weight: bold;" data-translate="language_label">Language:</label>
+            <select id="lang-selector" style="padding: 5px; border-radius: 5px;">
+                <option value="en">English</option>
+                <option value="es">Español</option>
+                <option value="ita">Italiano</option>
+            </select>
+        </div>
+        <h2 data-translate="new_reservation_heading">New Reservation</h2>
+
+        <!-- ALERTA DE ERROR -->
+        <div th:if="${errorMessage}" class="popup-error" style="margin-bottom: 1rem;">
+            <span th:text="${errorMessage}"></span>
+        </div>
+
+        <form th:action="@{/customer/make-reservation}" th:object="${reservation}" method="post">
+            <div class="input-group">
+                <label for="date" data-translate="reservation_date">Date:</label>
+                <input type="date" id="date" th:field="*{date}" th:attr="min=${minDate}" required>
+            </div>
+
+            <div class="input-group">
+                <label for="hour" data-translate="reservation_time">Time:</label>
+                <select id="hour" th:field="*{hour}" required>
+                    <option value="" disabled selected data-translate="select_time">Select a time</option>
+                    <option th:each="time : ${availableHours}"
+                            th:value="${time}"
+                            th:text="${time}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="nPeople" data-translate="reservation_people">Number of people:</label>
+                <input type="range" id="nPeople" th:field="*{nPeople}" min="1" max="20" value="1" oninput="updateSliderValue(this.value)" required>
+                <span id="sliderValue">1</span>
+            </div>
+
+            <button type="submit" class="btn auth-submit" data-translate="make_reservation">Make Reservation</button>
+        </form>
+
+        <div class="auth-links">
+            <a href="/customer/home" data-translate="back_to_home">← Back to home</a>
+        </div>
+    </div>
+
+    <script>
+        // Update slider value display
+        function updateSliderValue(value) {
+            document.getElementById('sliderValue').textContent = value;
+        }
+
+        // Ensure minimum date is set
+        document.addEventListener("DOMContentLoaded", function() {
+            const dateInput = document.getElementById('date');
+            if (dateInput) {
+                dateInput.min = new Date().toISOString().split('T')[0];
+            }
+        });
+    </script>
+    <script src="/js/translation.js"></script>
+</body>
+</html>

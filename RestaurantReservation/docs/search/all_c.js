@@ -1,5 +1,6 @@
 var searchData=
 [
+<<<<<<< HEAD
   ['securityconfig_0',['SecurityConfig',['../classcom_1_1restaurant_1_1reservation_1_1config_1_1_security_config.html',1,'com.restaurant.reservation.config.SecurityConfig'],['../classcom_1_1restaurant_1_1reservation_1_1config_1_1_security_config.html#a97d38c334c94807e929d8bc4518246aa',1,'com.restaurant.reservation.config.SecurityConfig.SecurityConfig()']]],
   ['securityconfig_2ejava_1',['SecurityConfig.java',['../_security_config_8java.html',1,'']]],
   ['setavailabilityhours_2',['setAvailabilityHours',['../classcom_1_1restaurant_1_1reservation_1_1model_1_1_restaurant.html#a2ae8e03879f6fd20b76923a765421c39',1,'com::restaurant::reservation::model::Restaurant']]],
@@ -20,4 +21,12 @@ var searchData=
   ['setuser_17',['setUser',['../classcom_1_1restaurant_1_1reservation_1_1model_1_1_reservation.html#aeed9c975467562234c5494e1fad55f42',1,'com::restaurant::reservation::model::Reservation']]],
   ['setusername_18',['setUsername',['../classcom_1_1restaurant_1_1reservation_1_1dto_1_1_register_request_d_t_o.html#affdd1ad6bc52348ab31d676bb8890a19',1,'com.restaurant.reservation.dto.RegisterRequestDTO.setUsername()'],['../classcom_1_1restaurant_1_1reservation_1_1model_1_1_user.html#ac65492646867a68dbbe94c658c04e652',1,'com.restaurant.reservation.model.User.setUsername()']]],
   ['setusertype_19',['setUserType',['../classcom_1_1restaurant_1_1reservation_1_1dto_1_1_register_request_d_t_o.html#add37d83097c716a70f1fb83557ac1abe',1,'com.restaurant.reservation.dto.RegisterRequestDTO.setUserType()'],['../classcom_1_1restaurant_1_1reservation_1_1model_1_1_user.html#ac2deb64a1ad7c4c0b475d92f5f9a8616',1,'com.restaurant.reservation.model.User.setUserType()']]]
+=======
+  ['pagecontroller_0',['PageController',['../classcom_1_1restaurant_1_1reservation_1_1controller_1_1_page_controller.html',1,'com::restaurant::reservation::controller']]],
+  ['pagecontroller_2ejava_1',['PageController.java',['../_page_controller_8java.html',1,'']]],
+  ['passwordencoder_2',['passwordEncoder',['../classcom_1_1restaurant_1_1reservation_1_1config_1_1_security_config.html#a9e1bc227e57494ed92734be4e429726d',1,'com::restaurant::reservation::config::SecurityConfig']]],
+  ['pastdatereservationexception_3',['PastDateReservationException',['../classcom_1_1restaurant_1_1reservation_1_1exception_1_1_past_date_reservation_exception.html',1,'com.restaurant.reservation.exception.PastDateReservationException'],['../classcom_1_1restaurant_1_1reservation_1_1exception_1_1_past_date_reservation_exception.html#ad8e2c3f69728210dfcc6f82cd39644d5',1,'com.restaurant.reservation.exception.PastDateReservationException.PastDateReservationException()']]],
+  ['pastdatereservationexception_2ejava_4',['PastDateReservationException.java',['../_past_date_reservation_exception_8java.html',1,'']]],
+  ['populatecurrentuser_5',['populateCurrentUser',['../classcom_1_1restaurant_1_1reservation_1_1controller_1_1_global_model_attributes.html#a36a0d86a1e47d1736dbe8ad952d36474',1,'com::restaurant::reservation::controller::GlobalModelAttributes']]]
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
 ];

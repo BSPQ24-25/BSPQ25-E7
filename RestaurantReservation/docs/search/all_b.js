@@ -1,5 +1,6 @@
 var searchData=
 [
+<<<<<<< HEAD
   ['registerrequestdto_0',['RegisterRequestDTO',['../classcom_1_1restaurant_1_1reservation_1_1dto_1_1_register_request_d_t_o.html',1,'com::restaurant::reservation::dto']]],
   ['registerrequestdto_2ejava_1',['RegisterRequestDTO.java',['../_register_request_d_t_o_8java.html',1,'']]],
   ['registeruser_2',['registerUser',['../classcom_1_1restaurant_1_1reservation_1_1controller_1_1_user_controller.html#a2e18061d843dcd6a3c23f5e7bc922ce1',1,'com.restaurant.reservation.controller.UserController.registerUser()'],['../interfacecom_1_1restaurant_1_1reservation_1_1service_1_1_user_service.html#ad0ac217ec0ebab95e74f2fdda8a7438a',1,'com.restaurant.reservation.service.UserService.registerUser()'],['../classcom_1_1restaurant_1_1reservation_1_1service_1_1_user_service_impl.html#a103e222e2b520c08c18528530a65e6d6',1,'com.restaurant.reservation.service.UserServiceImpl.registerUser()']]],
@@ -11,4 +12,7 @@ var searchData=
   ['restaurantreservationapplication_2ejava_8',['RestaurantReservationApplication.java',['../_restaurant_reservation_application_8java.html',1,'']]],
   ['restauranttable_9',['RestaurantTable',['../classcom_1_1restaurant_1_1reservation_1_1model_1_1_restaurant_table.html',1,'com::restaurant::reservation::model']]],
   ['restauranttable_2ejava_10',['RestaurantTable.java',['../_restaurant_table_8java.html',1,'']]]
+=======
+  ['onauthenticationsuccess_0',['onAuthenticationSuccess',['../classcom_1_1restaurant_1_1reservation_1_1security_1_1_custom_authentication_success_handler.html#ad6e788b8a28abc31919882048cd826a6',1,'com::restaurant::reservation::security::CustomAuthenticationSuccessHandler']]]
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
 ];

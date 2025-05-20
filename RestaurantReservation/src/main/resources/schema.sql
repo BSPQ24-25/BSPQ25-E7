@@ -42,7 +42,7 @@ CREATE TABLE restaurant_table (
 
 -- Crear tabla reservation
 CREATE TABLE reservation (
-    reservation_id INT AUTO_INCREMENT PRIMARY KEY,
+    reservation_id BIGINT  AUTO_INCREMENT PRIMARY KEY,
     user_id BIGINT NOT NULL,
     table_id INT NOT NULL,
     date DATE NOT NULL,
@@ -51,4 +51,23 @@ CREATE TABLE reservation (
     state VARCHAR(50) DEFAULT 'confirmed',
     FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
     FOREIGN KEY (table_id) REFERENCES restaurant_table(table_id) ON DELETE CASCADE
+);
+
+CREATE TABLE review (
+    review_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    customer_id BIGINT NOT NULL,
+    reservation_id BIGINT NOT NULL UNIQUE,
+    rating INT NOT NULL CHECK (rating BETWEEN 1 AND 5),
+    comment VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    
+    FOREIGN KEY (customer_id) REFERENCES user(id) ON DELETE CASCADE,
+    FOREIGN KEY (reservation_id) REFERENCES reservation(reservation_id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS notification (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    message VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    seen BOOLEAN DEFAULT FALSE
 );

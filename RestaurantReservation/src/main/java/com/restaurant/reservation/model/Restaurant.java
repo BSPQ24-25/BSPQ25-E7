@@ -4,8 +4,12 @@ import jakarta.persistence.*;
 import java.util.List;
 
 /**
+<<<<<<< HEAD
  * Represents a restaurant.
  * Contains its capacity, available hours, and its tables.
+=======
+ * Represents a restaurant with tables and availability.
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
  */
 @Entity
 public class Restaurant {
@@ -25,7 +29,11 @@ public class Restaurant {
     private String name;
 
     /**
+<<<<<<< HEAD
      * List of availability hours for the restaurant.
+=======
+     * List of availability hours.
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
      */
     @ElementCollection
     @CollectionTable(
@@ -36,13 +44,21 @@ public class Restaurant {
     private List<String> availabilityHours;
 
     /**
+<<<<<<< HEAD
      * Total seating capacity of the restaurant.
+=======
+     * Total capacity of the restaurant.
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
      */
     @Column(nullable = false)
     private Integer capacity;
 
     /**
+<<<<<<< HEAD
      * List of tables available in the restaurant.
+=======
+     * List of tables in the restaurant.
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
      */
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RestaurantTable> tables;

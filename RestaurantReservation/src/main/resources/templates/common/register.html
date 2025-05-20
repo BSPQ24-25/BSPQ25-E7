@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title data-translate="register_title">Register</title>
+    <link href="/css/styles.css" rel="stylesheet">
+</head>
+<body data-page="auth">
+    <div class="auth-box">
+        <div style="margin-top: 20px; text-align: center;">
+            <label for="lang-selector" style="font-weight: bold; margin-right: 10px;" data-translate="language_label">Language:</label>
+            <select id="lang-selector" style="padding: 5px; border-radius: 5px;">
+                <option value="en">English</option>
+                <option value="es">Español</option>
+                <option value="ita">Italiano</option>
+            </select>
+        </div>
+        <h2 data-translate="new_registration">New Registration</h2>
+
+        <!-- Mensaje de error opcional -->
+        <div th:if="${param.error}" class="error-message">
+            An account with this email already exists.
+        </div>
+
+        <form method="post" action="/auth/register" id="register-form">
+            <div class="input-group">
+                <label for="username" data-translate="username">Username:</label>
+                <input type="text" id="username" name="username" required minlength="2">
+            </div>
+            <div class="input-group">
+                <label for="email" data-translate="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="input-group">
+                <label for="phone" data-translate="phone">Phone:</label>
+                <input type="tel" id="phone" name="phone" required pattern="\\+?[0-9\\s\\-]{7,15}">
+            </div>
+            <div class="input-group">
+                <label for="password" data-translate="password">Password:</label>
+                <input type="password" id="password" name="password" required minlength="6">
+            </div>
+            <div class="input-group">
+                <label for="userType" data-translate="user_type">User Type:</label>
+                <select id="userType" name="userType" required>
+                    <option value="CUSTOMER" data-translate="customer">Customer</option>
+                    <option value="ADMIN" data-translate="admin">Admin</option>
+                </select>
+            </div>
+            <button type="submit" class="btn auth-submit" data-translate="register">Register</button>
+        </form>
+
+        <div class="auth-links">
+            <a href="/login.html" data-translate="already_have_account">Already have an account? Login</a>
+            <a href="/" data-translate="back_to_home">← Back to home</a>
+        </div>
+    </div>
+
+    <script src="/js/translation.js"></script>
+    <script src="/js/auth.js"></script>
+</body>
+</html>

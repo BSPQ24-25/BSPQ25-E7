@@ -16,30 +16,37 @@ body {
     align-items: center;
 }
 
-.auth-box, .welcome-box {
+/* ==== BOXES ==== */
+.auth-box,
+.welcome-box,
+.home-box {
     background: white;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     padding: 30px;
     width: 100%;
     max-width: 450px;
-    margin: 20px;
-}
-
-h1, h2 {
-    color: #2c3e50;
-    margin-bottom: 20px;
+    margin: 20px auto;
     text-align: center;
 }
 
-h1 {
-    font-size: 2rem;
+.home-box {
+    max-width: 600px;
+    padding: 40px 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
-h2 {
-    font-size: 1.5rem;
+/* ==== HEADINGS ==== */
+h1, h2 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; }
+
+/* ==== INPUTS ==== */
 .input-group {
     margin-bottom: 20px;
 }
@@ -72,6 +79,7 @@ small {
     font-size: 0.8rem;
 }
 
+/* ==== BUTTONS ==== */
 .btn {
     display: inline-block;
     padding: 12px 20px;
@@ -84,29 +92,31 @@ small {
     transition: background-color 0.3s;
 }
 
-.primary {
-    background-color: #3498db;
-    color: white;
-}
+.btn.primary { background-color: #3498db; color: white; }
+.btn.primary:hover { background-color: #2980b9; }
 
-.primary:hover {
-    background-color: #2980b9;
-}
+.btn.secondary { background-color: #2ecc71; color: white; }
+.btn.secondary:hover { background-color: #27ae60; }
 
-.secondary {
-    background-color: #2ecc71;
-    color: white;
-}
-
-.secondary:hover {
-    background-color: #27ae60;
-}
+.btn.logout-btn { background-color: #e74c3c; color: white; }
 
 .auth-submit {
     width: 100%;
     margin-top: 10px;
 }
 
+.auth-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.auth-buttons .btn {
+    min-width: 120px;
+}
+
+/* ==== LINKS ==== */
 .auth-links {
     margin-top: 20px;
     text-align: center;
@@ -124,13 +134,187 @@ small {
     color: #2980b9;
 }
 
-.error {
-    border-color: #e74c3c !important;
-}
-
+/* ==== ALERTS ==== */
 .error-message {
     color: #e74c3c;
-    font-size: 0.85rem;
-    margin-top: 5px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 15px;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.popup-error,
+.popup-success {
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.popup-error { background-color: #f44336; color: white; }
+.popup-success { background-color: #d4edda; color: #155724; }
+
+/* ==== RESERVAS ==== */
+.reservation-form {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.reservation-list {
+    margin-top: 2rem;
+}
+
+.reservation-card {
+    border: 1px solid #ddd;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+}
+
+/* ==== HOME & ROLES ==== */
+.button-group {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 20px 0 30px;
+}
+
+.logout-form {
+    margin-top: 20px;
+}
+
+.role-text {
+    font-weight: bold;
+    color: #555;
+    margin-top: 10px;
+}
+
+/* ==== ADMIN TABLE ==== */
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.styled-table th,
+.styled-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+.styled-table tr:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+.selected-row {
+    background-color: #b3e5fc !important;
+}
+
+.action-btn {
+    margin-right: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* 📦 Caja blanca principal */
+.home-box {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 📊 Estilo de la tabla */
+.styled-table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+    table-layout: auto;
+}
+
+.styled-table th,
+.styled-table td {
+    text-align: left;
+    padding: 10px;
+    white-space: nowrap;
+    border-bottom: 1px solid #ddd;
+}
+
+.styled-table th {
+    background-color: #f4f4f4;
+}
+
+/* ✂️ Columna email para acortar si hace falta */
+.email-cell {
+    max-width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.notification-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 999;
+}
+
+.notification-btn {
+    background-color: white;
+    border: 2px solid #ccc;
+    padding: 8px 12px;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.notification-popup {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    width: 280px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.notification-popup.hidden {
     display: none;
+}
+
+#notification-list li {
+    list-style: none;
+    padding: 6px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.star {
+    font-size: 2rem;
+    color: gray;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.star.selected {
+    color: gold;
 }

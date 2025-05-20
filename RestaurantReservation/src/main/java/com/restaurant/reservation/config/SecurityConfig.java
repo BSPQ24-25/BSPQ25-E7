@@ -25,18 +25,17 @@ public class SecurityConfig {
         this.userRepository = userRepository;
         this.successHandler = successHandler;
     }
-    
 
     @Bean
     public UserDetailsService userDetailsService() {
         return email -> userRepository.findByEmail(email)
-                .map(CustomUserDetails::new)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+            .map(CustomUserDetails::new)
+            .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder(); // Asegura hash de contraseñas
     }
 
     @Bean
@@ -45,42 +44,46 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                            "/", 
-                            "/index.html", 
-                            "/login.html", 
-                            "/register.html",
-                            "/css/**", 
-                            "/js/**", 
-                            "/images/**",
-                            "/api/auth/register", 
-                            "/api/auth/login"
-                        ).permitAll()
-                        .anyRequest().authenticated()
-                )
-                .formLogin(form -> form
-                        .loginPage("/login.html") // Página de login personalizada
-                        .successHandler(successHandler) // AQUI USAMOS nuestro handler
-                        .permitAll()
-                )
-                .build();
-    }
+            .csrf(csrf -> csrf.disable()) // Desactiva CSRF solo si es necesario
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers(
+                    "/", 
+                    "/index", 
+                    "/login", 
+                    "/register", 
+                    "/css/**", 
+                    "/js/**", 
+                    "/images/**", 
+                    "/auth/register",
+                        "/i18n/**" // Permite acceso a archivos de i18n
 
+                ).permitAll()
+                .anyRequest().authenticated()
+            )
+            .formLogin(form -> form
+                .loginPage("/login")              // Página de login
+                .loginProcessingUrl("/login")          // URL que maneja POST de login
+                .successHandler(successHandler)        // Redirige según rol
+                .failureUrl("/login?error=true")  // Redirige si falla login
+                .permitAll()
+            )
+            .logout(logout -> logout
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login?logout") // Redirección tras logout
+                .permitAll()
+            )
+            .build();
+    }
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
-                .requestMatchers(
-                    "/css/**", 
-                    "/js/**", 
-                    "/images/**", 
-                    "/index.html", 
-                    "/login.html", 
-                    "/register.html"
-                );
+            .requestMatchers(
+                "/css/**", 
+                "/js/**", 
+                "/images/**"
+            );
     }
 }

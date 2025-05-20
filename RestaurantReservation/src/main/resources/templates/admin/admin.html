@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link href="/css/styles.css" rel="stylesheet">
+</head>
+<body data-page = "admin">
+
+<div class="home-box">
+    <div style="margin-top: 20px; text-align: center;">
+        <label for="lang-selector" style="font-weight: bold; margin-right: 10px;" data-translate="language_label">Language:</label>
+        <select id="lang-selector" style="padding: 5px; border-radius: 5px;">
+            <option value="en">English</option>
+            <option value="es">Español</option>
+            <option value="ita">Italiano</option>
+        </select>
+    </div>
+    <h1 data-translate="welcome"></h1>
+    <p data-translate="admin"></p>
+
+    <table id="reservation-table" class="styled-table">
+        <thead>
+            <tr>
+                <th data-translate="table_id"></th>
+                <th data-translate="table_user"></th>
+                <th data-translate="table_date" style="min-width: 120px"></th>
+                <th data-translate="table_hour"></th>
+                <th data-translate="table_people"></th>
+                <th data-translate="table_status"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="res : ${reservations}" th:attr="data-id=${res.id}">
+                <td th:text="${res.id}">1</td>
+                <td class="email-cell" th:text="${res.user.email}">user@example.com</td>
+                <td th:text="${res.date}">2025-04-30</td>
+                <td th:text="${res.hour}">19:00</td>
+                <td th:text="${res.nPeople}">4</td>
+                <td th:text="${res.state}">pending</td>
+            </tr>
+        </tbody>        
+    </table>    
+
+    <!-- Formulario para modificar el horario del restaurante -->
+    <div style="margin-top: 40px; padding: 20px; border: 1px solid #ccc; border-radius: 8px;">
+        <h2 style="text-align: center;" data-translate = "modify_hours"></h2>
+        <form method="post" action="/admin/config/updateHours">
+            <div>
+                <label for="openingHour" data-translate="opening_hour"></label>
+                <input type="time" id="openingHour" name="openingHour" th:value="${openingHour}" required>
+            </div>
+
+            <div>
+                <label for="closingHour" data-translate="closing_hour"></label>
+                <input type="time" id="closingHour" name="closingHour" th:value="${closingHour}" required>
+            </div>
+
+            <div style="text-align: center;">
+                <button type="submit" class="btn action-btn" data-translate="update_hours"></button>
+            </div>
+        </form>
+
+    </div>
+
+    <div>
+        <button id="confirm-btn" class="btn action-btn" onclick="confirmAction('confirm')" data-translate="confirm_reservation"></button>
+        <button id="cancel-btn" class="btn action-btn" onclick="confirmAction('cancel')" data-translate="cancel_reservation"></button>
+    </div>
+
+    <div class="notification-container">
+        <button id="notification-btn" class="btn notification-btn">🔔</button>
+        <div id="notification-popup" class="notification-popup hidden">
+            <ul id="notification-list"></ul>
+        </div>
+    </div>
+
+    <form method="post" action="/logout">
+        <button type="submit" class="btn logout-btn" data-translate="logout"></button>
+    </form>
+
+</div>
+
+<script src="/js/translation.js"></script>
+<script src="/js/administration.js"></script>
+</body>
+</html>
