@@ -1,0 +1,4 @@
+var classcom_1_1restaurant_1_1reservation_1_1security_1_1_custom_authentication_success_handler =
+[
+    [ "onAuthenticationSuccess", "classcom_1_1restaurant_1_1reservation_1_1security_1_1_custom_authentication_success_handler.html#ad6e788b8a28abc31919882048cd826a6", null ]
+];

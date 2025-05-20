@@ -1,0 +1,13 @@
+<map id="src/main/java/com/restaurant/reservation/repository/ReviewRepository.java" name="src/main/java/com/restaurant/reservation/repository/ReviewRepository.java">
+<area shape="rect" id="Node000001" title=" " alt="" coords="508,5,796,48"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,96,225,139"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="526,51,240,98,239,93,525,46"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="248,96,502,139"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="588,51,455,93,454,88,587,46"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="526,96,779,139"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="655,48,655,81,650,81,650,48"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="803,96,1070,139"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="720,46,856,88,855,93,718,51"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="1095,104,1186,131"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="797,42,936,63,1082,93,1093,96,1091,101,1081,99,935,68,796,47"/>
+</map>

@@ -1,0 +1,4 @@
+var _no_table_with_enough_capacity_exception_8java =
+[
+    [ "com.restaurant.reservation.exception.NoTableWithEnoughCapacityException", "classcom_1_1restaurant_1_1reservation_1_1exception_1_1_no_table_with_enough_capacity_exception.html", "classcom_1_1restaurant_1_1reservation_1_1exception_1_1_no_table_with_enough_capacity_exception" ]
+];
