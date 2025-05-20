@@ -57,7 +57,7 @@ src/
 This project uses Doxygen for automatic documentation generation.  
 You can view the documentation online here:
 
-🔗 [View Documentation](https://<tu-usuario>.github.io/<nombre-del-repo>/)
+🔗 [View Documentation](https://bspq24-25.github.io/BSPQ25-E7/)
 
 
 ## 👥 **Team Members**
