@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AuthService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">RestaurantReservation</a> &gt; <a href="index.source.html" class="el_package">com.restaurant.reservation.service</a> &gt; <span class="el_source">AuthService.java</span></div><h1>AuthService.java</h1><pre class="source lang-java linenums">package com.restaurant.reservation.service;
+
+import com.restaurant.reservation.dto.RegisterRequestDTO;
+import com.restaurant.reservation.model.User;
+import com.restaurant.reservation.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import jakarta.transaction.Transactional;
+
+/**
+ * @class AuthService
+ * @brief Servicio responsable del registro de nuevos usuarios.
+ */
+@Service
+@Transactional
+<span class="fc" id="L17">public class AuthService {</span>
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    /**
+     * @brief Registra un nuevo usuario si no existe previamente.
+     * @param dto Objeto que contiene los datos del usuario a registrar
+     * @throws IllegalArgumentException si el usuario ya existe
+     */
+    public void register(RegisterRequestDTO dto) {
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        if (userRepository.findByEmail(dto.getEmail()).isPresent()) {</span>
+<span class="fc" id="L32">            throw new IllegalArgumentException(&quot;The user already exists&quot;);</span>
+        }
+
+<span class="fc" id="L35">        User user = new User(</span>
+<span class="fc" id="L36">                dto.getEmail(),</span>
+<span class="fc" id="L37">                dto.getUsername(),</span>
+<span class="fc" id="L38">                dto.getPhone(),</span>
+<span class="fc" id="L39">                passwordEncoder.encode(dto.getPassword()),</span>
+<span class="fc" id="L40">                dto.getUserType()</span>
+        );
+<span class="fc" id="L42">        userRepository.save(user);</span>
+<span class="fc" id="L43">    }</span>
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

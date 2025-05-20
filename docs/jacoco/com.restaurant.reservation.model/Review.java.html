@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Review.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">RestaurantReservation</a> &gt; <a href="index.source.html" class="el_package">com.restaurant.reservation.model</a> &gt; <span class="el_source">Review.java</span></div><h1>Review.java</h1><pre class="source lang-java linenums">package com.restaurant.reservation.model;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
+/**
+ * Represents a review made by a customer for a reservation.
+ */
+@Entity
+@Table(name = &quot;review&quot;)
+public class Review implements Serializable {
+
+    /**
+     * Unique identifier for the review.
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = &quot;review_id&quot;)
+    private Long reviewId;
+
+    /**
+     * The customer who made the review.
+     */
+    @ManyToOne
+    @JoinColumn(name = &quot;customer_id&quot;, nullable = false)
+    private User customer;
+
+    /**
+     * The reservation being reviewed.
+     */
+    @OneToOne
+    @JoinColumn(name = &quot;reservation_id&quot;, nullable = false, unique = true)
+    private Reservation reservation;
+
+    /**
+     * Rating given in the review (1 to 5).
+     */
+    @Min(1)
+    @Max(5)
+    @Column(name = &quot;rating&quot;, nullable = false)
+    private int rating;
+
+    /**
+     * Optional comment from the customer.
+     */
+    @Size(max = 255)
+    @Column(name = &quot;comment&quot;, length = 255)
+    private String comment;
+
+    /**
+     * Timestamp when the review was created.
+     */
+<span class="fc" id="L56">    @Column(name = &quot;created_at&quot;, nullable = false)</span>
+<span class="fc" id="L57">    private LocalDateTime createdAt = LocalDateTime.now();</span>
+
+    // Constructors
+<span class="fc" id="L60">    public Review() {}</span>
+
+<span class="fc" id="L62">    public Review(User customer, Reservation reservation, int rating, String comment) {</span>
+<span class="fc" id="L63">        this.customer = customer;</span>
+<span class="fc" id="L64">        this.reservation = reservation;</span>
+<span class="fc" id="L65">        this.rating = rating;</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">        this.comment = comment != null ? comment.trim() : null;</span>
+<span class="fc" id="L67">    }</span>
+
+    // Getters and Setters
+    public Long getReviewId() {
+<span class="nc" id="L71">        return reviewId;</span>
+    }
+
+    public User getCustomer() {
+<span class="nc" id="L75">        return customer;</span>
+    }
+
+    public void setCustomer(User customer) {
+<span class="nc" id="L79">        this.customer = customer;</span>
+<span class="nc" id="L80">    }</span>
+
+    public Reservation getReservation() {
+<span class="nc" id="L83">        return reservation;</span>
+    }
+
+    public void setReservation(Reservation reservation) {
+<span class="nc" id="L87">        this.reservation = reservation;</span>
+<span class="nc" id="L88">    }</span>
+
+    public int getRating() {
+<span class="fc" id="L91">        return rating;</span>
+    }
+
+    public void setRating(int rating) {
+<span class="nc" id="L95">        this.rating = Math.max(1, Math.min(5, rating)); // Enforce range 1-5</span>
+<span class="nc" id="L96">    }</span>
+
+    public String getComment() {
+<span class="fc" id="L99">        return comment;</span>
+    }
+
+    public void setComment(String comment) {
+<span class="nc bnc" id="L103" title="All 2 branches missed.">        this.comment = comment != null ? comment.trim() : null;</span>
+<span class="nc" id="L104">    }</span>
+
+    public LocalDateTime getCreatedAt() {
+<span class="nc" id="L107">        return createdAt;</span>
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+<span class="nc bnc" id="L111" title="All 2 branches missed.">        this.createdAt = createdAt != null ? createdAt : LocalDateTime.now();</span>
+<span class="nc" id="L112">    }</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L116">        return &quot;Review{&quot; +</span>
+               &quot;reviewId=&quot; + reviewId +
+<span class="nc bnc" id="L118" title="All 2 branches missed.">               &quot;, customer=&quot; + (customer != null ? customer.getId() : null) +</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">               &quot;, reservation=&quot; + (reservation != null ? reservation.getId() : null) +</span>
+               &quot;, rating=&quot; + rating +
+               &quot;, comment='&quot; + comment + '\'' +
+               &quot;, createdAt=&quot; + createdAt +
+               '}';
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

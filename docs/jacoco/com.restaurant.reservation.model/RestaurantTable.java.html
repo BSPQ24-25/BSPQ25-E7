@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RestaurantTable.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">RestaurantReservation</a> &gt; <a href="index.source.html" class="el_package">com.restaurant.reservation.model</a> &gt; <span class="el_source">RestaurantTable.java</span></div><h1>RestaurantTable.java</h1><pre class="source lang-java linenums">package com.restaurant.reservation.model;
+
+import jakarta.persistence.*;
+
+/**
+ * Represents a table in a restaurant.
+ */
+@Entity
+@Table(name = &quot;restaurant_table&quot;)
+<span class="fc" id="L10">public class RestaurantTable {</span>
+
+    /**
+     * Unique identifier for the table.
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = &quot;table_id&quot;)
+    private Integer tableId;
+
+    /**
+     * Number of people the table can accommodate.
+     */
+    @Column(nullable = false)
+    private Integer capacity;
+
+    /**
+     * Current state of the table (e.g. available, reserved).
+     */
+    @Column(nullable = false)
+    private String state;
+
+    /**
+     * Restaurant to which the table belongs.
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = &quot;restaurant_id&quot;, nullable = false)
+    private Restaurant restaurant;
+
+    // Getters y Setters
+    public Integer getId() {
+<span class="nc" id="L41">        return tableId;</span>
+    }
+
+    public void setId(Integer tableId) {
+<span class="nc" id="L45">        this.tableId = tableId;</span>
+<span class="nc" id="L46">    }</span>
+
+    public Integer getCapacity() {
+<span class="nc" id="L49">        return capacity;</span>
+    }
+
+    public void setCapacity(Integer capacity) {
+<span class="fc" id="L53">        this.capacity = capacity;</span>
+<span class="fc" id="L54">    }</span>
+
+    public String getState() {
+<span class="nc" id="L57">        return state;</span>
+    }
+
+    public void setState(String state) {
+<span class="fc" id="L61">        this.state = state;</span>
+<span class="fc" id="L62">    }</span>
+
+    public Restaurant getRestaurant() {
+<span class="nc" id="L65">        return restaurant;</span>
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+<span class="nc" id="L69">        this.restaurant = restaurant;</span>
+<span class="nc" id="L70">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

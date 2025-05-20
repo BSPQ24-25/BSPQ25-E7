@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SecurityConfig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">RestaurantReservation</a> &gt; <a href="index.source.html" class="el_package">com.restaurant.reservation.config</a> &gt; <span class="el_source">SecurityConfig.java</span></div><h1>SecurityConfig.java</h1><pre class="source lang-java linenums">package com.restaurant.reservation.config;
+
+import com.restaurant.reservation.repository.UserRepository;
+import com.restaurant.reservation.security.CustomAuthenticationSuccessHandler;
+import com.restaurant.reservation.security.CustomUserDetails;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+
+@Configuration
+public class SecurityConfig {
+
+    private final UserRepository userRepository;
+    private final CustomAuthenticationSuccessHandler successHandler;
+
+<span class="fc" id="L24">    public SecurityConfig(UserRepository userRepository, CustomAuthenticationSuccessHandler successHandler) {</span>
+<span class="fc" id="L25">        this.userRepository = userRepository;</span>
+<span class="fc" id="L26">        this.successHandler = successHandler;</span>
+<span class="fc" id="L27">    }</span>
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+<span class="pc" id="L31">        return email -&gt; userRepository.findByEmail(email)</span>
+<span class="nc" id="L32">            .map(CustomUserDetails::new)</span>
+<span class="nc" id="L33">            .orElseThrow(() -&gt; new UsernameNotFoundException(&quot;Usuario no encontrado&quot;));</span>
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+<span class="fc" id="L38">        return new BCryptPasswordEncoder(); // Asegura hash de contraseñas</span>
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+<span class="fc" id="L43">        return configuration.getAuthenticationManager();</span>
+    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+<span class="fc" id="L48">        return http</span>
+<span class="fc" id="L49">            .csrf(csrf -&gt; csrf.disable()) // Desactiva CSRF solo si es necesario</span>
+<span class="fc" id="L50">            .authorizeHttpRequests(auth -&gt; auth</span>
+<span class="fc" id="L51">                .requestMatchers(</span>
+                    &quot;/&quot;, 
+                    &quot;/index&quot;, 
+                    &quot;/login&quot;, 
+                    &quot;/register&quot;, 
+                    &quot;/css/**&quot;, 
+                    &quot;/js/**&quot;, 
+                    &quot;/images/**&quot;, 
+                    &quot;/auth/register&quot;,
+                        &quot;/i18n/**&quot; // Permite acceso a archivos de i18n
+
+<span class="fc" id="L62">                ).permitAll()</span>
+<span class="fc" id="L63">                .anyRequest().authenticated()</span>
+            )
+<span class="fc" id="L65">            .formLogin(form -&gt; form</span>
+<span class="fc" id="L66">                .loginPage(&quot;/login&quot;)              // Página de login</span>
+<span class="fc" id="L67">                .loginProcessingUrl(&quot;/login&quot;)          // URL que maneja POST de login</span>
+<span class="fc" id="L68">                .successHandler(successHandler)        // Redirige según rol</span>
+<span class="fc" id="L69">                .failureUrl(&quot;/login?error=true&quot;)  // Redirige si falla login</span>
+<span class="fc" id="L70">                .permitAll()</span>
+            )
+<span class="fc" id="L72">            .logout(logout -&gt; logout</span>
+<span class="fc" id="L73">                .logoutUrl(&quot;/logout&quot;)</span>
+<span class="fc" id="L74">                .logoutSuccessUrl(&quot;/login?logout&quot;) // Redirección tras logout</span>
+<span class="fc" id="L75">                .permitAll()</span>
+            )
+<span class="fc" id="L77">            .build();</span>
+    }
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+<span class="fc" id="L82">        return (web) -&gt; web.ignoring()</span>
+<span class="fc" id="L83">            .requestMatchers(</span>
+                &quot;/css/**&quot;, 
+                &quot;/js/**&quot;, 
+                &quot;/images/**&quot;
+            );
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

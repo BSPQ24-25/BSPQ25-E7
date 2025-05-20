@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RegisterRequestDTO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">RestaurantReservation</a> &gt; <a href="index.source.html" class="el_package">com.restaurant.reservation.dto</a> &gt; <span class="el_source">RegisterRequestDTO.java</span></div><h1>RegisterRequestDTO.java</h1><pre class="source lang-java linenums">package com.restaurant.reservation.dto;
+
+import com.restaurant.reservation.model.UserType;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+
+/**
+ * @class RegisterRequestDTO
+ * @brief DTO de entrada para el registro de un nuevo usuario.
+ */
+public class RegisterRequestDTO {
+
+    @NotBlank
+    @Pattern(regexp = &quot;^[A-Za-z0-9+_.-]+@(.+)$&quot;, message = &quot;Formato de email inválido&quot;)
+    private String email;
+
+    @NotBlank
+    private String username;
+
+    @NotBlank
+    @Pattern(regexp = &quot;^[+]?[(]?[0-9]{1,4}[)]?[-\\s./0-9]*$&quot;, message = &quot;Formato de teléfono inválido&quot;)
+    private String phone;
+
+    @NotBlank
+    private String password;
+
+    @NotNull
+    private UserType userType;
+
+    // Getters y setters
+    public String getEmail() {
+<span class="fc" id="L33">        return email;</span>
+    }
+
+    public void setEmail(String email) {
+<span class="pc bpc" id="L37" title="1 of 2 branches missed.">        this.email = email != null ? email.trim().toLowerCase() : null;</span>
+<span class="fc" id="L38">    }</span>
+
+    public String getUsername() {
+<span class="fc" id="L41">        return username;</span>
+    }
+
+    public void setUsername(String username) {
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">        this.username = username != null ? username.trim() : null;</span>
+<span class="fc" id="L46">    }</span>
+
+    public String getPhone() {
+<span class="fc" id="L49">        return phone;</span>
+    }
+
+    public void setPhone(String phone) {
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">        this.phone = phone != null ? phone.replaceAll(&quot;[^+0-9]&quot;, &quot;&quot;) : null;</span>
+<span class="fc" id="L54">    }</span>
+
+    public String getPassword() {
+<span class="fc" id="L57">        return password;</span>
+    }
+
+    public void setPassword(String password) {
+<span class="fc" id="L61">        this.password = password;</span>
+<span class="fc" id="L62">    }</span>
+
+    public UserType getUserType() {
+<span class="fc" id="L65">        return userType;</span>
+    }
+
+    public void setUserType(UserType userType) {
+<span class="fc" id="L69">        this.userType = userType;</span>
+<span class="fc" id="L70">    }</span>
+
+<span class="fc" id="L72">    public RegisterRequestDTO() {</span>
+        
+<span class="fc" id="L74">    }</span>
+
+    /**
+     * @brief Constructor completo.
+     * @param email Email del usuario.
+     * @param username Nombre de usuario.
+     * @param phone Teléfono del usuario.
+     * @param password Contraseña.
+     * @param userType Tipo de usuario (ADMIN o CUSTOMER).
+     */
+<span class="fc" id="L84">    public RegisterRequestDTO(String email, String username, String phone, String password, UserType userType) {</span>
+<span class="fc" id="L85">        this.email = email;</span>
+<span class="fc" id="L86">        this.username = username;</span>
+<span class="fc" id="L87">        this.phone = phone;</span>
+<span class="fc" id="L88">        this.password = password;</span>
+<span class="fc" id="L89">        this.userType = userType;</span>
+<span class="fc" id="L90">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Restaurant.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">RestaurantReservation</a> &gt; <a href="index.source.html" class="el_package">com.restaurant.reservation.model</a> &gt; <span class="el_source">Restaurant.java</span></div><h1>Restaurant.java</h1><pre class="source lang-java linenums">package com.restaurant.reservation.model;
+
+import jakarta.persistence.*;
+import java.util.List;
+
+/**
+ * Represents a restaurant with tables and availability.
+ */
+@Entity
+<span class="fc" id="L10">public class Restaurant {</span>
+
+    /**
+     * Unique identifier for the restaurant.
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = &quot;restaurant_id&quot;)
+    private Long id;
+
+    /**
+     * Name of the restaurant.
+     */
+    @Column(nullable = false)
+    private String name;
+
+    /**
+     * List of availability hours.
+     */
+    @ElementCollection
+    @CollectionTable(
+        name = &quot;restaurant_availability_hours&quot;,
+        joinColumns = @JoinColumn(name = &quot;restaurant_id&quot;)
+    )
+    @Column(name = &quot;availability_hours&quot;)
+    private List&lt;String&gt; availabilityHours;
+
+    /**
+     * Total capacity of the restaurant.
+     */
+    @Column(nullable = false)
+    private Integer capacity;
+
+    /**
+     * List of tables in the restaurant.
+     */
+    @OneToMany(mappedBy = &quot;restaurant&quot;, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List&lt;RestaurantTable&gt; tables;
+
+    // Getters y Setters
+    public Long getId() {
+<span class="nc" id="L51">        return id;</span>
+    }
+
+    public void setId(Long id) {
+<span class="nc" id="L55">        this.id = id;</span>
+<span class="nc" id="L56">    }</span>
+
+    public String getName() {
+<span class="nc" id="L59">        return name;</span>
+    }
+
+    public void setName(String name) {
+<span class="nc" id="L63">        this.name = name;</span>
+<span class="nc" id="L64">    }</span>
+
+    public List&lt;String&gt; getAvailabilityHours() {
+<span class="nc" id="L67">        return availabilityHours;</span>
+    }
+
+    public void setAvailabilityHours(List&lt;String&gt; availabilityHours) {
+<span class="fc" id="L71">        this.availabilityHours = availabilityHours;</span>
+<span class="fc" id="L72">    }</span>
+
+    public Integer getCapacity() {
+<span class="nc" id="L75">        return capacity;</span>
+    }
+
+    public void setCapacity(Integer capacity) {
+<span class="nc" id="L79">        this.capacity = capacity;</span>
+<span class="nc" id="L80">    }</span>
+
+    public List&lt;RestaurantTable&gt; getTables() {
+<span class="nc" id="L83">        return tables;</span>
+    }
+
+    public void setTables(List&lt;RestaurantTable&gt; tables) {
+<span class="nc" id="L87">        this.tables = tables;</span>
+<span class="nc" id="L88">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

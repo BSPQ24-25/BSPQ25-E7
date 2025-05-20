@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CustomerService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">RestaurantReservation</a> &gt; <a href="index.source.html" class="el_package">com.restaurant.reservation.service</a> &gt; <span class="el_source">CustomerService.java</span></div><h1>CustomerService.java</h1><pre class="source lang-java linenums">package com.restaurant.reservation.service;
+
+import com.restaurant.reservation.dto.ReservationRequestDTO;
+import com.restaurant.reservation.exception.InvalidReservationTimeException;
+import com.restaurant.reservation.exception.NoTableWithEnoughCapacityException;
+import com.restaurant.reservation.exception.PastDateReservationException;
+import com.restaurant.reservation.model.Reservation;
+import com.restaurant.reservation.model.RestaurantTable;
+import com.restaurant.reservation.model.User;
+import com.restaurant.reservation.model.Notification;
+import com.restaurant.reservation.repository.ReservationRepository;
+import com.restaurant.reservation.repository.NotificationRepository;
+import com.restaurant.reservation.repository.RestaurantTableRepository;
+import com.restaurant.reservation.repository.UserRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
+
+@Service
+<span class="fc" id="L26">public class CustomerService {</span>
+
+    @Autowired
+    private ReservationRepository reservationRepository;
+
+    @Autowired
+    private RestaurantTableRepository tableRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private AdminService adminService;
+
+    @Autowired
+    private NotificationRepository notificationRepository;
+
+    /**
+     * @brief Crea una nueva reserva para el usuario autenticado.
+     * @param reservationDTO Datos de la reserva.
+     * @throws InvalidReservationTimeException si la hora es inválida o está ocupada.
+     * @throws PastDateReservationException si la fecha está en el pasado.
+     * @throws NoTableWithEnoughCapacityException si no hay mesas suficientes.
+     */
+    
+    @Transactional
+    public void makeReservation(ReservationRequestDTO reservationDTO) {
+<span class="fc" id="L53">        LocalDate reservationDate = reservationDTO.getDate();</span>
+<span class="fc" id="L54">        LocalTime reservationHour = reservationDTO.getHour();</span>
+<span class="fc" id="L55">        int numberOfPeople = reservationDTO.getnPeople();</span>
+
+        // ✅ Validar que la hora es en intervalos de 30 minutos
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">        if (!reservationDTO.isValidTime()) {</span>
+<span class="nc" id="L59">            throw new InvalidReservationTimeException(&quot;Las reservas deben ser en horas completas o medias horas (ej: 12:00 o 12:30)&quot;);</span>
+        }
+
+        // 🚫 No reservar fechas pasadas
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        if (reservationDate.isBefore(LocalDate.now())) {</span>
+<span class="fc" id="L64">            throw new PastDateReservationException();</span>
+        }
+
+        // 🕒 Verificar horario permitido del restaurante
+<span class="fc" id="L68">        LocalTime openingTime = LocalTime.parse(adminService.getOpeningHour());</span>
+<span class="fc" id="L69">        LocalTime closingTime = LocalTime.parse(adminService.getClosingHour());</span>
+        
+<span class="pc bpc" id="L71" title="1 of 4 branches missed.">        if (reservationHour.isBefore(openingTime) || reservationHour.isAfter(closingTime)) {</span>
+<span class="fc" id="L72">            throw new InvalidReservationTimeException();</span>
+        }
+
+        // 🔍 Verificar que la hora concreta tenga disponibilidad
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">        if (!isTimeSlotAvailable(reservationDate, reservationHour)) {</span>
+<span class="nc" id="L77">            throw new InvalidReservationTimeException(&quot;La hora seleccionada no está disponible&quot;);</span>
+        }
+
+        // 🔎 Buscar mesas disponibles con capacidad suficiente
+<span class="fc" id="L81">        List&lt;RestaurantTable&gt; tables = tableRepository.findAvailableTables(</span>
+            reservationDate,
+            reservationHour,
+            numberOfPeople
+        );
+
+<span class="fc bfc" id="L87" title="All 2 branches covered.">        if (tables.isEmpty()) {</span>
+<span class="fc" id="L88">            throw new NoTableWithEnoughCapacityException(numberOfPeople);</span>
+        }
+
+        // 👤 Obtener el usuario autenticado
+<span class="fc" id="L92">        String email = SecurityContextHolder.getContext().getAuthentication().getName();</span>
+<span class="fc" id="L93">        User user = userRepository.findByEmail(email)</span>
+<span class="pc" id="L94">            .orElseThrow(() -&gt; new RuntimeException(&quot;Usuario no encontrado&quot;));</span>
+
+        // 🪑 Crear la reserva
+<span class="fc" id="L97">        RestaurantTable selectedTable = tables.get(0);</span>
+<span class="fc" id="L98">        Reservation reservation = new Reservation();</span>
+<span class="fc" id="L99">        reservation.setUser(user);</span>
+<span class="fc" id="L100">        reservation.setTable(selectedTable);</span>
+<span class="fc" id="L101">        reservation.setDate(reservationDate);</span>
+<span class="fc" id="L102">        reservation.setHour(reservationHour);</span>
+<span class="fc" id="L103">        reservation.setnPeople(numberOfPeople);</span>
+<span class="fc" id="L104">        reservation.setState(&quot;pending&quot;);</span>
+
+<span class="fc" id="L106">        reservationRepository.save(reservation);</span>
+
+<span class="fc" id="L108">        System.out.println(&quot;✔️ Reserva creada para &quot; + user.getEmail() +</span>
+                           &quot; el &quot; + reservationDate + &quot; a las &quot; + reservationHour +
+                           &quot; para &quot; + numberOfPeople + &quot; personas.&quot;);
+        
+                           
+<span class="fc" id="L113">        notificationRepository.save(new Notification(&quot;Nueva reserva de &quot; + user.getEmail()));</span>
+
+<span class="fc" id="L115">    }</span>
+
+    @Transactional
+    public void updateReservation(Long id, ReservationRequestDTO dto) {
+<span class="fc" id="L119">        Reservation reservation = reservationRepository.findById(id)</span>
+<span class="pc" id="L120">            .orElseThrow(() -&gt; new RuntimeException(&quot;Reserva no encontrada&quot;));</span>
+
+        // ✅ Validar que la reserva pertenece al usuario autenticado
+<span class="fc" id="L123">        String email = SecurityContextHolder.getContext().getAuthentication().getName();</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">        if (!reservation.getUser().getEmail().equals(email)) {</span>
+<span class="fc" id="L125">            throw new RuntimeException(&quot;No tienes permiso para modificar esta reserva&quot;);</span>
+        }
+
+        // ✅ Validaciones similares a creación
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">        if (!dto.isValidTime()) {</span>
+<span class="nc" id="L130">            throw new InvalidReservationTimeException(&quot;Las reservas deben ser en horas completas o medias horas (ej: 12:00 o 12:30)&quot;);</span>
+        }
+        
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">        if (dto.getDate().isBefore(LocalDate.now())) {</span>
+<span class="nc" id="L134">            throw new PastDateReservationException();</span>
+        }
+        
+<span class="fc" id="L137">        LocalTime openingTime = LocalTime.parse(adminService.getOpeningHour());</span>
+<span class="fc" id="L138">        LocalTime closingTime = LocalTime.parse(adminService.getClosingHour());</span>
+<span class="pc bpc" id="L139" title="2 of 4 branches missed.">        if (dto.getHour().isBefore(openingTime) || dto.getHour().isAfter(closingTime)) {</span>
+<span class="nc" id="L140">            throw new InvalidReservationTimeException(&quot;La hora está fuera del horario permitido&quot;);</span>
+        }
+
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">        if (!isTimeSlotAvailable(dto.getDate(), dto.getHour())) {</span>
+<span class="nc" id="L144">            throw new InvalidReservationTimeException(&quot;La hora seleccionada no está disponible&quot;);</span>
+        }
+
+        // 🔎 Buscar mesas disponibles
+<span class="fc" id="L148">        List&lt;RestaurantTable&gt; tables = tableRepository.findAvailableTables(</span>
+<span class="fc" id="L149">            dto.getDate(),</span>
+<span class="fc" id="L150">            dto.getHour(),</span>
+<span class="fc" id="L151">            dto.getnPeople()</span>
+        );
+
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">        if (tables.isEmpty()) {</span>
+<span class="nc" id="L155">            throw new NoTableWithEnoughCapacityException(dto.getnPeople());</span>
+        }
+
+        // ✏️ Actualizar datos de la reserva
+<span class="fc" id="L159">        reservation.setTable(tables.get(0));</span>
+<span class="fc" id="L160">        reservation.setDate(dto.getDate());</span>
+<span class="fc" id="L161">        reservation.setHour(dto.getHour());</span>
+<span class="fc" id="L162">        reservation.setnPeople(dto.getnPeople());</span>
+<span class="fc" id="L163">        reservation.setState(&quot;updated&quot;);</span>
+
+<span class="fc" id="L165">        reservationRepository.save(reservation);</span>
+<span class="fc" id="L166">    }</span>
+
+    @Transactional
+    public void deleteReservation(Long id) {
+<span class="fc" id="L170">        Reservation reservation = reservationRepository.findById(id)</span>
+<span class="pc" id="L171">            .orElseThrow(() -&gt; new RuntimeException(&quot;Reserva no encontrada&quot;));</span>
+
+<span class="fc" id="L173">        String email = SecurityContextHolder.getContext().getAuthentication().getName();</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">        if (!reservation.getUser().getEmail().equals(email)) {</span>
+<span class="fc" id="L175">            throw new RuntimeException(&quot;No tienes permiso para eliminar esta reserva&quot;);</span>
+        }
+
+<span class="fc" id="L178">        notificationRepository.save(new Notification(&quot;Reserva cancelada por &quot; + reservation.getUser().getEmail()));</span>
+
+<span class="fc" id="L180">        reservationRepository.deleteById(id);</span>
+<span class="fc" id="L181">    }</span>
+
+    // Métodos auxiliares
+    private boolean isTimeSlotAvailable(LocalDate date, LocalTime hour) {
+        // 🔢 Contar reservas existentes para esa fecha y hora
+<span class="fc" id="L186">        long existingReservations = reservationRepository.countByDateAndHour(date, hour);</span>
+
+        // 🧮 Obtener capacidad total del restaurante
+<span class="fc" id="L189">        int totalCapacity = getTotalRestaurantCapacity();</span>
+
+<span class="pc bpc" id="L191" title="1 of 2 branches missed.">        return existingReservations &lt; totalCapacity;</span>
+    }
+
+    private int getTotalRestaurantCapacity() {
+        // 🛠️ Esto se puede adaptar a tu modelo real
+<span class="fc" id="L196">        return 100; // Ejemplo de capacidad máxima del restaurante</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

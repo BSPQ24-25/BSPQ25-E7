@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GlobalModelAttributes.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">RestaurantReservation</a> &gt; <a href="index.source.html" class="el_package">com.restaurant.reservation.controller</a> &gt; <span class="el_source">GlobalModelAttributes.java</span></div><h1>GlobalModelAttributes.java</h1><pre class="source lang-java linenums">package com.restaurant.reservation.controller;
+
+import com.restaurant.reservation.security.CustomUserDetails;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ModelAttribute;
+
+/**
+ * Controller advice to inject the currently authenticated user into the model.
+ */
+@ControllerAdvice
+<span class="fc" id="L12">public class GlobalModelAttributes {</span>
+
+    /**
+     * Adds the current user to the model for all views.
+     * @param authentication current authentication object
+     * @return CustomUserDetails or null
+     */
+    @ModelAttribute(&quot;currentUser&quot;)
+    public CustomUserDetails populateCurrentUser(Authentication authentication) {
+<span class="nc bnc" id="L21" title="All 4 branches missed.">        if (authentication != null &amp;&amp; authentication.getPrincipal() instanceof CustomUserDetails) {</span>
+<span class="nc" id="L22">            return (CustomUserDetails) authentication.getPrincipal();</span>
+        }
+<span class="nc" id="L24">        return null;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

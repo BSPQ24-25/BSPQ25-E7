@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Notification.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">RestaurantReservation</a> &gt; <a href="index.source.html" class="el_package">com.restaurant.reservation.model</a> &gt; <span class="el_source">Notification.java</span></div><h1>Notification.java</h1><pre class="source lang-java linenums">package com.restaurant.reservation.model;
+
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
+/**
+ * Represents a notification message for a user.
+ */
+@Entity
+public class Notification {
+
+    /**
+     * Unique identifier for the notification.
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    /**
+     * The notification message content.
+     */
+    private String message;
+
+    /**
+     * Indicates whether the notification has been seen.
+     */
+    private boolean seen;
+
+    /**
+     * Timestamp when the notification was created.
+     */
+    private LocalDateTime createdAt;
+
+    /**
+     * Default constructor.
+     */
+<span class="fc" id="L37">    public Notification() {}</span>
+
+    /**
+     * Constructor with message.
+     * @param message the notification message
+     */
+<span class="fc" id="L43">    public Notification(String message) {</span>
+<span class="fc" id="L44">        this.message = message;</span>
+<span class="fc" id="L45">        this.seen = false;</span>
+<span class="fc" id="L46">        this.createdAt = LocalDateTime.now();</span>
+<span class="fc" id="L47">    }</span>
+
+    // Getters y Setters
+<span class="nc" id="L50">    public Long getId() { return id; }</span>
+<span class="nc" id="L51">    public void setId(Long id) { this.id = id; }</span>
+
+<span class="fc" id="L53">    public String getMessage() { return message; }</span>
+<span class="nc" id="L54">    public void setMessage(String message) { this.message = message; }</span>
+
+<span class="nc" id="L56">    public boolean isSeen() { return seen; }</span>
+<span class="nc" id="L57">    public void setSeen(boolean seen) { this.seen = seen; }</span>
+
+<span class="nc" id="L59">    public LocalDateTime getCreatedAt() { return createdAt; }</span>
+<span class="nc" id="L60">    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

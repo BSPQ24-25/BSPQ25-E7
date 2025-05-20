@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AdminService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">RestaurantReservation</a> &gt; <a href="index.source.html" class="el_package">com.restaurant.reservation.service</a> &gt; <span class="el_source">AdminService.java</span></div><h1>AdminService.java</h1><pre class="source lang-java linenums">package com.restaurant.reservation.service;
+
+import java.nio.charset.StandardCharsets;
+import java.time.LocalTime;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.restaurant.reservation.model.Reservation;
+import com.restaurant.reservation.repository.NotificationRepository;
+import com.restaurant.reservation.repository.ReservationRepository;
+import com.restaurant.reservation.model.Notification;
+
+/**
+ * @class AdminService
+ * @brief Servicio para gestionar funciones administrativas del restaurante
+ */
+@Service
+public class AdminService {
+
+    private final ReservationRepository reservationRepository;
+    private final EmailSenderService emailSenderService;
+    private final NotificationRepository notificationRepository;
+
+<span class="fc" id="L26">    private String openingHour = &quot;09:00&quot;;</span>
+<span class="fc" id="L27">    private String closingHour = &quot;22:00&quot;;</span>
+
+    /**
+     * @brief Constructor que inyecta dependencias necesarias.
+     * @param reservationRepository Repositorio de reservas
+     * @param emailSenderService Servicio de envío de emails
+     * @param notificationRepository Repositorio de notificaciones
+     */
+<span class="fc" id="L35">    public AdminService(ReservationRepository reservationRepository, EmailSenderService emailSenderService, NotificationRepository notificationRepository) {</span>
+<span class="fc" id="L36">        this.reservationRepository = reservationRepository;</span>
+<span class="fc" id="L37">        this.emailSenderService = emailSenderService;</span>
+<span class="fc" id="L38">        this.notificationRepository = notificationRepository;</span>
+<span class="fc" id="L39">    }</span>
+
+    /**
+     * @brief Obtiene la hora de apertura del restaurante como cadena.
+     * @return Hora de apertura en formato HH:mm
+     */
+    public String getOpeningHour() {
+<span class="fc" id="L46">        return openingHour;</span>
+    }
+
+    /**
+     * @brief Establece la hora de apertura del restaurante.
+     * @param openingHour Hora en formato HH:mm
+     */
+    public void setOpeningHour(String openingHour) {
+<span class="nc" id="L54">        this.openingHour = openingHour;</span>
+<span class="nc" id="L55">    }</span>
+
+    /**
+     * @brief Obtiene la hora de cierre del restaurante como cadena.
+     * @return Hora de cierre en formato HH:mm
+     */
+    public String getClosingHour() {
+<span class="fc" id="L62">        return closingHour;</span>
+    }
+
+    /**
+     * @brief Establece la hora de cierre del restaurante.
+     * @param closingHour Hora en formato HH:mm
+     */
+    public void setClosingHour(String closingHour) {
+<span class="nc" id="L70">        this.closingHour = closingHour;</span>
+<span class="nc" id="L71">    }</span>
+
+    /**
+     * @brief Convierte la hora de apertura a objeto LocalTime.
+     * @return Hora de apertura como LocalTime
+     */
+    public LocalTime getOpeningHourAsTime() {
+<span class="nc" id="L78">        return LocalTime.parse(openingHour);</span>
+    }
+
+    /**
+     * @brief Convierte la hora de cierre a objeto LocalTime.
+     * @return Hora de cierre como LocalTime
+     */
+    public LocalTime getClosingHourAsTime() {
+<span class="nc" id="L86">        return LocalTime.parse(closingHour);</span>
+    }
+
+    /**
+     * @brief Retorna todas las reservas incluyendo la información del usuario.
+     * @return Lista de reservas
+     */
+    public List&lt;Reservation&gt; findAllReservations() {
+<span class="fc" id="L94">        return reservationRepository.findAllWithUser();</span>
+    }
+
+    /**
+     * @brief Cancela una reserva específica y notifica por email al usuario.
+     * @param id ID de la reserva a cancelar
+     */
+    @Transactional
+    public void cancelReservation(Long id) {
+<span class="fc" id="L103">        Reservation reservation = reservationRepository.findById(id)</span>
+<span class="fc" id="L104">            .orElseThrow(() -&gt; new RuntimeException(&quot;Reservation not found&quot;));</span>
+
+<span class="fc" id="L106">        reservation.setState(&quot;cancelled&quot;);</span>
+<span class="fc" id="L107">        reservationRepository.save(reservation);</span>
+
+<span class="fc" id="L109">        String userEmail = reservation.getUser().getEmail();</span>
+<span class="fc" id="L110">        String htmlContent = loadTemplate(&quot;templates/email/cancellation_email.html&quot;);</span>
+<span class="fc" id="L111">        emailSenderService.sendEmail(userEmail, &quot;Reservation Cancelled&quot;, htmlContent);</span>
+<span class="fc" id="L112">    }</span>
+
+    /**
+     * @brief Confirma una reserva específica y notifica por email al usuario.
+     * @param id ID de la reserva a confirmar
+     */
+    @Transactional
+    public void confirmReservation(Long id) {
+<span class="fc" id="L120">        Reservation reservation = reservationRepository.findById(id)</span>
+<span class="fc" id="L121">            .orElseThrow(() -&gt; new RuntimeException(&quot;Reservation not found&quot;));</span>
+
+<span class="fc" id="L123">        reservation.setState(&quot;confirmed&quot;);</span>
+<span class="fc" id="L124">        reservationRepository.save(reservation);</span>
+
+<span class="fc" id="L126">        String userEmail = reservation.getUser().getEmail();</span>
+<span class="fc" id="L127">        String htmlContent = loadTemplate(&quot;templates/email/confirmation_email.html&quot;);</span>
+<span class="fc" id="L128">        emailSenderService.sendEmail(userEmail, &quot;Reservation Confirmed&quot;, htmlContent);</span>
+<span class="fc" id="L129">    }</span>
+
+    /**
+     * @brief Marca todas las notificaciones como vistas.
+     */
+    @Transactional
+    public void markAllNotificationsAsSeen() {
+<span class="nc" id="L136">        notificationRepository.markAllAsSeen(); </span>
+<span class="nc" id="L137">    }</span>
+
+    /**
+     * @brief Devuelve las notificaciones no leídas.
+     * @return Lista de notificaciones no vistas
+     */
+    public List&lt;Notification&gt; getUnreadNotifications() {
+<span class="nc" id="L144">        return notificationRepository.findBySeenFalse();</span>
+    }
+
+    /**
+     * @brief Carga una plantilla HTML desde el classpath.
+     * @param path Ruta del archivo de plantilla
+     * @return Contenido de la plantilla como String
+     * @throws RuntimeException si falla la lectura
+     */
+    private String loadTemplate(String path) {
+        try {
+<span class="fc" id="L155">            return new String(</span>
+<span class="fc" id="L156">                getClass().getClassLoader().getResourceAsStream(path).readAllBytes(),</span>
+                StandardCharsets.UTF_8
+            );
+<span class="nc" id="L159">        } catch (Exception e) {</span>
+<span class="nc" id="L160">            throw new RuntimeException(&quot;Failed to load email template: &quot; + path, e);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

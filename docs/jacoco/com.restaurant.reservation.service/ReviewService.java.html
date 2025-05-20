@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReviewService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">RestaurantReservation</a> &gt; <a href="index.source.html" class="el_package">com.restaurant.reservation.service</a> &gt; <span class="el_source">ReviewService.java</span></div><h1>ReviewService.java</h1><pre class="source lang-java linenums">package com.restaurant.reservation.service;
+
+import com.restaurant.reservation.model.Review;
+import com.restaurant.reservation.model.Reservation;
+import com.restaurant.reservation.model.User;
+import com.restaurant.reservation.repository.ReviewRepository;
+import com.restaurant.reservation.repository.ReservationRepository;
+import com.restaurant.reservation.repository.UserRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+<span class="fc" id="L19">public class ReviewService {</span>
+
+    @Autowired
+    private ReviewRepository reviewRepository;
+
+    @Autowired
+    private ReservationRepository reservationRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    /**
+     * @brief Envía una reseña para una reserva completada.
+     * @param customerId ID del cliente.
+     * @param reservationId ID de la reserva.
+     * @param rating Puntuación otorgada.
+     * @param comment Comentario adicional.
+     * @return Review creada.
+     * @throws IllegalStateException si la reserva no es válida para reseñar.
+     */
+
+    @Transactional
+    public Review submitReview(Long customerId, Long reservationId, int rating, String comment) {
+<span class="fc" id="L42">        Optional&lt;User&gt; customerOpt = userRepository.findById(customerId);</span>
+<span class="fc" id="L43">        Optional&lt;Reservation&gt; reservationOpt = reservationRepository.findById(reservationId);</span>
+
+<span class="pc bpc" id="L45" title="1 of 4 branches missed.">        if (customerOpt.isEmpty() || reservationOpt.isEmpty()) {</span>
+<span class="fc" id="L46">            throw new IllegalArgumentException(&quot;Invalid customer or reservation ID.&quot;);</span>
+        }
+
+<span class="fc" id="L49">        Reservation reservation = reservationOpt.get();</span>
+
+        // Check that the reservation is completed and the customer owns it
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        if (!reservation.getUser().getId().equals(customerId)) {</span>
+<span class="fc" id="L53">            throw new IllegalStateException(&quot;User does not own this reservation.&quot;);</span>
+        }
+
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        if (!reservation.getDate().isBefore(LocalDate.now())) {</span>
+<span class="fc" id="L57">            throw new IllegalStateException(&quot;Cannot review a future reservation.&quot;);</span>
+        }
+
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">        if (reviewRepository.existsByReservationId(reservationId)) {</span>
+<span class="nc" id="L61">            throw new IllegalStateException(&quot;Reservation has already been reviewed.&quot;);</span>
+        }
+
+<span class="fc" id="L64">        Review review = new Review(customerOpt.get(), reservation, rating, comment);</span>
+<span class="fc" id="L65">        return reviewRepository.save(review);</span>
+    }
+
+    /**
+     * @brief Obtiene todas las reseñas realizadas por un cliente.
+     * @param customerId ID del cliente.
+     * @return Lista de reseñas.
+     */
+
+    public List&lt;Review&gt; getReviewsByCustomer(Long customerId) {
+<span class="nc" id="L75">        return reviewRepository.findByCustomerId(customerId);</span>
+    }
+
+    /**
+     * @brief Obtiene todas las reseñas dirigidas al restaurante.
+     * @param restaurantId ID del restaurante.
+     * @return Lista de reseñas.
+     */
+    
+    public List&lt;Review&gt; getReviewsByRestaurant(Long restaurantId) {
+<span class="nc" id="L85">        return reviewRepository.findByRestaurantId(restaurantId);</span>
+    }
+
+    /**
+     * @brief Verifica si una reserva ya fue reseñada.
+     * @param reservationId ID de la reserva.
+     * @return true si ya fue reseñada, false en caso contrario.
+     */
+
+    public boolean hasReservationBeenReviewed(Long reservationId) {
+<span class="nc" id="L95">        return reviewRepository.existsByReservationId(reservationId);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
