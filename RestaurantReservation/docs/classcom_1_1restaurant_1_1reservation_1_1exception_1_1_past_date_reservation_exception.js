@@ -1,4 +1,0 @@
-var classcom_1_1restaurant_1_1reservation_1_1exception_1_1_past_date_reservation_exception =
-[
-    [ "PastDateReservationException", "classcom_1_1restaurant_1_1reservation_1_1exception_1_1_past_date_reservation_exception.html#ad8e2c3f69728210dfcc6f82cd39644d5", null ]
-];

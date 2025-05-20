@@ -1,0 +1,19 @@
+var searchData=
+[
+  ['identified_20by_20a_20unique_20email_0',['A user can be an admin or a customer, identified by a unique email.',['../classcom_1_1restaurant_1_1reservation_1_1model_1_1_user.html#autotoc_md12',1,'']]],
+  ['in_20the_20reservation_1',['Number of people included in the reservation.',['../classcom_1_1restaurant_1_1reservation_1_1model_1_1_reservation.html#autotoc_md4',1,'']]],
+  ['in_20the_20restaurant_2',['List of tables available in the restaurant.',['../classcom_1_1restaurant_1_1reservation_1_1model_1_1_restaurant.html#autotoc_md8',1,'']]],
+  ['included_20in_20the_20reservation_3',['Number of people included in the reservation.',['../classcom_1_1restaurant_1_1reservation_1_1model_1_1_reservation.html#autotoc_md4',1,'']]],
+  ['index_4',['index',['../classcom_1_1restaurant_1_1reservation_1_1controller_1_1_page_controller.html#aec5b77cf876e1852087afedd454e026f',1,'com::restaurant::reservation::controller::PageController']]],
+  ['interface_20for_20accessing_20user_20entities_20from_20the_20database_5',['Repository interface for accessing User entities from the database.',['../interfacecom_1_1restaurant_1_1reservation_1_1repository_1_1_user_repository.html#autotoc_md14',1,'']]],
+  ['invalidreservationtimeexception_6',['InvalidReservationTimeException',['../classcom_1_1restaurant_1_1reservation_1_1exception_1_1_invalid_reservation_time_exception.html',1,'com.restaurant.reservation.exception.InvalidReservationTimeException'],['../classcom_1_1restaurant_1_1reservation_1_1exception_1_1_invalid_reservation_time_exception.html#ace7e756eaf36f83c8e80dee3617fc0ae',1,'com.restaurant.reservation.exception.InvalidReservationTimeException.InvalidReservationTimeException()'],['../classcom_1_1restaurant_1_1reservation_1_1exception_1_1_invalid_reservation_time_exception.html#a46ae79e96956e757b067199d502a97fd',1,'com.restaurant.reservation.exception.InvalidReservationTimeException.InvalidReservationTimeException(String message)']]],
+  ['invalidreservationtimeexception_2ejava_7',['InvalidReservationTimeException.java',['../_invalid_reservation_time_exception_8java.html',1,'']]],
+  ['isaccountnonexpired_8',['isAccountNonExpired',['../classcom_1_1restaurant_1_1reservation_1_1security_1_1_custom_user_details.html#afc468d4e49dbc253190cbc671796a4cc',1,'com::restaurant::reservation::security::CustomUserDetails']]],
+  ['isaccountnonlocked_9',['isAccountNonLocked',['../classcom_1_1restaurant_1_1reservation_1_1security_1_1_custom_user_details.html#a3ec50222444e1c33e3c1f0232ea4169a',1,'com::restaurant::reservation::security::CustomUserDetails']]],
+  ['iscredentialsnonexpired_10',['isCredentialsNonExpired',['../classcom_1_1restaurant_1_1reservation_1_1security_1_1_custom_user_details.html#a0b2b990073c0b70b679db761addc01bb',1,'com::restaurant::reservation::security::CustomUserDetails']]],
+  ['isenabled_11',['isEnabled',['../classcom_1_1restaurant_1_1reservation_1_1security_1_1_custom_user_details.html#a14640fb9b6335501ead404e55a2fb545',1,'com::restaurant::reservation::security::CustomUserDetails']]],
+  ['isseen_12',['isSeen',['../classcom_1_1restaurant_1_1reservation_1_1model_1_1_notification.html#a80c0b77f441df3eda642e5cebe25fd58',1,'com::restaurant::reservation::model::Notification']]],
+  ['isvalidtime_13',['isValidTime',['../classcom_1_1restaurant_1_1reservation_1_1dto_1_1_reservation_request_d_t_o.html#ae7c23471bad27a7c777cd91fed53bf58',1,'com::restaurant::reservation::dto::ReservationRequestDTO']]],
+  ['its_20capacity_20available_20hours_20and_20its_20tables_14',['Contains its capacity, available hours, and its tables.',['../classcom_1_1restaurant_1_1reservation_1_1model_1_1_restaurant.html#autotoc_md5',1,'']]],
+  ['its_20tables_15',['Contains its capacity, available hours, and its tables.',['../classcom_1_1restaurant_1_1reservation_1_1model_1_1_restaurant.html#autotoc_md5',1,'']]]
+];

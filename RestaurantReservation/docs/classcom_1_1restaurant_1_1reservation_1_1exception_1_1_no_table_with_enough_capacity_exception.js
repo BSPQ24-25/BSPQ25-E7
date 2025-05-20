@@ -1,4 +1,0 @@
-var classcom_1_1restaurant_1_1reservation_1_1exception_1_1_no_table_with_enough_capacity_exception =
-[
-    [ "NoTableWithEnoughCapacityException", "classcom_1_1restaurant_1_1reservation_1_1exception_1_1_no_table_with_enough_capacity_exception.html#a472f217901c623da0ccbbe2631705f55", null ]
-];

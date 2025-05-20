@@ -1,6 +1,0 @@
-var namespacecom_1_1restaurant_1_1reservation_1_1exception =
-[
-    [ "InvalidReservationTimeException", "classcom_1_1restaurant_1_1reservation_1_1exception_1_1_invalid_reservation_time_exception.html", "classcom_1_1restaurant_1_1reservation_1_1exception_1_1_invalid_reservation_time_exception" ],
-    [ "NoTableWithEnoughCapacityException", "classcom_1_1restaurant_1_1reservation_1_1exception_1_1_no_table_with_enough_capacity_exception.html", "classcom_1_1restaurant_1_1reservation_1_1exception_1_1_no_table_with_enough_capacity_exception" ],
-    [ "PastDateReservationException", "classcom_1_1restaurant_1_1reservation_1_1exception_1_1_past_date_reservation_exception.html", "classcom_1_1restaurant_1_1reservation_1_1exception_1_1_past_date_reservation_exception" ]
-];
