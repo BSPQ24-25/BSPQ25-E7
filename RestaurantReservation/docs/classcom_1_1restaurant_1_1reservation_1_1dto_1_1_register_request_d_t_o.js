@@ -1,7 +1,10 @@
 var classcom_1_1restaurant_1_1reservation_1_1dto_1_1_register_request_d_t_o =
 [
+<<<<<<< HEAD
+=======
     [ "RegisterRequestDTO", "classcom_1_1restaurant_1_1reservation_1_1dto_1_1_register_request_d_t_o.html#a98735d6eadc068399cc8178e332827f9", null ],
     [ "RegisterRequestDTO", "classcom_1_1restaurant_1_1reservation_1_1dto_1_1_register_request_d_t_o.html#a24a3a1cff12e774f49274e6cfa18a8e4", null ],
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
     [ "getEmail", "classcom_1_1restaurant_1_1reservation_1_1dto_1_1_register_request_d_t_o.html#a3e4165b0d5f0ecd60e32047f0f5c0142", null ],
     [ "getPassword", "classcom_1_1restaurant_1_1reservation_1_1dto_1_1_register_request_d_t_o.html#a09f7bdc1aafaaedbd4eb0c3228acc23d", null ],
     [ "getPhone", "classcom_1_1restaurant_1_1reservation_1_1dto_1_1_register_request_d_t_o.html#ab6644f3d4f10e51b406a94d4180389b2", null ],

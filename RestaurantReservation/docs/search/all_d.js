@@ -1,5 +1,8 @@
 var searchData=
 [
+<<<<<<< HEAD
+  ['tostring_0',['toString',['../classcom_1_1restaurant_1_1reservation_1_1model_1_1_user.html#af2e8f523feedf2ab28a1b44314942f2a',1,'com::restaurant::reservation::model::User']]]
+=======
   ['register_0',['register',['../classcom_1_1restaurant_1_1reservation_1_1service_1_1_auth_service.html#a8fd95064c56e81bf503f28acb3e5eac2',1,'com::restaurant::reservation::service::AuthService']]],
   ['registerform_1',['registerForm',['../classcom_1_1restaurant_1_1reservation_1_1controller_1_1_auth_controller.html#a7106775164d0be9eca8136ff3ef24b70',1,'com::restaurant::reservation::controller::AuthController']]],
   ['registerpage_2',['registerPage',['../classcom_1_1restaurant_1_1reservation_1_1controller_1_1_page_controller.html#ae3380cb5bcb0960ab3835716d740aa2b',1,'com::restaurant::reservation::controller::PageController']]],
@@ -31,4 +34,5 @@ var searchData=
   ['reviewresponsedto_2ejava_28',['ReviewResponseDTO.java',['../_review_response_d_t_o_8java.html',1,'']]],
   ['reviewservice_29',['ReviewService',['../classcom_1_1restaurant_1_1reservation_1_1service_1_1_review_service.html',1,'com::restaurant::reservation::service']]],
   ['reviewservice_2ejava_30',['ReviewService.java',['../_review_service_8java.html',1,'']]]
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
 ];

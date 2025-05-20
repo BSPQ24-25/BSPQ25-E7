@@ -26,7 +26,15 @@ var NAVTREE =
 [
   [ "Cosa Nostra", "index.html", [
     [ "Namespaces", "namespaces.html", [
+<<<<<<< HEAD
+      [ "Namespace List", "namespaces.html", "namespaces_dup" ],
+      [ "Namespace Members", "namespacemembers.html", [
+        [ "All", "namespacemembers.html", null ],
+        [ "Functions", "namespacemembers_func.html", null ]
+      ] ]
+=======
       [ "Namespace List", "namespaces.html", "namespaces_dup" ]
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
     ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
@@ -46,9 +54,14 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
+<<<<<<< HEAD
+"_authentication_service_8java.html",
+"dir_d8517d8b842053dc3dd7dde525dd9163.html"
+=======
 "_admin_controller_8java.html",
 "classcom_1_1restaurant_1_1reservation_1_1model_1_1_reservation.html#a3676a47f160a42dafae849bada34f292",
 "interfacecom_1_1restaurant_1_1reservation_1_1repository_1_1_reservation_repository.html#a50aafab75c2d4b151a00cb23daca3ff8"
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

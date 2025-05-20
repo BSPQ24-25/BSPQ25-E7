@@ -5,7 +5,11 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 /**
+<<<<<<< HEAD
+ * Represents a reservation made by a user for a specific table and time.
+=======
  * Represents a reservation made by a user for a restaurant table.
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
  */
 @Entity
 @Table(name = "reservation")
@@ -34,24 +38,45 @@ public class Reservation {
     private RestaurantTable table;
 
     /**
+<<<<<<< HEAD
+     * The date of the reservation.
+=======
      * Date of the reservation.
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
      */
     @Column(nullable = false)
     private LocalDate date;
 
     /**
+<<<<<<< HEAD
+     * The time of the reservation.
+=======
      * Time of the reservation.
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
      */
     @Column(nullable = false)
     private LocalTime hour;
 
     /**
+<<<<<<< HEAD
+     * Number of people included in the reservation.
+=======
      * Number of people for the reservation.
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
      */
     @Column(nullable = false, name = "n_people")
     private int nPeople;
 
     /**
+<<<<<<< HEAD
+     * The state of the reservation (e.g., confirmed).
+     */
+    @Column(nullable = false, columnDefinition = "VARCHAR(50) DEFAULT 'confirmed'")
+    private String state;
+
+
+    // Constructores
+=======
      * Current state of the reservation (e.g. confirmed, cancelled).
      */
     @Column(nullable = false)
@@ -66,6 +91,7 @@ public class Reservation {
     /**
      * Default constructor.
      */
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
     public Reservation() {}
 
     /**

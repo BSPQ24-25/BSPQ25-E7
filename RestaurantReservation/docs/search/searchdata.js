@@ -1,10 +1,18 @@
 var indexSectionsWithContent =
 {
+<<<<<<< HEAD
+  0: "acfghijlmoprstuvw",
+  1: "achjlrsu",
+  2: "c",
+  3: "achjlrsu",
+  4: "acfghilmoprstuvw",
+=======
   0: "acdefghilmnoprstuw",
   1: "acegilnprsu",
   2: "c",
   3: "acegilnprsu",
   4: "acdefghilmnoprstuw",
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
   5: "ac"
 };
 

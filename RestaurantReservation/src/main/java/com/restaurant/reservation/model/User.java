@@ -7,7 +7,11 @@ import java.io.Serializable;
 
 /**
  * Represents a user of the system.
+<<<<<<< HEAD
+ * A user can be an admin or a customer, identified by a unique email.
+=======
  * A user can be either an admin or a customer, identified by email.
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
  */
 @Entity
 @Table(name = "user")
@@ -22,37 +26,62 @@ public class User implements Serializable {
     private Long id;
 
     /**
+<<<<<<< HEAD
+     * Email address of the user.
+     * Must follow valid email format.
+     */
+    @NotBlank(message = "Email es obligatorio")
+=======
      * User email (must be unique and valid format).
      */
     @NotBlank
     @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$")
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
     @Column(name = "email", nullable = false, unique = true, length = 100)
     private String email;
 
     /**
      * Username of the user.
      */
+<<<<<<< HEAD
+    @NotBlank(message = "Nombre de usuario es obligatorio")
+=======
     @NotBlank
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
     @Column(name = "username", nullable = false, length = 100)
     private String username;
 
     /**
      * Phone number of the user.
      */
+<<<<<<< HEAD
+    @NotBlank(message = "Teléfono es obligatorio")
+=======
     @NotBlank
     @Pattern(regexp = "^[+]?[(]?[0-9]{1,4}[)]?[-\\s./0-9]*$")
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
     @Column(name = "phone", nullable = false, length = 50)
     private String phone;
 
     /**
+<<<<<<< HEAD
+     * User password. Should be stored encrypted.
+     */
+    @NotBlank(message = "Contraseña es obligatoria")
+=======
      * Password for the account.
      */
     @NotBlank
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
     @Column(name = "password", nullable = false, length = 100)
     private String password;
 
     /**
+<<<<<<< HEAD
+     * Defines the type of user (e.g., ADMIN or CUSTOMER).
+=======
      * Role of the user in the system (e.g. ADMIN, CUSTOMER).
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
      */
     @Enumerated(EnumType.STRING)
     @Column(name = "user_type", nullable = false)

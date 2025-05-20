@@ -1,5 +1,11 @@
 var searchData=
 [
+<<<<<<< HEAD
+  ['isaccountnonexpired_0',['isAccountNonExpired',['../classcom_1_1restaurant_1_1reservation_1_1security_1_1_custom_user_details.html#afc468d4e49dbc253190cbc671796a4cc',1,'com::restaurant::reservation::security::CustomUserDetails']]],
+  ['isaccountnonlocked_1',['isAccountNonLocked',['../classcom_1_1restaurant_1_1reservation_1_1security_1_1_custom_user_details.html#a3ec50222444e1c33e3c1f0232ea4169a',1,'com::restaurant::reservation::security::CustomUserDetails']]],
+  ['iscredentialsnonexpired_2',['isCredentialsNonExpired',['../classcom_1_1restaurant_1_1reservation_1_1security_1_1_custom_user_details.html#a0b2b990073c0b70b679db761addc01bb',1,'com::restaurant::reservation::security::CustomUserDetails']]],
+  ['isenabled_3',['isEnabled',['../classcom_1_1restaurant_1_1reservation_1_1security_1_1_custom_user_details.html#a14640fb9b6335501ead404e55a2fb545',1,'com::restaurant::reservation::security::CustomUserDetails']]]
+=======
   ['getauthorities_0',['getAuthorities',['../classcom_1_1restaurant_1_1reservation_1_1security_1_1_custom_user_details.html#a973359b3bccf74adae6b4978beac04a8',1,'com::restaurant::reservation::security::CustomUserDetails']]],
   ['getavailabilityhours_1',['getAvailabilityHours',['../classcom_1_1restaurant_1_1reservation_1_1model_1_1_restaurant.html#ab908882d6ce7b1dd12d98f45b0bf908a',1,'com::restaurant::reservation::model::Restaurant']]],
   ['getcapacity_2',['getCapacity',['../classcom_1_1restaurant_1_1reservation_1_1model_1_1_restaurant.html#ab97a795b752e54640749776611d01602',1,'com.restaurant.reservation.model.Restaurant.getCapacity()'],['../classcom_1_1restaurant_1_1reservation_1_1model_1_1_restaurant_table.html#a67e265249bea828dab95d39ebb00939b',1,'com.restaurant.reservation.model.RestaurantTable.getCapacity()']]],
@@ -38,4 +44,5 @@ var searchData=
   ['getusertype_35',['getUserType',['../classcom_1_1restaurant_1_1reservation_1_1dto_1_1_register_request_d_t_o.html#a66e49a9b891d94ec1d5d26ab3304d54e',1,'com.restaurant.reservation.dto.RegisterRequestDTO.getUserType()'],['../classcom_1_1restaurant_1_1reservation_1_1dto_1_1_user_response_d_t_o.html#a508eff5534f7ff280aea97de3b0cf6fd',1,'com.restaurant.reservation.dto.UserResponseDTO.getUserType()'],['../classcom_1_1restaurant_1_1reservation_1_1model_1_1_user.html#a8da8edf31ede5d011d95eca4d6563609',1,'com.restaurant.reservation.model.User.getUserType()']]],
   ['globalmodelattributes_36',['GlobalModelAttributes',['../classcom_1_1restaurant_1_1reservation_1_1controller_1_1_global_model_attributes.html',1,'com::restaurant::reservation::controller']]],
   ['globalmodelattributes_2ejava_37',['GlobalModelAttributes.java',['../_global_model_attributes_8java.html',1,'']]]
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
 ];

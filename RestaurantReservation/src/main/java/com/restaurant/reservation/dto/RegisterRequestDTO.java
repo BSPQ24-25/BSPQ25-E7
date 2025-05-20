@@ -6,28 +6,49 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 /**
+<<<<<<< HEAD
+ * Data Transfer Object used to register a new user.
+ * Contains user credentials and contact details.
+=======
  * @class RegisterRequestDTO
  * @brief DTO de entrada para el registro de un nuevo usuario.
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
  */
 public class RegisterRequestDTO {
 
+    /**
+     * User's email address.
+     * Must follow a valid email format.
+     */
     @NotBlank
     @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$", message = "Formato de email inválido")
     private String email;
 
+    /**
+     * Username of the user.
+     */
     @NotBlank
     private String username;
 
+    /**
+     * Phone number of the user.
+     * Must follow a valid international phone format.
+     */
     @NotBlank
     @Pattern(regexp = "^[+]?[(]?[0-9]{1,4}[)]?[-\\s./0-9]*$", message = "Formato de teléfono inválido")
     private String phone;
 
+    /**
+     * User's password.
+     */
     @NotBlank
     private String password;
 
+    /**
+     * Type of user (e.g., ADMIN or CUSTOMER).
+     */
     @NotNull
     private UserType userType;
-
     // Getters y setters
     public String getEmail() {
         return email;

@@ -1,5 +1,22 @@
 var searchData=
 [
+<<<<<<< HEAD
+  ['user_0',['User',['../classcom_1_1restaurant_1_1reservation_1_1model_1_1_user.html',1,'com.restaurant.reservation.model.User'],['../classcom_1_1restaurant_1_1reservation_1_1model_1_1_user.html#a8d1774521ef4e52f2b6235836e268811',1,'com.restaurant.reservation.model.User.User()'],['../classcom_1_1restaurant_1_1reservation_1_1model_1_1_user.html#a0b712046c75f5f8bae1d1257ff385f2b',1,'com.restaurant.reservation.model.User.User(String email, String username, String phone, String password, UserType userType)']]],
+  ['user_2ejava_1',['User.java',['../_user_8java.html',1,'']]],
+  ['usercontroller_2',['UserController',['../classcom_1_1restaurant_1_1reservation_1_1controller_1_1_user_controller.html',1,'com.restaurant.reservation.controller.UserController'],['../classcom_1_1restaurant_1_1reservation_1_1controller_1_1_user_controller.html#a1255b08b029f078b1cae34ea93b0953a',1,'com.restaurant.reservation.controller.UserController.UserController()']]],
+  ['usercontroller_2ejava_3',['UserController.java',['../_user_controller_8java.html',1,'']]],
+  ['userdetailsservice_4',['userDetailsService',['../classcom_1_1restaurant_1_1reservation_1_1config_1_1_security_config.html#aae5f73cde859aca2a9f874609bb3c97c',1,'com::restaurant::reservation::config::SecurityConfig']]],
+  ['userrepository_5',['UserRepository',['../interfacecom_1_1restaurant_1_1reservation_1_1repository_1_1_user_repository.html',1,'com::restaurant::reservation::repository']]],
+  ['userrepository_2ejava_6',['UserRepository.java',['../_user_repository_8java.html',1,'']]],
+  ['userresponsedto_7',['UserResponseDTO',['../classcom_1_1restaurant_1_1reservation_1_1dto_1_1_user_response_d_t_o.html',1,'com.restaurant.reservation.dto.UserResponseDTO'],['../classcom_1_1restaurant_1_1reservation_1_1dto_1_1_user_response_d_t_o.html#aef4209d99bdb73d42b57147e79c6f938',1,'com.restaurant.reservation.dto.UserResponseDTO.UserResponseDTO()']]],
+  ['userresponsedto_2ejava_8',['UserResponseDTO.java',['../_user_response_d_t_o_8java.html',1,'']]],
+  ['userservice_9',['UserService',['../interfacecom_1_1restaurant_1_1reservation_1_1service_1_1_user_service.html',1,'com::restaurant::reservation::service']]],
+  ['userservice_2ejava_10',['UserService.java',['../_user_service_8java.html',1,'']]],
+  ['userserviceimpl_11',['UserServiceImpl',['../classcom_1_1restaurant_1_1reservation_1_1service_1_1_user_service_impl.html',1,'com.restaurant.reservation.service.UserServiceImpl'],['../classcom_1_1restaurant_1_1reservation_1_1service_1_1_user_service_impl.html#a20a0eb6da79415440c7213c6ebc50342',1,'com.restaurant.reservation.service.UserServiceImpl.UserServiceImpl()']]],
+  ['userserviceimpl_2ejava_12',['UserServiceImpl.java',['../_user_service_impl_8java.html',1,'']]],
+  ['usertype_13',['UserType',['../enumcom_1_1restaurant_1_1reservation_1_1model_1_1_user_type.html',1,'com::restaurant::reservation::model']]],
+  ['usertype_2ejava_14',['UserType.java',['../_user_type_8java.html',1,'']]]
+=======
   ['securityconfig_0',['SecurityConfig',['../classcom_1_1restaurant_1_1reservation_1_1config_1_1_security_config.html',1,'com.restaurant.reservation.config.SecurityConfig'],['../classcom_1_1restaurant_1_1reservation_1_1config_1_1_security_config.html#a97d38c334c94807e929d8bc4518246aa',1,'com.restaurant.reservation.config.SecurityConfig.SecurityConfig()']]],
   ['securityconfig_2ejava_1',['SecurityConfig.java',['../_security_config_8java.html',1,'']]],
   ['securityfilterchain_2',['securityFilterChain',['../classcom_1_1restaurant_1_1reservation_1_1config_1_1_security_config.html#ae72b6ac6a356b98e4e7e31f2beccfc8a',1,'com::restaurant::reservation::config::SecurityConfig']]],
@@ -35,4 +52,5 @@ var searchData=
   ['setusertype_32',['setUserType',['../classcom_1_1restaurant_1_1reservation_1_1dto_1_1_register_request_d_t_o.html#add37d83097c716a70f1fb83557ac1abe',1,'com.restaurant.reservation.dto.RegisterRequestDTO.setUserType()'],['../classcom_1_1restaurant_1_1reservation_1_1model_1_1_user.html#ac2deb64a1ad7c4c0b475d92f5f9a8616',1,'com.restaurant.reservation.model.User.setUserType()']]],
   ['showreservationform_33',['showReservationForm',['../classcom_1_1restaurant_1_1reservation_1_1controller_1_1_customer_controller.html#a5fba45299e5a530633e9957149ab5fff',1,'com::restaurant::reservation::controller::CustomerController']]],
   ['submitreview_34',['submitReview',['../classcom_1_1restaurant_1_1reservation_1_1controller_1_1_review_controller.html#a1b13880ea8dbe1cd392f4c0b3cf0de0d',1,'com.restaurant.reservation.controller.ReviewController.submitReview()'],['../classcom_1_1restaurant_1_1reservation_1_1service_1_1_review_service.html#ac97a9249173c2c2f7b1ff329bde01f7b',1,'com.restaurant.reservation.service.ReviewService.submitReview()']]]
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
 ];

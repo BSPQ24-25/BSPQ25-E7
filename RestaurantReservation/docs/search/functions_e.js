@@ -1,5 +1,8 @@
 var searchData=
 [
+<<<<<<< HEAD
+  ['validatetoken_0',['validateToken',['../classcom_1_1restaurant_1_1reservation_1_1security_1_1_jwt_token_provider.html#a5f8cb777a5924cd42cc90914073a8c55',1,'com::restaurant::reservation::security::JwtTokenProvider']]]
+=======
   ['securityconfig_0',['SecurityConfig',['../classcom_1_1restaurant_1_1reservation_1_1config_1_1_security_config.html#a97d38c334c94807e929d8bc4518246aa',1,'com::restaurant::reservation::config::SecurityConfig']]],
   ['securityfilterchain_1',['securityFilterChain',['../classcom_1_1restaurant_1_1reservation_1_1config_1_1_security_config.html#ae72b6ac6a356b98e4e7e31f2beccfc8a',1,'com::restaurant::reservation::config::SecurityConfig']]],
   ['sendemail_2',['sendEmail',['../classcom_1_1restaurant_1_1reservation_1_1service_1_1_email_sender_service.html#ac8d21857dd64a857b894a6c3b2e2012f',1,'com::restaurant::reservation::service::EmailSenderService']]],
@@ -34,4 +37,5 @@ var searchData=
   ['setusertype_31',['setUserType',['../classcom_1_1restaurant_1_1reservation_1_1dto_1_1_register_request_d_t_o.html#add37d83097c716a70f1fb83557ac1abe',1,'com.restaurant.reservation.dto.RegisterRequestDTO.setUserType()'],['../classcom_1_1restaurant_1_1reservation_1_1model_1_1_user.html#ac2deb64a1ad7c4c0b475d92f5f9a8616',1,'com.restaurant.reservation.model.User.setUserType()']]],
   ['showreservationform_32',['showReservationForm',['../classcom_1_1restaurant_1_1reservation_1_1controller_1_1_customer_controller.html#a5fba45299e5a530633e9957149ab5fff',1,'com::restaurant::reservation::controller::CustomerController']]],
   ['submitreview_33',['submitReview',['../classcom_1_1restaurant_1_1reservation_1_1controller_1_1_review_controller.html#a1b13880ea8dbe1cd392f4c0b3cf0de0d',1,'com.restaurant.reservation.controller.ReviewController.submitReview()'],['../classcom_1_1restaurant_1_1reservation_1_1service_1_1_review_service.html#ac97a9249173c2c2f7b1ff329bde01f7b',1,'com.restaurant.reservation.service.ReviewService.submitReview()']]]
+>>>>>>> 2fa7554a80bfbc37e8cdf443ca991ed3b9ef4758
 ];
